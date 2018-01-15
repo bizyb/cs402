@@ -32,7 +32,9 @@
 #include "warmup1.h"
 
 // static char gszProgName[MAXPATHLENGTH];
-int BUFFERSIZE = 81;
+const int BUFFERSIZE = 81;
+const double FACTOR = 100.0;
+const int MAX_AMOUNT = 1000000000; // $10,000,000.00
 
 
 int gnDebug=0;
@@ -42,35 +44,110 @@ int gnSeed=0;
 /* ----------------------- Utility Functions ----------------------- */
 void printError(ErrorType e) {
 
+    // TODO: do we have to handle line length?
     char *msg;
     if (e == FileOpen) msg = "Failed to open file.";
     else if (e == LongLine) msg = "Line exceeds acceptable length.";
     else if (e == MalformedLine) msg = "Unacceptable line formatting.";
     else if (e == Duplicate) msg = "Found entries with duplicate timestamp.";
+    else if (e == HighAmount) msg = "Amount exceeds allowed limit.";
+    else if (e == HighBalance) msg = "Balance exceeds allowed limit.";
+    else if (e == UnknownFlag) msg = "Unknown transaction flag.";
+    else if (e == UnknownAmount) msg = "Unable to parse amount.";
     fprintf(stderr, "%s Exting program...\n", msg);
     // exit()
 
 }
-int validateFormat(char *flag, char *date, char *amount, char *desc) {
 
+void printHistory(Transaction record) {
+
+    fprintf(stdout, "%s ", record.date);
+    fprintf(stdout, "%s ", record.desc);
+    fprintf(stdout, "%d ", record.amount);
+    fprintf(stdout, "%d\n", record.balance);
 
 }
-int parseLine(char *line) {
+int getAmount(char *amount) {
 
-    char delim = '\t';
+    char *end;
+    double dAmount = strtod(amount, &end);
+    if (amount == end) {
+
+        ErrorType e = UnknownAmount;
+        printError(e);
+    }
+
+    int iAmount = (int) (dAmount * FACTOR);
+    if (iAmount >= MAX_AMOUNT) {
+
+        ErrorType e = HighAmount;
+        printError(e);
+    }
+    return iAmount;
+
+}
+Transaction getTransaction(char *flag, char *date, char *amount, char *desc) {
+
+    char *tDate, *tDesc;
+    int tAmount, tBalance, tRawDate;
+    Flag tFlag;
+
+    if (*flag == '-') tFlag = WITHDRAWAL;
+    else if (*flag == '+') tFlag = DEPOSIT;
+    else {
+        ErrorType e = UnknownFlag;
+        printError(e);
+    }
+
+    tRawDate = (int) *date; //getDate(), handle timestamp errors
+    tDate = date; //formatDate(), no need to do error handling since getDate() succeeded
+    tDesc = desc; //getDesc(), check that it's not empty
+   
+    tAmount = getAmount(amount);
+    if (tAmount >= MAX_AMOUNT) {
+        ErrorType e = HighAmount;
+        printError(e);
+    }
+    tBalance = 0; //for now; will be computed after sorting; when iterating through the sorted list, 
+    //keep local max abs(balance). Handle >=10mil accordingly 
+
+
+
+    Transaction record = {tDate, tDesc, tAmount, tBalance, tRawDate, tFlag};
+    return record;
+}
+
+void insertRecord(Transaction record) {
+
+    //iterate through the list and insert the record in a sorted order
+    // if another record with the same timestamp exists, call printError to exit program
+
+}
+int validateFormat(char *flag, char *date, char *amount, char *desc) {
+
+    return TRUE;
+}
+Transaction parseLine(char *line) {
+
+    char *delim = "\t";
     char *flag, *date, *amount, *desc;
-    flag = strtok(line, &delim);
-    date = strtok(NULL, &delim);
-    amount = strtok(NULL, &delim);
-    desc = strtok(NULL, &delim);
-
+    flag = strtok(line, delim);
+    date = strtok(NULL, delim);
+    amount = strtok(NULL, delim);
+    desc = strtok(NULL, delim);
+    
     if (!validateFormat(flag, date, amount, desc)) {
         ErrorType e = MalformedLine;
         printError(e);
     }
 
+    return getTransaction(flag, date, amount, desc);
     
-    fprintf(stdout, "%s %s %s %s\n", flag, date, amount, desc);
+
+
+
+
+    // fprintf(stdout, "%s %s %s %s\n", flag, date, amount, desc);
 
     // while (tokens != NULL) {
     //      fprintf(stdout, "%s\n", tokens);
@@ -80,7 +157,7 @@ int parseLine(char *line) {
    
     // fprintf(stdout, "%d\n", length);
 
-    return TRUE;
+    // return TRUE;
 }
 int readInput(char *path) {
     char buffer [BUFFERSIZE];
@@ -92,7 +169,9 @@ int readInput(char *path) {
         printError(e);
     }
     while (fgets(buffer, BUFFERSIZE,  file) != NULL) {
-        (void)parseLine((char *) &buffer);
+        Transaction record = parseLine((char *) &buffer);
+        // insertRecord(record);
+        printHistory(record);
         // fprintf(stdout, "%s\n", buffer);
         // fprintf(stdout, "length: %d\n", length);
     }

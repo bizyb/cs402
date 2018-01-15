@@ -26,24 +26,44 @@
 
 #include "cs402.h"
 
-typedef struct TransactionRecord {
-
-	int date;
-	char *desc;
-	int amount;
-	int balance;
-
-} Transaction;
-
 typedef enum {
 	FileOpen,
 	LongLine,
 	MalformedLine,
-	Duplicate
+	Duplicate,
+	HighAmount,
+	HighBalance,
+	UnknownFlag,
+	UnknownAmount
 } ErrorType;
+
+typedef enum {
+
+	DEPOSIT,
+	WITHDRAWAL
+} Flag;
+
+typedef struct TransactionRecord {
+
+	char *date;
+	char *desc;
+	int amount;
+	int balance;
+	int dateRaw;
+	Flag flag;
+
+} Transaction;
+
+
 
 #endif /*_WARMUP1_H*/
 
-extern int readInput(char *path);
+extern int readInput(char *);
+extern int getAmount(char *);
 extern void printError(ErrorType);
-extern int parseLine(char *line);
+extern Transaction getTransaction(char *, char *, char *, char *);
+extern int validateFormat(char *, char *, char *, char *);
+extern Transaction parseLine(char *);
+extern void insertRecord(Transaction);
+extern void printHistory(Transaction);
+
