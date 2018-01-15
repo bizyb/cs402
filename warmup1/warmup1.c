@@ -32,7 +32,7 @@
 #include "warmup1.h"
 
 // static char gszProgName[MAXPATHLENGTH];
-int BUFFERSIZE = 80;
+int BUFFERSIZE = 81;
 
 
 int gnDebug=0;
@@ -43,10 +43,44 @@ int gnSeed=0;
 void printError(ErrorType e) {
 
     char *msg;
-    if (e == FileOpen) msg = "Failed to open file. Exiting program\n";
-    fprintf(stderr, "%s", msg);
+    if (e == FileOpen) msg = "Failed to open file.";
+    else if (e == LongLine) msg = "Line exceeds acceptable length.";
+    else if (e == MalformedLine) msg = "Unacceptable line formatting.";
+    else if (e == Duplicate) msg = "Found entries with duplicate timestamp.";
+    fprintf(stderr, "%s Exting program...\n", msg);
     // exit()
 
+}
+int validateFormat(char *flag, char *date, char *amount, char *desc) {
+
+
+}
+int parseLine(char *line) {
+
+    char delim = '\t';
+    char *flag, *date, *amount, *desc;
+    flag = strtok(line, &delim);
+    date = strtok(NULL, &delim);
+    amount = strtok(NULL, &delim);
+    desc = strtok(NULL, &delim);
+
+    if (!validateFormat(flag, date, amount, desc)) {
+        ErrorType e = MalformedLine;
+        printError(e);
+    }
+
+    
+    fprintf(stdout, "%s %s %s %s\n", flag, date, amount, desc);
+
+    // while (tokens != NULL) {
+    //      fprintf(stdout, "%s\n", tokens);
+    //      tokens = strtok(NULL, &delim);
+    // }
+    // unsigned int length = strlen(tokens);
+   
+    // fprintf(stdout, "%d\n", length);
+
+    return TRUE;
 }
 int readInput(char *path) {
     char buffer [BUFFERSIZE];
@@ -58,12 +92,12 @@ int readInput(char *path) {
         printError(e);
     }
     while (fgets(buffer, BUFFERSIZE,  file) != NULL) {
-        unsigned int length = strlen(buffer);
-        fprintf(stdout, "%s\n", buffer);
-        fprintf(stdout, "length: %d\n", length);
+        (void)parseLine((char *) &buffer);
+        // fprintf(stdout, "%s\n", buffer);
+        // fprintf(stdout, "length: %d\n", length);
     }
 
-    return 1;
+    return TRUE;
 
 }
 
@@ -71,7 +105,7 @@ int readInput(char *path) {
 
 int main(int argc, char *argv[])
 {
-    char *path = "test.txt";
+    char *path = "tfile.txt";
     readInput(path);
     
     return(0);

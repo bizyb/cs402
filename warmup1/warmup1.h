@@ -36,10 +36,14 @@ typedef struct TransactionRecord {
 } Transaction;
 
 typedef enum {
-	FileOpen
+	FileOpen,
+	LongLine,
+	MalformedLine,
+	Duplicate
 } ErrorType;
 
 #endif /*_WARMUP1_H*/
 
 extern int readInput(char *path);
 extern void printError(ErrorType);
+extern int parseLine(char *line);
