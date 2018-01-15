@@ -332,8 +332,8 @@ void DoTest()
     int num_items=64;
     My402List list, list2;
 
-    memset(&list, 0, sizeof(My402List));
-    memset(&list2, 0, sizeof(My402List));
+    // memset(&list, 0, sizeof(My402List));
+    // memset(&list2, 0, sizeof(My402List));
     (void)My402ListInit(&list);
     (void)My402ListInit(&list2);
 

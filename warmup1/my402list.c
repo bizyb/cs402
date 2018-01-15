@@ -37,7 +37,7 @@ int addToEmpty(My402List* pList, My402ListElem *elem) {
 	pList->anchor.prev = elem, pList->anchor.next = elem;
  	elem->prev = &pList->anchor, elem->next = &pList->anchor;
  	pList->num_members++; 
- 	return 1;
+ 	return TRUE;
 
 }
  int  My402ListLength(My402List* pList) {
@@ -46,22 +46,19 @@ int addToEmpty(My402List* pList, My402ListElem *elem) {
  }
  int  My402ListEmpty(My402List* pList) {
 
- 	// return pList->anchor.prev == NULL && pList->anchor.next == NULL;
- 	return pList->num_members == 0;
+ 	
+ 	if (pList->num_members == 0) return TRUE;
+ 	return FALSE;
 
  }
 
  int  My402ListAppend(My402List* pList, void* obj)  {
 
- 	// TODO: malloc errors
-
-
  	My402ListElem *elem = (My402ListElem *) malloc(sizeof(My402ListElem));
+ 	if (elem == NULL) return FALSE;
  	elem->obj = obj;
 
- 	if (My402ListEmpty(pList)) {
- 		// pList->anchor.prev = elem, pList->anchor.next = elem;
- 		// elem->prev = &pList->anchor, elem->next = &pList->anchor; 
+ 	if (My402ListEmpty(pList)) { 
  		return addToEmpty(pList, elem);
  	}
  	else {
@@ -71,13 +68,12 @@ int addToEmpty(My402List* pList, My402ListElem *elem) {
 
  	}
  	pList->num_members++;
- 	return 1;
+ 	return TRUE;
  }
  int  My402ListPrepend(My402List* pList, void* obj) {
-
- 	// TODO: malloc errors
-
- 	My402ListElem *elem = (My402ListElem *) malloc(sizeof(My402ListElem));
+ 
+	My402ListElem *elem = (My402ListElem *) malloc(sizeof(My402ListElem));
+	if (elem == NULL) return FALSE;
  	elem->obj = obj;
  	if (My402ListEmpty(pList)) {
 
@@ -91,7 +87,7 @@ int addToEmpty(My402List* pList, My402ListElem *elem) {
  		pList->anchor.next = elem, elem->prev = &pList->anchor; 
  	}
  	pList->num_members++;
- 	return 1;
+ 	return TRUE;
  }
  void My402ListUnlink(My402List* pList, My402ListElem* elem) {
 
@@ -131,6 +127,7 @@ int addToEmpty(My402List* pList, My402ListElem *elem) {
  	}
  	else {
  		My402ListElem *newElem = (My402ListElem *) malloc(sizeof(My402ListElem));
+ 		if (newElem == NULL) return FALSE;
  		newElem->obj = obj;
  		newElem->next = elem->next, elem->next->prev = newElem;
  		elem->next = newElem, newElem->prev = elem;
@@ -138,7 +135,7 @@ int addToEmpty(My402List* pList, My402ListElem *elem) {
  	}
 
 
- 	return 1;
+ 	return TRUE;
  }
  int  My402ListInsertBefore(My402List* pList, void* obj, My402ListElem* elem) {
 
@@ -149,12 +146,13 @@ int addToEmpty(My402List* pList, My402ListElem *elem) {
  	}
  	else {
  		My402ListElem *newElem = (My402ListElem *) malloc(sizeof(My402ListElem));
+ 		if (newElem == NULL) return FALSE;
  		newElem->obj = obj;
  		newElem->prev = elem->prev, elem->prev->next = newElem;
  		newElem->next = elem, elem->prev = newElem;
  		pList->num_members++;
  	}
- 	return 1;
+ 	return TRUE;
  }
 
  My402ListElem *My402ListFirst(My402List* pList) {
@@ -192,10 +190,9 @@ int addToEmpty(My402List* pList, My402ListElem *elem) {
  
  int My402ListInit(My402List *pList) {
 
- 	pList = (My402List *) malloc(sizeof(My402List));
  	pList->num_members = 0;
- 	My402ListElem anchor = {NULL, NULL, NULL};
- 	pList->anchor = anchor;
-
- 	return 1;
+ 	// memset(&pList->anchor, 0, sizeof(My402ListElem));
+ 	// if (pList->anchor != NULL) return FALSE;
+ 	return TRUE;
  }
+ 

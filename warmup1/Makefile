@@ -9,3 +9,4 @@ my402list.o: my402list.c my402list.h
 
 clean:
 	rm -f *.o listtest
+
