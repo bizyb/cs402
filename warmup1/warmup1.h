@@ -34,7 +34,8 @@ typedef enum {
 	HighAmount,
 	HighBalance,
 	UnknownFlag,
-	UnknownAmount
+	UnknownAmount,
+	InvalidTimestamp
 } ErrorType;
 
 typedef enum {
@@ -59,7 +60,9 @@ typedef struct TransactionRecord {
 #endif /*_WARMUP1_H*/
 
 extern int readInput(char *);
+extern Flag getFlag(char *);
 extern int getAmount(char *);
+extern int getRawDate(char *);
 extern void printError(ErrorType);
 extern Transaction getTransaction(char *, char *, char *, char *);
 extern int validateFormat(char *, char *, char *, char *);
