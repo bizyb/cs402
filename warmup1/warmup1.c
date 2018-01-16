@@ -27,17 +27,22 @@
 #include <stdlib.h>
 // #include <sys/time.h>
 #include <time.h>
+// #include <locale.h>
 
 #include "cs402.h"
 #include "my402list.h"
 #include "warmup1.h"
 
+
 // static char gszProgName[MAXPATHLENGTH];
 const int BUFFERSIZE = 1025;
-const double FACTOR = 100.0;
+const double FACTOR = 100.00;
 const int MAX_AMOUNT = 1000000000; // $10,000,000.00
 const int MAX_DATE_LENGTH = 10;
 const int BASE = 10;
+
+
+
 
 
 
@@ -88,16 +93,16 @@ void printHistory(My402List*  pList) {
         fprintf(stdout, "| %s ", record.date);
         fprintf(stdout, "| %s", record.desc);
 
-        float fAmount = ((float) record.amount / FACTOR);
-        if (record.flag == WITHDRAWAL) fprintf(stdout, "| (%12.2f) ", fAmount);
-        else fprintf(stdout, "|  %12.2f  ", fAmount);
-
+        char* amount = formatCurrency(record.amount);
+        if (record.flag == WITHDRAWAL) fprintf(stdout, "| (%s) ", amount);
+        else fprintf(stdout, "|  %s  ", formatCurrency(record.amount));
         
-        fAmount = ((float) record.amount / FACTOR);
-        if (record.flag == WITHDRAWAL) fprintf(stdout, "| (%12.2f) |\n", fAmount);
-        else fprintf(stdout, "|  %12.2f  |\n", fAmount);
+        amount = formatCurrency(record.amount);
+        if (record.flag == WITHDRAWAL) fprintf(stdout, "| (%s) |\n", amount);
+        else fprintf(stdout, "|  %s  |\n", formatCurrency(record.amount));
 
         curr = My402ListNext(pList, curr);
+        // free(amount);
     }
     fprintf(stdout, "%s\n", border);
 
@@ -119,14 +124,19 @@ Flag getFlag(char* flag) {
 int getAmount(char* amount) {
 
     char* end;
+    // fprintf(stdout, "before conversion amount: %s\n", amount);
     double dAmount = strtod(amount, &end);
     if (amount == end) {
         // if conversion fails, address of amount gets stored at address of end
+        // fprintf(stdout, "failed on amount: %s\n", amount);
         ErrorType e = UnknownAmount;
         printError(e);
     }
 
     int iAmount = (int) (dAmount*  FACTOR);
+    // fprintf(stdout, "dAmount: %f\n", dAmount);
+    // fprintf(stdout, "dAmount: %f\n", (dAmount*  FACTOR));
+    // fprintf(stdout, "iAmount: %d\n", iAmount);
     if (iAmount >= MAX_AMOUNT) {
 
         ErrorType e = HighAmount;
@@ -202,6 +212,75 @@ char* formatDate(int rawDate) {
     buffer[DATE_LENGTH-1] = '\0';
     return buffer;
 
+}
+
+char* formatCurrency(int value) {
+
+    const int FIELD_WIDTH = 12;
+   
+    char* buffer = (char*) malloc((FIELD_WIDTH+1)*sizeof(char)); //TODO: free up the memory in printHistory
+    float fAmount = ((float) value / FACTOR);
+    sprintf(buffer, "%.2f", fAmount);
+    int newLength = insertComma(buffer);
+
+    int i, j = 0;
+    char c = ' ';
+    // right-justify
+    for (i = FIELD_WIDTH - 1; i >= 0; i--) {
+
+        if (j >= newLength) buffer[i] = c;
+        else {
+            buffer[i] = buffer[newLength - j - 1];
+            j++;
+        }
+    }
+
+
+
+    return buffer;
+
+}
+
+int insertComma(char* buffer) {
+
+    const int FIELD_WIDTH = 12;
+    const int FIRST_COMMA_POS = 6;
+    const int SECOND_COMMA_POS = 10;
+    int length;
+
+    for (length = 0; length < FIELD_WIDTH; length++) {
+
+        if (buffer[length] == '\0') break;
+    }
+
+    // char *temp = (char*) malloc((FIELD_WIDTH+1)*sizeof(char));
+    char temp[FIELD_WIDTH];
+    char c = ',';
+    memset(&temp, 0, (FIELD_WIDTH+1)*sizeof(char));
+    int n;
+    if (length > FIRST_COMMA_POS) {
+
+        n = length - FIRST_COMMA_POS;
+        strncpy(temp, buffer, n);
+        temp[n] = c;
+        strncpy(&temp[n+1], &buffer[n], FIRST_COMMA_POS);
+        strncpy(buffer, temp, FIELD_WIDTH);
+        length++;
+    }
+  
+    if (length  > SECOND_COMMA_POS) {
+        
+        n = length - SECOND_COMMA_POS;
+        strncpy(temp, buffer, n);
+        temp[n] = c;
+        strncpy(&temp[n+1], &buffer[n], SECOND_COMMA_POS);
+        strncpy(buffer, temp, FIELD_WIDTH);
+        length++;
+
+    }
+
+    return length;
+    // free(temp);
 
 
 }
@@ -316,6 +395,19 @@ int readInput(My402List* pList, char* path) {
 
 int main(int argc, char* argv[])
 {
+    // char* locale = "C";
+    // char* sep = ",";
+    // // setlocale(LC_ALL, locale);
+    // struct lconv *loc;
+    // loc = localeconv();
+    // printf("Thousands Separator: %s\n", loc->thousands_sep);
+    // char* result = setlocale (LC_NUMERIC, locale);
+    // fprintf(stdout, "result: %s\n", result);
+    // loc = localeconv();
+    // loc->thousands_sep = sep;
+    // fprintf(stdout, "Thousands Separator: %s\n", loc->thousands_sep);
+
+
     char* path = "tfile.txt";
     My402List list;
     memset(&list, 0, sizeof(My402List));
