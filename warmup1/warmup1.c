@@ -25,7 +25,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <sys/time.h>
+// #include <sys/time.h>
+#include <time.h>
 
 #include "cs402.h"
 #include "my402list.h"
@@ -67,6 +68,10 @@ void printError(ErrorType e) {
 
 void printHistory(My402List*  pList) {
 
+    // TODO: Format floats to display with commas as appropriate
+    // TODO: add ???.. for amount/balance exceeding 10mil
+    // TODO: date formatting
+
     My402ListElem* curr = pList->anchor.next;
     char* border = "+-----------------+--------------------------+----------------+----------------+";
     fprintf(stdout, "%s\n", border);
@@ -80,7 +85,7 @@ void printHistory(My402List*  pList) {
     while (curr != NULL) {
         Transaction record = *(Transaction* ) curr->obj;
 
-        fprintf(stdout, "| %s      ", record.date);
+        fprintf(stdout, "| %s ", record.date);
         fprintf(stdout, "| %s", record.desc);
 
         float fAmount = ((float) record.amount / FACTOR);
@@ -98,13 +103,7 @@ void printHistory(My402List*  pList) {
 
 }
 
-// char* formatAmount(int amount, Flag flag) {
 
-//     float fAmount = ((float) amount / FACTOR);
-//     char *cAmount = ()
-
-
-// }
 Flag getFlag(char* flag) {
 
     Flag tFlag;
@@ -183,6 +182,29 @@ char* getDesc(char* desc) {
     return abridged;
 }
 
+char* formatDate(int rawDate) {
+
+    const int DATE_LENGTH = 16;
+    char* delim = " ";
+    char* day, *month, *date, *year;
+    char* buffer = (char* ) malloc((DATE_LENGTH +1) *sizeof(char)); //TODO: malloc needs to be freed
+    time_t t = rawDate;
+    char* fTime = ctime(&t);
+
+    
+    day = strtok(fTime, delim);
+    month = strtok(NULL, delim);
+    date = strtok(NULL, delim);
+    (void)strtok(NULL, delim); // ignore the hour
+    year = strtok(NULL, delim);
+
+    sprintf(buffer, "%s %s %s %s", day, month, date, year);
+    buffer[DATE_LENGTH-1] = '\0';
+    return buffer;
+
+
+
+}
 Transaction getTransaction(char* flag, char* date, char* amount, char* desc) {
 
     char* tDate,* tDesc;
@@ -191,7 +213,7 @@ Transaction getTransaction(char* flag, char* date, char* amount, char* desc) {
 
     tFlag = getFlag(flag);
     tRawDate = getRawDate(date);
-    tDate = date; //formatDate(), no need to do error handling since getDate() succeeded
+    tDate = formatDate(tRawDate); // no need to do error handling since getDate() succeeded
     tDesc = getDesc(desc); //, check that it's not empty
    
     tAmount = getAmount(amount);
@@ -235,7 +257,7 @@ Transaction* copyTransaction(Transaction record) {
 void insertTransaction(My402List* pList, Transaction record) {
 
     //iterate through the list and insert the record in a sorted order
-    // if another record with the same timestamp exists, call printError to exit program
+    // if another record with the same timestamp exists, call printError to exit the program
    
     int result = My402ListAppend(pList, (void* ) copyTransaction(record));
     if (result == FALSE) {
@@ -248,8 +270,10 @@ void insertTransaction(My402List* pList, Transaction record) {
 }
 int validateFormat(char* flag, char* date, char* amount, char* desc) {
 
+    // TODO: validate input data
     return TRUE;
 }
+
 Transaction parseLine(char* line) {
 
     char* delim = "\t";
@@ -299,6 +323,11 @@ int main(int argc, char* argv[])
 
     readInput(&list, path);
     printHistory(&list);
+
+
+
+    // free all memory
+    // My402ListUnlinkAll(&list);
     
     return(0);
 }

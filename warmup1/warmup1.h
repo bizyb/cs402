@@ -72,5 +72,6 @@ extern Transaction parseLine(char*);
 extern Transaction* copyTransaction(Transaction record);
 extern void insertTransaction(My402List*, Transaction);
 extern void printHistory(My402List*);
-extern char* formatAmount(int, Flag);
+extern char* formatDate(int);
+// extern char* formatAmount(int, Flag);
 
