@@ -68,29 +68,38 @@ void printError(ErrorType e) {
 void printHistory(My402List*  pList) {
 
     My402ListElem* curr = pList->anchor.next;
-    char* border = "+-----------------+--------------------------+----------------+----------------+\n";
-
+    char* border = "+-----------------+--------------------------+----------------+----------------+";
     fprintf(stdout, "%s\n", border);
+    fprintf(stdout, "|       Date      ");
+    fprintf(stdout, "| Description              ");
+    fprintf(stdout, "|         Amount ");
+    fprintf(stdout, "|        Balance |\n");
+    fprintf(stdout, "%s\n", border);
+
+
     while (curr != NULL) {
         Transaction record = *(Transaction* ) curr->obj;
 
-        fprintf(stdout, "%s ", record.date);
-        fprintf(stdout, "%s ", record.desc);
+        fprintf(stdout, "| %s      ", record.date);
+        fprintf(stdout, "| %s|", record.desc);
+
+        char* amount = formatAmount(record.amount, record.flag);
         fprintf(stdout, "%d ", record.amount);
-        fprintf(stdout, "%d ", record.balance);
-        fprintf(stdout, "%d\n", record.dateRaw);
+
+        char* balance = formatAmount(record.amount, record.flag); //TODO: need to send recrod.balance once ready
+        fprintf(stdout, "%d ", blaance);
 
         curr = My402ListNext(pList, curr);
     }
     fprintf(stdout, "%s\n", border);
-    
-    
-    // char* dateCol = "|  Date"
-    // char* left = "| ";
-    // char* date = "%s"
 
 }
 
+char* formatAmount(int amount, Flag flag) {
+
+
+
+}
 Flag getFlag(char* flag) {
 
     Flag tFlag;
@@ -136,6 +145,39 @@ int getRawDate(char* date) {
 
     return iDate;
 }
+
+char* getDesc(char* desc) {
+
+    unsigned int length = strlen(desc);
+    const unsigned int DESC_LENGTH = 23;
+    const unsigned int CELL_LENGTH = 26;
+
+    // TODO: This will lead to some leakage so need to do something about it
+    char * abridged = (char *) malloc((DESC_LENGTH +1)*sizeof(char)); 
+
+    unsigned int i;
+
+    if (length < DESC_LENGTH) {
+        
+        for (i = 0; i < length; i++) {
+            abridged[i] = desc[i];
+        }
+        for (i = length; i < CELL_LENGTH; i++) {
+            abridged[i] = ' '; //pad it with spaces
+        }        
+    }
+    else {
+         for (i = 0; i < DESC_LENGTH; i++) {
+            abridged[i] = desc[i];
+        }
+        for (i = DESC_LENGTH; i < CELL_LENGTH ; i++) {
+            abridged[i] = ' '; //pad it with spaces
+        }
+    }
+    abridged[CELL_LENGTH-1] = '\0';
+    return abridged;
+}
+
 Transaction getTransaction(char* flag, char* date, char* amount, char* desc) {
 
     char* tDate,* tDesc;
@@ -145,7 +187,7 @@ Transaction getTransaction(char* flag, char* date, char* amount, char* desc) {
     tFlag = getFlag(flag);
     tRawDate = getRawDate(date);
     tDate = date; //formatDate(), no need to do error handling since getDate() succeeded
-    tDesc = desc; //getDesc(), check that it's not empty
+    tDesc = getDesc(desc); //, check that it's not empty
    
     tAmount = getAmount(amount);
 
