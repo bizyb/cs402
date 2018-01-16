@@ -81,13 +81,16 @@ void printHistory(My402List*  pList) {
         Transaction record = *(Transaction* ) curr->obj;
 
         fprintf(stdout, "| %s      ", record.date);
-        fprintf(stdout, "| %s|", record.desc);
+        fprintf(stdout, "| %s", record.desc);
 
-        char* amount = formatAmount(record.amount, record.flag);
-        fprintf(stdout, "%d ", record.amount);
+        float fAmount = ((float) record.amount / FACTOR);
+        if (record.flag == WITHDRAWAL) fprintf(stdout, "| (%12.2f) ", fAmount);
+        else fprintf(stdout, "|  %12.2f  ", fAmount);
 
-        char* balance = formatAmount(record.amount, record.flag); //TODO: need to send recrod.balance once ready
-        fprintf(stdout, "%d ", blaance);
+        
+        fAmount = ((float) record.amount / FACTOR);
+        if (record.flag == WITHDRAWAL) fprintf(stdout, "| (%12.2f) |\n", fAmount);
+        else fprintf(stdout, "|  %12.2f  |\n", fAmount);
 
         curr = My402ListNext(pList, curr);
     }
@@ -95,11 +98,13 @@ void printHistory(My402List*  pList) {
 
 }
 
-char* formatAmount(int amount, Flag flag) {
+// char* formatAmount(int amount, Flag flag) {
+
+//     float fAmount = ((float) amount / FACTOR);
+//     char *cAmount = ()
 
 
-
-}
+// }
 Flag getFlag(char* flag) {
 
     Flag tFlag;
