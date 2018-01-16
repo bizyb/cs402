@@ -30,12 +30,19 @@
 #include "cs402.h"
 
 #include "my402list.h"
+#include "warmup1.h" // remove after debugging
 
  
 int addToEmpty(My402List* pList, My402ListElem *elem) {
 
 	pList->anchor.prev = elem, pList->anchor.next = elem;
  	elem->prev = &pList->anchor, elem->next = &pList->anchor;
+
+
+ // 	Transaction record = *(Transaction *) elem->obj;
+	// fprintf(stdout, "%s ", record.date);
+	// fprintf(stdout, "%d\n", record.dateRaw);
+
  	pList->num_members++; 
  	return TRUE;
 
@@ -67,6 +74,16 @@ int addToEmpty(My402List* pList, My402ListElem *elem) {
  		pList->anchor.prev = elem; elem->next = &pList->anchor;
 
  	}
+
+
+ // 	Transaction record = *(Transaction *) elem->obj;
+	// fprintf(stdout, "%s ", record.date);
+	// fprintf(stdout, "%s ", record.desc);
+	// fprintf(stdout, "%d ", record.amount);
+	// fprintf(stdout, "%d ", record.balance);
+	// fprintf(stdout, "%d\n", record.dateRaw);
+
+
  	pList->num_members++;
  	return TRUE;
  }
@@ -195,4 +212,4 @@ int addToEmpty(My402List* pList, My402ListElem *elem) {
  	// if (pList->anchor != NULL) return FALSE;
  	return TRUE;
  }
- 
+
