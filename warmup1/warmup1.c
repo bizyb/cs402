@@ -26,16 +26,18 @@
 #include <string.h>
 #include <stdlib.h>
 // #include <sys/time.h>
-#include <time.h>
+#include <time.h> // TODO: remove this and uncomment sys/time.h
 
 #include "cs402.h"
 #include "my402list.h"
 #include "warmup1.h"
+#include <regex.h>
 
 
 
 // static char gszProgName[MAXPATHLENGTH];
-const int BUFFERSIZE = 1025;
+const int BUFFERSIZE = 1028;
+const int MAX_LINE = 1024;
 const double FACTOR = 100.00;
 const int MAX_AMOUNT = 1000000000; // $10,000,000.00
 const int MAX_DATE_LENGTH = 10;
@@ -47,14 +49,14 @@ const int BASE = 10;
 
 
 /* ----------------------- Utility Functions -----------------------*/
-void printError(ErrorType e) {
+void exitOnError(ErrorType e) {
 
     // TODO: do we have to handle line length?
     char* msg;
     switch(e) {
         case FileOpen: msg = "Failed to open file."; break;
         case LongLine: msg = "Line exceeds acceptable length."; break;
-        case MalformedLine: msg = "Unacceptable line formatting."; break;
+        case MalformedLine: msg = "Invalid line formatting."; break;
         case Duplicate: msg = "Found entries with duplicate timestamp."; break;
         case HighAmount: msg = "Amount exceeds allowed limit."; break;
         case HighBalance: msg = "Balance exceeds allowed limit."; break;
@@ -117,7 +119,7 @@ Flag getFlag(char* flag) {
     else if (*flag == '+') tFlag = DEPOSIT;
     else {
         ErrorType e = UnknownFlag;
-        printError(e);
+        exitOnError(e);
     }
     return tFlag;
 }
@@ -130,17 +132,14 @@ int getAmount(char* amount) {
         // if conversion fails, address of amount gets stored at address of end
         // fprintf(stdout, "failed on amount: %s\n", amount);
         ErrorType e = UnknownAmount;
-        printError(e);
+        exitOnError(e);
     }
 
     int iAmount = round(dAmount * FACTOR);
-    // fprintf(stdout, "dAmount: %f\n", dAmount);
-    // fprintf(stdout, "dAmount*  FACTOR: %f\n", dAmount*  FACTOR);
-    // fprintf(stdout, "iAmount = (int) (dAmount*  FACTOR): %d\n", iAmount);
     if (iAmount >= MAX_AMOUNT) {
 
         ErrorType e = HighAmount;
-        printError(e);
+        exitOnError(e);
     }
     return iAmount;
 
@@ -154,7 +153,7 @@ int getRawDate(char* date) {
     if (length > MAX_DATE_LENGTH || date == end) {
 
         ErrorType e = InvalidTimestamp;
-        printError(e);
+        exitOnError(e);
     }
 
     return iDate;
@@ -218,18 +217,11 @@ char* formatCurrency(int value) {
 
     const int FIELD_WIDTH = 12;
    
-    char* buffer = (char*) malloc((FIELD_WIDTH+1)*sizeof(char)); //TODO: free up the memory in printHistory
+   //TODO: free up the memory in printHistory
+    char* buffer = (char*) malloc((FIELD_WIDTH+1)*sizeof(char)); 
     double fAmount = (value / FACTOR);
-    // fprintf(stdout, "fAmount first: %f\n", fAmount);
     sprintf(buffer, "%.2f", fAmount);
     int newLength = insertComma(buffer);
-
-    // fprintf(stdout, "--------------------------------------\n");
-    // fprintf(stdout, "value: %d\n", value);
-    // fprintf(stdout, "value / (float)FACTOR: %f\n", value / (float)FACTOR);
-    //  fprintf(stdout, "fAmount second: %f\n", fAmount);
-    // fprintf(stdout, "buffer: %s\n", buffer);
-    // fprintf(stdout, "--------------------------------------\n");
 
     int i, j = 0;
     char c = ' ';
@@ -242,8 +234,6 @@ char* formatCurrency(int value) {
             j++;
         }
     }
-
-
 
     return buffer;
 
@@ -308,7 +298,6 @@ Transaction getTransaction(char* flag, char* date, char* amount, char* desc) {
     tBalance = 0; //for now; will be computed after sorting; when iterating through the sorted list, 
     //keep local max abs(balance). Handle >=10mil accordingly 
 
-    // fprintf(stdout, "in transaction: %s\n", tDesc);
     Transaction record = {tDate, tDesc, tAmount, tBalance, tRawDate, tFlag};
     return record;
 }
@@ -335,7 +324,7 @@ Transaction* copyTransaction(Transaction record) {
 
     // if (recPtr == NULL) {
     //     ErrorType e = Malloc;
-    //     printError(e);
+    //     exitOnError(e);
     // }
     return recPtr;
 
@@ -344,37 +333,98 @@ Transaction* copyTransaction(Transaction record) {
 void insertTransaction(My402List* pList, Transaction record) {
 
     //iterate through the list and insert the record in a sorted order
-    // if another record with the same timestamp exists, call printError to exit the program
+    // if another record with the same timestamp exists, call exitOnError to exit the program
    
     int result = My402ListAppend(pList, (void* ) copyTransaction(record));
     if (result == FALSE) {
 
         ErrorType e = ListInsertion;
-        printError(e);
+        exitOnError(e);
     }
     
     
 }
-int validateFormat(char* flag, char* date, char* amount, char* desc) {
+// int validateFormat(char* flag, char* date, char* amount, char* desc) {
 
-    // TODO: validate input data
-    return TRUE;
+//     return ;
+//     return TRUE;
+// }
+// bool isValidFlag(char* flag) {
+
+//     // redundant flag validation
+
+//     return (flag == '-' || flag == '+');
+// }
+
+// bool isValidDate(char* date) {
+
+//     /// date validation is somewhat redundant; validation of the numerical 
+//     // value is handled in getRawDate()
+
+//     return strlen(date) <= MAX_DATE_LENGTH; 
+// }
+
+// bool isValidAmount(char* amount) {
+
+//     // ensure that amount has the format x.yz, where there can be 1 to 7 numbers on the left
+//     // side of the period and exactly two on the right
+//     // a less cryptic regex: \d{1,7}\.\d{2}\0  <-- not that the last character is a null character
+//     // because it's appended by strtock(). Otherwsie, it would have been \t if we hadn't tokenized
+//     //  
+
+// // -|\+\t\d{10}\t\d{1,7}\.\d{2}\t\w+
+//     // \+(\t\d{10}\t\d{1,7}\.\d{2}\t\w+)|-(\t\d{10}\t\d{1,7}\.\d{2}\t\w+)
+
+//     // (-|\+)(\t\d{10}\t\d{1,7}\.\d{2}\t\w+) validate formatting
+//     // line formatting: just iterate to line break or \0 and compare to max char length
+// }
+// bool isValidDesc(char* desc) {
+
+//     return strlen(desc) > 0;
+// }
+void validateLine(char* line) {
+
+    //match formatting
+    regex_t patternBuffer;
+    char* pattern = "(\\+|\\-)(\t([0-9]{1,10})\t([0-9]{1,7}\\.[0-9]{2})\t\\w+)";
+    int formatFail = regcomp(&patternBuffer, pattern, REG_EXTENDED);
+    formatFail = regexec(&patternBuffer, line, 0, NULL, 0);
+
+    //verify line width
+    int i;
+    for(i = 0; i < BUFFERSIZE; i++) {
+
+        if (line[i] == '\n' || line[i] == '\0') break;
+    }
+    
+    if (formatFail) {
+
+        ErrorType e = MalformedLine;
+        exitOnError(e);
+    }
+    if (i > MAX_LINE) {
+
+        ErrorType e = LongLine;
+        exitOnError(e);
+    }
+
+
+    // fprintf(stdout, "pattern match result: %d\n", formatFail);
 }
 
 Transaction parseLine(char* line) {
 
     char* delim = "\t";
     char* flag,* date,* amount,* desc;
+
+    validateLine(line);
+
+
     flag = strtok(line, delim);
     date = strtok(NULL, delim);
     amount = strtok(NULL, delim);
     desc = strtok(NULL, delim);
 
-
-    if (!validateFormat(flag, date, amount, desc)) {
-        ErrorType e = MalformedLine;
-        printError(e);
-    }
     if (desc[strlen(desc)-1] == '\n')  desc[strlen(desc)-1] = '\0';
 
     return getTransaction(flag, date, amount, desc);
@@ -388,7 +438,7 @@ int readInput(My402List* pList, char* path) {
     file = fopen(path, "r");
     if (file == NULL) {
         ErrorType e = FileOpen;
-        printError(e);
+        exitOnError(e);
     }
     while (fgets(buffer, BUFFERSIZE,  file) != NULL) {
         Transaction record = parseLine((char* ) &buffer);

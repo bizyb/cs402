@@ -65,7 +65,7 @@ extern int readInput(My402List*, char*);
 extern Flag getFlag(char*);
 extern int getAmount(char*);
 extern int getRawDate(char*);
-extern void printError(ErrorType);
+extern void exitOnError(ErrorType);
 extern Transaction getTransaction(char*, char*, char*, char*);
 extern int validateFormat(char*, char*, char*, char*);
 extern Transaction parseLine(char*);
@@ -76,3 +76,4 @@ extern char* formatDate(int);
 extern char* formatCurrency(int);
 extern int insertComma(char*);
 
+extern void validateLine(char* );
