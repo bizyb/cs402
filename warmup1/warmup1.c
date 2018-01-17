@@ -64,7 +64,10 @@ void exitOnError(ErrorType e) {
         case UnknownAmount: msg = "Unable to parse amount."; break;
         case InvalidTimestamp: msg = "Invalid timestamp."; break;
         case Malloc: msg = "Failed to allocate memory"; break;
-        case ListInsertion: msg = "Failed to add transaction record into list.";
+        case ListInsertion: msg = "Failed to add transaction record into list."; break;
+        case TooManyArgs: msg = "Too many command line arguments."; break;
+        case TooFewArgs: msg = "Not enough command line arguments."; break;
+        case UnknownCmd: msg = "Unknown command. Did you mean to say 'sort'?"; break;
         default: msg = "Unknown error";
     }
 
@@ -75,7 +78,7 @@ void exitOnError(ErrorType e) {
 
 void printHistory(My402List*  pList) {
 
-    // TODO: Format floats to display with commas as appropriate
+    
     // TODO: add ???.. for amount/balance exceeding 10mil
     // TODO: date formatting
 
@@ -166,7 +169,7 @@ char* getDesc(char* desc) {
     const unsigned int CELL_LENGTH = 26;
 
     // TODO: This will lead to some leakage so need to do something about it
-    char * abridged = (char *) malloc((DESC_LENGTH +1)*sizeof(char)); 
+    char * abridged = (char *) calloc(1, (DESC_LENGTH +1)*sizeof(char)); 
 
     unsigned int i;
 
@@ -196,7 +199,7 @@ char* formatDate(int rawDate) {
     const int DATE_LENGTH = 16;
     char* delim = " ";
     char* day, *month, *date, *year;
-    char* buffer = (char* ) malloc((DATE_LENGTH +1) *sizeof(char)); //TODO: malloc needs to be freed
+    char* buffer = (char* ) calloc(1, (DATE_LENGTH +1) *sizeof(char)); //TODO: malloc needs to be freed
     time_t t = rawDate;
     char* fTime = ctime(&t);
 
@@ -218,7 +221,7 @@ char* formatCurrency(int value) {
     const int FIELD_WIDTH = 12;
    
    //TODO: free up the memory in printHistory
-    char* buffer = (char*) malloc((FIELD_WIDTH+1)*sizeof(char)); 
+    char* buffer = (char*) calloc(1, (FIELD_WIDTH+1)*sizeof(char));
     double fAmount = (value / FACTOR);
     sprintf(buffer, "%.2f", fAmount);
     int newLength = insertComma(buffer);
@@ -234,7 +237,7 @@ char* formatCurrency(int value) {
             j++;
         }
     }
-
+    // fprintf(stdout, "amount: %d\n", tAmount);
     return buffer;
 
 }
@@ -251,10 +254,8 @@ int insertComma(char* buffer) {
         if (buffer[length] == '\0') break;
     }
 
-    // char *temp = (char*) malloc((FIELD_WIDTH+1)*sizeof(char));
-    char temp[FIELD_WIDTH];
+    char *temp = (char*) calloc(1, (FIELD_WIDTH+1)*sizeof(char));
     char c = ',';
-    memset(&temp, 0, (FIELD_WIDTH+1)*sizeof(char));
     int n;
     if (length > FIRST_COMMA_POS) {
 
@@ -278,7 +279,7 @@ int insertComma(char* buffer) {
     }
 
     return length;
-    // free(temp);
+    // free(temp); TODO: free temp
 
 
 }
@@ -295,6 +296,7 @@ Transaction getTransaction(char* flag, char* date, char* amount, char* desc) {
    
     tAmount = getAmount(amount);
 
+
     tBalance = 0; //for now; will be computed after sorting; when iterating through the sorted list, 
     //keep local max abs(balance). Handle >=10mil accordingly 
 
@@ -305,14 +307,15 @@ Transaction getTransaction(char* flag, char* date, char* amount, char* desc) {
 Transaction* copyTransaction(Transaction record) {
 
     // TODO: check all malloc and memcpy return values
+    //TODO: calloc these instead of malloc so we cann
 
-    Transaction* recPtr = (Transaction* ) malloc(sizeof(Transaction));
-    recPtr->date = (char* ) malloc(sizeof(char));
-    recPtr->desc = (char* ) malloc(sizeof(char));
-    recPtr->amount = *(int* ) malloc(sizeof(int));
-    recPtr->balance = *(int* ) malloc(sizeof(int));
-    recPtr->dateRaw = *(int* ) malloc(sizeof(int));
-    recPtr->flag = *(Flag* ) malloc(sizeof(Flag));
+    Transaction* recPtr = (Transaction* ) calloc(1, sizeof(Transaction));
+    recPtr->date = (char* ) calloc(1, sizeof(char));
+    recPtr->desc = (char* ) calloc(1, sizeof(char));
+    recPtr->amount = *(int* ) calloc(1, sizeof(int));
+    recPtr->balance = *(int* ) calloc(1, sizeof(int));
+    recPtr->dateRaw = *(int* ) calloc(1, sizeof(int));
+    recPtr->flag = *(Flag* ) calloc(1, sizeof(Flag));
 
     (void)memcpy((void* ) recPtr->date, (void* ) record.date, (strlen(record.date)+1)*sizeof(char));
     (void)memcpy((void* ) recPtr->desc, (void* ) record.desc, (strlen(record.desc)+1)*sizeof(char));
@@ -344,44 +347,7 @@ void insertTransaction(My402List* pList, Transaction record) {
     
     
 }
-// int validateFormat(char* flag, char* date, char* amount, char* desc) {
 
-//     return ;
-//     return TRUE;
-// }
-// bool isValidFlag(char* flag) {
-
-//     // redundant flag validation
-
-//     return (flag == '-' || flag == '+');
-// }
-
-// bool isValidDate(char* date) {
-
-//     /// date validation is somewhat redundant; validation of the numerical 
-//     // value is handled in getRawDate()
-
-//     return strlen(date) <= MAX_DATE_LENGTH; 
-// }
-
-// bool isValidAmount(char* amount) {
-
-//     // ensure that amount has the format x.yz, where there can be 1 to 7 numbers on the left
-//     // side of the period and exactly two on the right
-//     // a less cryptic regex: \d{1,7}\.\d{2}\0  <-- not that the last character is a null character
-//     // because it's appended by strtock(). Otherwsie, it would have been \t if we hadn't tokenized
-//     //  
-
-// // -|\+\t\d{10}\t\d{1,7}\.\d{2}\t\w+
-//     // \+(\t\d{10}\t\d{1,7}\.\d{2}\t\w+)|-(\t\d{10}\t\d{1,7}\.\d{2}\t\w+)
-
-//     // (-|\+)(\t\d{10}\t\d{1,7}\.\d{2}\t\w+) validate formatting
-//     // line formatting: just iterate to line break or \0 and compare to max char length
-// }
-// bool isValidDesc(char* desc) {
-
-//     return strlen(desc) > 0;
-// }
 void validateLine(char* line) {
 
     //match formatting
@@ -430,37 +396,72 @@ Transaction parseLine(char* line) {
     return getTransaction(flag, date, amount, desc);
 }
 
-int readInput(My402List* pList, char* path) {
+int readInput(My402List* pList, char* fileName, FILE* inStream) {
 
     char buffer [BUFFERSIZE];
     FILE* file;
 
-    file = fopen(path, "r");
-    if (file == NULL) {
-        ErrorType e = FileOpen;
-        exitOnError(e);
-    }
-    while (fgets(buffer, BUFFERSIZE,  file) != NULL) {
-        Transaction record = parseLine((char* ) &buffer);
-        insertTransaction(pList, record);
-    }
+    if (fileName != NULL) {
 
+        file = fopen(fileName, "r");
+        if (file == NULL) {
+            ErrorType e = FileOpen;
+            exitOnError(e);
+        }
+    }
+    else file = inStream;
+
+    
+    while (fgets(buffer, BUFFERSIZE,  file) != NULL) {
+        if (buffer[0] != '\n') {
+            Transaction record = parseLine((char* ) &buffer);
+            insertTransaction(pList, record);
+        }
+        
+    }
+    // fclose() //TODO: close if fileName is given; what would happen if 
+    // fclose called on stdin? can use the same api for both?
     return TRUE;
 
 }
 
+void processArgs(int argc, char *argv[], char** fileNamePtr, FILE** inStreamPtr) {
+
+    const int MAX_ARG_COUNT = 3;
+
+    char* command = "sort";
+    if (argc > MAX_ARG_COUNT) exitOnError(TooManyArgs);
+    else if (argc == MAX_ARG_COUNT) {
+
+        if (strcmp(command, argv[1]) != 0) exitOnError(UnknownCmd);
+        *fileNamePtr = argv[MAX_ARG_COUNT-1];
+     
+    }
+    else if (argc == MAX_ARG_COUNT - 1) {
+
+        if (strcmp(command, argv[1]) != 0) exitOnError(UnknownCmd);
+        *inStreamPtr = stdin;
+    }
+
+    else exitOnError(TooFewArgs); 
+    // fprintf(stdout, "stream 1: %s\n", *fileName);
+
+    
+}
 /* ----------------------- main() -----------------------*/
 
 int main(int argc, char* argv[])
 {
-    
-    char* path = "tfile.txt";
+    char* fileName = NULL;
+    FILE* inStream = NULL;
     My402List list;
+
+    processArgs(argc, argv, &fileName, &inStream);
     memset(&list, 0, sizeof(My402List));
     (void)My402ListInit(&list);
-
-    readInput(&list, path);
-    printHistory(&list);
+    readInput(&list, fileName, inStream);
+    if (list.num_members) printHistory(&list);
+    
 
 
 

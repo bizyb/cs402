@@ -37,7 +37,11 @@ typedef enum {
 	UnknownAmount,
 	InvalidTimestamp,
 	Malloc,
-	ListInsertion
+	ListInsertion,
+	TooManyArgs,
+	UnknownCmd,
+	TooFewArgs
+
 } ErrorType;
 
 typedef enum {
@@ -60,8 +64,9 @@ typedef struct TransactionRecord {
 
 
 #endif /*_WARMUP1_H*/
-
-extern int readInput(My402List*, char*);
+/*
+*/
+extern int readInput(My402List*, char*, FILE*);
 extern Flag getFlag(char*);
 extern int getAmount(char*);
 extern int getRawDate(char*);
@@ -72,8 +77,30 @@ extern Transaction parseLine(char*);
 extern Transaction* copyTransaction(Transaction record);
 extern void insertTransaction(My402List*, Transaction);
 extern void printHistory(My402List*);
+
+
 extern char* formatDate(int);
+
+/*
+	Format a currency value by defining its width and justifying the final value
+	to the right. Return the formatted value as a string. 
+*/
 extern char* formatCurrency(int);
+
+/*
+	Insert a thousands separator into currency values about to be printed to
+	stdout. If insertion is successfull, return TRUE. Return FALSE otherwsie. 
+*/
 extern int insertComma(char*);
 
+/*
+	Perform input line validation using regex pattern matching. Perform additional 
+	validation on line length. If either one of the validation fails, print the 
+	appropriate error message and exit the program. NB: Line validation is a more 
+	holistic validation form. While it's unlikely that valid lines would escape 
+	matching, redundant validations are still performed on the individual tokens
+	in their corresponding functions.
+*/
 extern void validateLine(char* );
+
+extern void processArgs(int, char* [], char**, FILE**);
