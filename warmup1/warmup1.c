@@ -27,11 +27,11 @@
 #include <stdlib.h>
 // #include <sys/time.h>
 #include <time.h>
-// #include <locale.h>
 
 #include "cs402.h"
 #include "my402list.h"
 #include "warmup1.h"
+
 
 
 // static char gszProgName[MAXPATHLENGTH];
@@ -133,10 +133,10 @@ int getAmount(char* amount) {
         printError(e);
     }
 
-    int iAmount = (int) (dAmount*  FACTOR);
+    int iAmount = round(dAmount * FACTOR);
     // fprintf(stdout, "dAmount: %f\n", dAmount);
-    // fprintf(stdout, "dAmount: %f\n", (dAmount*  FACTOR));
-    // fprintf(stdout, "iAmount: %d\n", iAmount);
+    // fprintf(stdout, "dAmount*  FACTOR: %f\n", dAmount*  FACTOR);
+    // fprintf(stdout, "iAmount = (int) (dAmount*  FACTOR): %d\n", iAmount);
     if (iAmount >= MAX_AMOUNT) {
 
         ErrorType e = HighAmount;
@@ -219,9 +219,17 @@ char* formatCurrency(int value) {
     const int FIELD_WIDTH = 12;
    
     char* buffer = (char*) malloc((FIELD_WIDTH+1)*sizeof(char)); //TODO: free up the memory in printHistory
-    float fAmount = ((float) value / FACTOR);
+    double fAmount = (value / FACTOR);
+    // fprintf(stdout, "fAmount first: %f\n", fAmount);
     sprintf(buffer, "%.2f", fAmount);
     int newLength = insertComma(buffer);
+
+    // fprintf(stdout, "--------------------------------------\n");
+    // fprintf(stdout, "value: %d\n", value);
+    // fprintf(stdout, "value / (float)FACTOR: %f\n", value / (float)FACTOR);
+    //  fprintf(stdout, "fAmount second: %f\n", fAmount);
+    // fprintf(stdout, "buffer: %s\n", buffer);
+    // fprintf(stdout, "--------------------------------------\n");
 
     int i, j = 0;
     char c = ' ';
@@ -395,19 +403,7 @@ int readInput(My402List* pList, char* path) {
 
 int main(int argc, char* argv[])
 {
-    // char* locale = "C";
-    // char* sep = ",";
-    // // setlocale(LC_ALL, locale);
-    // struct lconv *loc;
-    // loc = localeconv();
-    // printf("Thousands Separator: %s\n", loc->thousands_sep);
-    // char* result = setlocale (LC_NUMERIC, locale);
-    // fprintf(stdout, "result: %s\n", result);
-    // loc = localeconv();
-    // loc->thousands_sep = sep;
-    // fprintf(stdout, "Thousands Separator: %s\n", loc->thousands_sep);
-
-
+    
     char* path = "tfile.txt";
     My402List list;
     memset(&list, 0, sizeof(My402List));
