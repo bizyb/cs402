@@ -44,10 +44,6 @@ const int MAX_DATE_LENGTH = 10;
 const int BASE = 10;
 
 
-
-
-
-
 /* ----------------------- Utility Functions -----------------------*/
 void exitOnError(ErrorType e) {
 
@@ -95,16 +91,16 @@ void printHistory(My402List*  pList) {
     while (curr != NULL) {
         Transaction record = *(Transaction* ) curr->obj;
 
-        fprintf(stdout, "| %s ", record.date);
-        fprintf(stdout, "| %s", record.desc);
+        fprintf(stdout, "| %s ", cleanString(record.date));
+        fprintf(stdout, "| %s", cleanString(record.desc));
 
-        char* amount = formatCurrency(record.amount);
+        char* amount = cleanString(formatCurrency(record.amount));
         if (record.flag == WITHDRAWAL) fprintf(stdout, "| (%s) ", amount);
         else fprintf(stdout, "|  %s  ", formatCurrency(record.amount));
         
-        amount = formatCurrency(record.amount);
-        if (record.flag == WITHDRAWAL) fprintf(stdout, "| (%s) |\n", amount);
-        else fprintf(stdout, "|  %s  |\n", formatCurrency(record.amount));
+        char* balance = cleanString(formatCurrency(record.balance));
+        if (record.flag == WITHDRAWAL) fprintf(stdout, "| (%s) |\n", balance);
+        else fprintf(stdout, "|  %s  |\n", formatCurrency(record.balance));
 
         curr = My402ListNext(pList, curr);
         // free(amount);
@@ -113,6 +109,16 @@ void printHistory(My402List*  pList) {
 
 }
 
+char* cleanString(char* dirtyString) {
+
+    unsigned int i;
+    for (i = 0; i < strlen(dirtyString); i++) {
+
+        if (dirtyString[i] == '\n') dirtyString[i] = ' ';
+
+    }
+    return dirtyString;
+}
 
 Flag getFlag(char* flag) {
 
@@ -129,7 +135,6 @@ Flag getFlag(char* flag) {
 int getAmount(char* amount) {
 
     char* end;
-    // fprintf(stdout, "before conversion amount: %s\n", amount);
     double dAmount = strtod(amount, &end);
     if (amount == end) {
         // if conversion fails, address of amount gets stored at address of end
@@ -210,8 +215,10 @@ char* formatDate(int rawDate) {
     (void)strtok(NULL, delim); // ignore the hour
     year = strtok(NULL, delim);
 
+
     sprintf(buffer, "%s %s %s %s", day, month, date, year);
     buffer[DATE_LENGTH-1] = '\0';
+   
     return buffer;
 
 }
@@ -237,7 +244,7 @@ char* formatCurrency(int value) {
             j++;
         }
     }
-    // fprintf(stdout, "amount: %d\n", tAmount);
+    
     return buffer;
 
 }
@@ -360,22 +367,20 @@ void validateLine(char* line) {
     int i;
     for(i = 0; i < BUFFERSIZE; i++) {
 
-        if (line[i] == '\n' || line[i] == '\0') break;
+        if (line[i] == '\n') break;
     }
-    
+
     if (formatFail) {
 
         ErrorType e = MalformedLine;
         exitOnError(e);
     }
-    if (i > MAX_LINE) {
+    if (i + 1 > MAX_LINE) {
 
         ErrorType e = LongLine;
         exitOnError(e);
     }
 
-
-    // fprintf(stdout, "pattern match result: %d\n", formatFail);
 }
 
 Transaction parseLine(char* line) {
@@ -384,6 +389,7 @@ Transaction parseLine(char* line) {
     char* flag,* date,* amount,* desc;
 
     validateLine(line);
+    
 
 
     flag = strtok(line, delim);
@@ -444,7 +450,6 @@ void processArgs(int argc, char *argv[], char** fileNamePtr, FILE** inStreamPtr)
     }
 
     else exitOnError(TooFewArgs); 
-    // fprintf(stdout, "stream 1: %s\n", *fileName);
 
     
 }

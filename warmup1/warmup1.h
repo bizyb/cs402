@@ -104,3 +104,5 @@ extern int insertComma(char*);
 extern void validateLine(char* );
 
 extern void processArgs(int, char* [], char**, FILE**);
+
+extern char* cleanString(char*);
