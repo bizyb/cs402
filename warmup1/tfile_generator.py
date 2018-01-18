@@ -2,7 +2,7 @@
 import random
 import copy
 '''
-output file format:
+output file format (matching regex: (\-|\+)(\t\d{1,10}\t\d{1,7}\.\d{2}\t\w+))
 
 -	1230728833	45.33	Phone bill
 -	1263142433	654.32	Beemer monthly payment
@@ -11,8 +11,9 @@ output file format:
 
 
 '''
-NUM_TRANSACTIONS = 1000
+NUM_TRANSACTIONS = 2
 MAX_LINE_LENGTH = 200
+dates = {}
 
 def getFile():
 
@@ -27,6 +28,7 @@ def getFile():
 	for sentence in raw_text:
 
 		sentence.replace('\t', ' ').replace('\n', ' ')
+		sentence[0].replace(" ","")
 		clean_text.extend(sentence.split("."))
 
 	return clean_text
@@ -38,11 +40,17 @@ def getFlag():
 
 def getDate():
 	
-	return random.randint(0, 9999999999)
+	# avoid duplicate timestamp
+	while True:
+		d = random.randint(0, 9999999999)
+		if not dates.get(d):
+			dates[d] = d
+			return d
+		
 
 def getAmount():
 	
-	return "{:10.2f}".format(random.uniform(0, 9999999))
+	return "{:.2f}".format(random.uniform(0, 9999999))
 
 
 def getDesc(text):
@@ -51,6 +59,8 @@ def getDesc(text):
 
 		t = random.choice(text)
 		if len(t) > 1:
+			# Ignore leading space
+			t = " ".join([c for c in t.split() if c])
 			# return a description at least one character or longer
 			return t
 
