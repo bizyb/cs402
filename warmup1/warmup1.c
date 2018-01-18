@@ -8,7 +8,6 @@
 #include <string.h>
 #include <stdlib.h>
 // #include <sys/time.h>
-#include <time.h> // TODO: remove this and uncomment sys/time.h
 
 #include "cs402.h"
 #include "my402list.h"
@@ -48,7 +47,7 @@ void exitOnError(ErrorType e) {
         default: msg = "Unknown error";
     }
 
-    fprintf(stderr, "%s Exting program...\n", msg);
+    fprintf(stderr, "%s Exiting program...\n", msg);
     exit(1);
 
 }
@@ -379,7 +378,7 @@ void validateLine(char* line) {
     //verify formatting
     regex_t patternBuffer;
     int formatFail;
-    char* pattern = "(\\+|\\-)(\t([0-9]{1,10})\t([0-9]{1,7}\\.[0-9]{2})\t\\w+)";
+    char* pattern = "(\\+|\\-)(\t([0-9]{1,10})\t([0-9]{1,7}\\.[0-9]{2})\t[A-Za-z0-9_]+)";
 
     formatFail  = regcomp(&patternBuffer, pattern, REG_EXTENDED);
     formatFail = regexec(&patternBuffer, line, 0, NULL, 0);
