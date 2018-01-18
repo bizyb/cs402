@@ -52,8 +52,8 @@ typedef enum {
 
 typedef struct TransactionRecord {
 
-	char*date;
-	char*desc;
+	char* date;
+	char* desc;
 	int amount;
 	int balance;
 	int dateRaw;
@@ -74,7 +74,7 @@ extern void exitOnError(ErrorType);
 extern Transaction getTransaction(char*, char*, char*, char*);
 extern int validateFormat(char*, char*, char*, char*);
 extern Transaction parseLine(char*);
-extern Transaction* copyTransaction(Transaction record);
+extern Transaction* copyTransaction(Transaction, Transaction*);
 extern void insertTransaction(My402List*, Transaction);
 extern void printHistory(My402List*);
 
@@ -106,3 +106,5 @@ extern void validateLine(char* );
 extern void processArgs(int, char* [], char**, FILE**);
 
 extern char* cleanString(char*);
+
+extern void freeMemory(My402List*, My402ListElem*);

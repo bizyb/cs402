@@ -72,6 +72,18 @@ void exitOnError(ErrorType e) {
 
 }
 
+void freeMemory(My402List* pList, My402ListElem* elem) {
+    
+    Transaction* recPtr = (Transaction*) elem->obj;
+    free(recPtr->date);
+    free(recPtr->desc);
+    free(recPtr);
+    My402ListUnlink(pList, elem);
+    
+
+
+}
+
 void printHistory(My402List*  pList) {
 
     
@@ -79,6 +91,7 @@ void printHistory(My402List*  pList) {
     // TODO: date formatting
 
     My402ListElem* curr = pList->anchor.next;
+    My402ListElem* prev = NULL;
     char* border = "+-----------------+--------------------------+----------------+----------------+";
     fprintf(stdout, "%s\n", border);
     fprintf(stdout, "|       Date      ");
@@ -96,16 +109,22 @@ void printHistory(My402List*  pList) {
 
         char* amount = cleanString(formatCurrency(record.amount));
         if (record.flag == WITHDRAWAL) fprintf(stdout, "| (%s) ", amount);
-        else fprintf(stdout, "|  %s  ", formatCurrency(record.amount));
+        else fprintf(stdout, "|  %s  ", amount);
         
         char* balance = cleanString(formatCurrency(record.balance));
         if (record.flag == WITHDRAWAL) fprintf(stdout, "| (%s) |\n", balance);
-        else fprintf(stdout, "|  %s  |\n", formatCurrency(record.balance));
+        else fprintf(stdout, "|  %s  |\n", balance);
 
+        prev = curr;
         curr = My402ListNext(pList, curr);
-        // free(amount);
+
+        freeMemory(pList, prev);
+        // My402ListUnlink(pList, prev);
+        free(amount);
+        free(balance);
     }
     fprintf(stdout, "%s\n", border);
+    My402ListUnlinkAll(pList);
 
 }
 
@@ -174,7 +193,7 @@ char* getDesc(char* desc) {
     const unsigned int CELL_LENGTH = 26;
 
     // TODO: This will lead to some leakage so need to do something about it
-    char * abridged = (char *) calloc(1, (DESC_LENGTH +1)*sizeof(char)); 
+    char * abridged = (char *) calloc(CELL_LENGTH +1, sizeof(char)); 
 
     unsigned int i;
 
@@ -204,7 +223,7 @@ char* formatDate(int rawDate) {
     const int DATE_LENGTH = 16;
     char* delim = " ";
     char* day, *month, *date, *year;
-    char* buffer = (char* ) calloc(1, (DATE_LENGTH +1) *sizeof(char)); //TODO: malloc needs to be freed
+    char* buffer = (char* ) calloc(DATE_LENGTH +1, sizeof(char)); //TODO: malloc needs to be freed
     time_t t = rawDate;
     char* fTime = ctime(&t);
 
@@ -228,7 +247,7 @@ char* formatCurrency(int value) {
     const int FIELD_WIDTH = 12;
    
    //TODO: free up the memory in printHistory
-    char* buffer = (char*) calloc(1, (FIELD_WIDTH+1)*sizeof(char));
+    char* buffer = (char*) calloc(FIELD_WIDTH + 1, sizeof(char));
     double fAmount = (value / FACTOR);
     sprintf(buffer, "%.2f", fAmount);
     int newLength = insertComma(buffer);
@@ -261,7 +280,7 @@ int insertComma(char* buffer) {
         if (buffer[length] == '\0') break;
     }
 
-    char *temp = (char*) calloc(1, (FIELD_WIDTH+1)*sizeof(char));
+    char *temp = (char*) calloc(FIELD_WIDTH + 1, sizeof(char));
     char c = ',';
     int n;
     if (length > FIRST_COMMA_POS) {
@@ -284,9 +303,8 @@ int insertComma(char* buffer) {
         length++;
 
     }
-
+    free(temp);
     return length;
-    // free(temp); TODO: free temp
 
 
 }
@@ -311,27 +329,22 @@ Transaction getTransaction(char* flag, char* date, char* amount, char* desc) {
     return record;
 }
 
-Transaction* copyTransaction(Transaction record) {
+Transaction* copyTransaction(Transaction record, Transaction* recPtr) {
 
     // TODO: check all malloc and memcpy return values
-    //TODO: calloc these instead of malloc so we cann
-
-    Transaction* recPtr = (Transaction* ) calloc(1, sizeof(Transaction));
-    recPtr->date = (char* ) calloc(1, sizeof(char));
-    recPtr->desc = (char* ) calloc(1, sizeof(char));
-    recPtr->amount = *(int* ) calloc(1, sizeof(int));
-    recPtr->balance = *(int* ) calloc(1, sizeof(int));
-    recPtr->dateRaw = *(int* ) calloc(1, sizeof(int));
-    recPtr->flag = *(Flag* ) calloc(1, sizeof(Flag));
-
+    
+    recPtr->date = (char* ) calloc(strlen(record.date) + 1, sizeof(char));
+    recPtr->desc = (char* ) calloc(strlen(record.desc) + 1, sizeof(char));
+   
     (void)memcpy((void* ) recPtr->date, (void* ) record.date, (strlen(record.date)+1)*sizeof(char));
     (void)memcpy((void* ) recPtr->desc, (void* ) record.desc, (strlen(record.desc)+1)*sizeof(char));
-    (void)memcpy((void* ) &recPtr->amount, (void* ) &record.amount, sizeof(int)+1);
-    (void)memcpy((void* ) &recPtr->balance, (void* ) &record.balance, sizeof(int)+1);
-    (void)memcpy((void* ) &recPtr->dateRaw, (void* ) &record.dateRaw, sizeof(int)+1);
-    (void)memcpy((void* ) &recPtr->flag, (void* ) &record.flag, sizeof(Flag)+1);
+    (void)memcpy((void* ) &recPtr->amount, (void* ) &record.amount, sizeof(int));
+    (void)memcpy((void* ) &recPtr->balance, (void* ) &record.balance, sizeof(int));
+    (void)memcpy((void* ) &recPtr->dateRaw, (void* ) &record.dateRaw, sizeof(int));
+    (void)memcpy((void* ) &recPtr->flag, (void* ) &record.flag, sizeof(Flag));
     
-
+    free(record.date);
+    free(record.desc);
     // if (recPtr == NULL) {
     //     ErrorType e = Malloc;
     //     exitOnError(e);
@@ -345,13 +358,14 @@ void insertTransaction(My402List* pList, Transaction record) {
     //iterate through the list and insert the record in a sorted order
     // if another record with the same timestamp exists, call exitOnError to exit the program
    
-    int result = My402ListAppend(pList, (void* ) copyTransaction(record));
+    Transaction* recPtr = (Transaction* ) calloc(1, sizeof(Transaction));
+    int result = My402ListAppend(pList, (void* ) copyTransaction(record, recPtr));
     if (result == FALSE) {
 
         ErrorType e = ListInsertion;
         exitOnError(e);
     }
-    
+
     
 }
 
@@ -362,6 +376,7 @@ void validateLine(char* line) {
     char* pattern = "(\\+|\\-)(\t([0-9]{1,10})\t([0-9]{1,7}\\.[0-9]{2})\t\\w+)";
     int formatFail = regcomp(&patternBuffer, pattern, REG_EXTENDED);
     formatFail = regexec(&patternBuffer, line, 0, NULL, 0);
+    regfree(&patternBuffer);
 
     //verify line width
     int i;
@@ -390,8 +405,6 @@ Transaction parseLine(char* line) {
 
     validateLine(line);
     
-
-
     flag = strtok(line, delim);
     date = strtok(NULL, delim);
     amount = strtok(NULL, delim);
@@ -425,8 +438,7 @@ int readInput(My402List* pList, char* fileName, FILE* inStream) {
         }
         
     }
-    // fclose() //TODO: close if fileName is given; what would happen if 
-    // fclose called on stdin? can use the same api for both?
+    fclose(file);
     return TRUE;
 
 }
@@ -453,6 +465,7 @@ void processArgs(int argc, char *argv[], char** fileNamePtr, FILE** inStreamPtr)
 
     
 }
+
 /* ----------------------- main() -----------------------*/
 
 int main(int argc, char* argv[])
@@ -466,12 +479,7 @@ int main(int argc, char* argv[])
     (void)My402ListInit(&list);
     readInput(&list, fileName, inStream);
     if (list.num_members) printHistory(&list);
-    
-
-
-
-    // free all memory
-    // My402ListUnlinkAll(&list);
+    // freeMemory(&list);
     
     return(0);
 }
