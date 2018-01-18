@@ -98,7 +98,7 @@ extern Transaction parseLine(char*);
 extern Transaction* copyTransaction(Transaction, Transaction*);
 
 /*
-	Insert 
+	Insert a Transaction record in sorted order.
 */
 extern void insertTransaction(My402List*, Transaction);
 
