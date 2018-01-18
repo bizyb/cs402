@@ -327,7 +327,7 @@ void insertTransaction(My402List* pList, Transaction record) {
         Transaction* currRecordPtr = (Transaction*) elem->obj;
 
         if (currRecordPtr->dateRaw == recPtr->dateRaw) exitOnError(Duplicate);
-        else if (currRecordPtr->dateRaw > recPtr->dateRaw) {
+        else if (recPtr->dateRaw < currRecordPtr->dateRaw) {
 
             inserted = My402ListInsertBefore(pList, (void*)recPtr, elem);
             if (!inserted) exitOnError(ListInsertion);
@@ -336,7 +336,8 @@ void insertTransaction(My402List* pList, Transaction record) {
         }
 
     }
-    if (!inserted) My402ListPrepend(pList, (void*)recPtr);
+    if (!inserted) My402ListAppend(pList, (void*)recPtr);
+    
     
 }
 void computeBalance(My402List* pList) {
@@ -358,21 +359,16 @@ void computeBalance(My402List* pList) {
 
             prevRecordPtr = (Transaction*) elem->prev->obj;
             balance = prevRecordPtr->balance;
-            // balance = balance < 0 ? balance
 
             if (currRecordPtr->flag == WITHDRAWAL) balance -= currRecordPtr->amount;
             else balance += currRecordPtr->amount;
 
-            if (balance < 0) {
-
-                // balance *= -1;
-                currRecordPtr->balFlag = NEGATIVE; 
-            }
+            if (balance < 0) currRecordPtr->balFlag = NEGATIVE; 
             else currRecordPtr->balFlag = POSITIVE;
+
             currRecordPtr->balance = balance;    
         }
-        fprintf(stdout, "balance %d\n", balance);
-
+     
         if ( currRecordPtr->balance >= MAX_AMOUNT) exitOnError(HighBalance);
         else if ( currRecordPtr->balance <= -1 * MAX_AMOUNT) exitOnError(LowBalance);
     }
