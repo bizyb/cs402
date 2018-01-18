@@ -1,4 +1,0 @@
-+	6147308630	3399213.89	Convallis a cras semper auctor
--	8341177916	3408652.71	Proin fermentum leo vel orci porta
-+	2614400846	5097955.78	Vulputate eu scelerisque felis imperdiet
-+	1806174490	1551331.83	Id donec ultrices tincidunt arcu non

@@ -11,8 +11,10 @@ output file format (matching regex: (\-|\+)(\t\d{1,10}\t\d{1,7}\.\d{2}\t\w+))
 
 
 '''
-NUM_TRANSACTIONS = 2
+NUM_TRANSACTIONS = 100000
 MAX_LINE_LENGTH = 200
+MAX_AMOUNT = 100
+MAX_32_BIT_INT = (2**31) - 1
 dates = {}
 
 def getFile():
@@ -42,7 +44,7 @@ def getDate():
 	
 	# avoid duplicate timestamp
 	while True:
-		d = random.randint(0, 9999999999)
+		d = random.randint(0, MAX_32_BIT_INT)
 		if not dates.get(d):
 			dates[d] = d
 			return d
@@ -50,7 +52,7 @@ def getDate():
 
 def getAmount():
 	
-	return "{:.2f}".format(random.uniform(0, 9999999))
+	return "{:.2f}".format(random.uniform(0, MAX_AMOUNT))
 
 
 def getDesc(text):

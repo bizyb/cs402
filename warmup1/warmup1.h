@@ -9,10 +9,12 @@
 
 #include "cs402.h"
 
+int lineNum;
+
 typedef enum {
 	FileOpen,
 	LongLine,
-	MalformedLine,
+	// MalformedLine,
 	Duplicate,
 	HighAmount,
 	HighBalance,
@@ -24,7 +26,13 @@ typedef enum {
 	ListInsertion,
 	TooManyArgs,
 	UnknownCmd,
-	TooFewArgs
+	TooFewArgs,
+	FlagFormat,
+	DateFormat,
+	CurrencyFormat,
+	DescFormat,
+	EmptyLine,
+	LineTooShort
 
 } ErrorType;
 
@@ -133,7 +141,7 @@ extern int insertComma(char*);
 	matching, redundant validations are still performed on the individual tokens
 	in their corresponding functions.
 */
-extern void validateLine(char* );
+extern void validateLine(char*);
 
 /*
 	Parse command line arguments. If there are three command line arguments,,
@@ -163,5 +171,9 @@ extern void freeMemory(My402List*, My402ListElem*);
 */
 extern void computeBalance(My402List*);
 
-
+/*
+	Perform regex matching for a particular transaction attribute. 
+	If matching fails, throw the corresponding error message.
+*/
+extern void matchPattern(char*, char*, ErrorType);
 #endif /*_WARMUP1_H*/

@@ -9,6 +9,7 @@
 #include <stdlib.h>
 // #include <sys/time.h>
 
+#include <time.h>
 #include "cs402.h"
 #include "my402list.h"
 #include "warmup1.h"
@@ -17,6 +18,7 @@
 
 const int BUFFERSIZE = 1028;
 const int MAX_LINE = 1024;
+const int MIN_LINE = 10;
 const double FACTOR = 100.00;
 const int MAX_AMOUNT = 1000000000; // $10,000,000.00
 const int MAX_DATE_LENGTH = 10;
@@ -31,7 +33,7 @@ void exitOnError(ErrorType e) {
     switch(e) {
         case FileOpen:      msg = "Failed to open file."; break;
         case LongLine:      msg = "Line exceeds acceptable length."; break;
-        case MalformedLine: msg = "Invalid line formatting."; break;
+        // case MalformedLine: msg = "Invalid line formatting."; break;
         case Duplicate:     msg = "Found entries with duplicate timestamp."; break;
         case HighAmount:    msg = "Amount exceeds allowed limit."; break;
         case HighBalance:   msg = "Balance exceeds allowed limit."; break;
@@ -44,10 +46,16 @@ void exitOnError(ErrorType e) {
         case TooManyArgs:   msg = "Too many command line arguments."; break;
         case TooFewArgs:    msg = "Not enough command line arguments."; break;
         case UnknownCmd:    msg = "Unknown command. Did you mean to say 'sort'?"; break;
+        case EmptyLine:     msg = "Empty line."; break;
+        case LineTooShort:  msg = "Not enough characters."; break;
+        case FlagFormat:    msg = "Invalid transaction flag."; break;
+        case DateFormat:    msg = "Invalid date."; break;
+        case CurrencyFormat:msg = "Invalid currency."; break;
+        case DescFormat:    msg = "Invalid/missing description."; break;
         default: msg = "Unknown error";
     }
 
-    fprintf(stderr, "%s Exiting program...\n", msg);
+    fprintf(stderr, "Error on line %d: %s\n", lineNum, msg);
     exit(1);
 
 }
@@ -325,7 +333,11 @@ void insertTransaction(My402List* pList, Transaction record) {
 
         Transaction* currRecordPtr = (Transaction*) elem->obj;
 
-        if (currRecordPtr->dateRaw == recPtr->dateRaw) exitOnError(Duplicate);
+        if (currRecordPtr->dateRaw == recPtr->dateRaw) {
+            // fprintf(stdout, "currRecordPtr->dateRaw: %d\n", currRecordPtr->dateRaw );
+            // fprintf(stdout, "recPtr->dateRaw: %d\n", recPtr->dateRaw);
+            exitOnError(Duplicate);
+        }
         else if (recPtr->dateRaw < currRecordPtr->dateRaw) {
 
             inserted = My402ListInsertBefore(pList, (void*)recPtr, elem);
@@ -365,7 +377,8 @@ void computeBalance(My402List* pList) {
             if (balance < 0) currRecordPtr->balFlag = NEGATIVE; 
             else currRecordPtr->balFlag = POSITIVE;
 
-            currRecordPtr->balance = balance;    
+            currRecordPtr->balance = balance;
+            // fprintf(stdout, "balance: %d\n", balance);    
         }
      
         if ( currRecordPtr->balance >= MAX_AMOUNT) exitOnError(HighBalance);
@@ -373,16 +386,38 @@ void computeBalance(My402List* pList) {
     }
 }
 
-void validateLine(char* line) {
+void matchPattern(char* line, char* pattern, ErrorType e) {
 
-    //verify formatting
     regex_t patternBuffer;
     int formatFail;
-    char* pattern = "(\\+|\\-)(\t([0-9]{1,10})\t([0-9]{1,7}\\.[0-9]{2})\t[A-Za-z0-9_]+)";
 
     formatFail  = regcomp(&patternBuffer, pattern, REG_EXTENDED);
     formatFail = regexec(&patternBuffer, line, 0, NULL, 0);
     regfree(&patternBuffer);
+
+    if (formatFail) exitOnError(e);
+
+
+
+}
+void validateLine(char* line) {
+
+    //verify formatting
+    // Note that the pattens are additive. If the previous patten fails, the next
+    // one never gets executed since the program exits. This helps us avoid any 
+    // ambiguities when it comes to matching the description, which can contain
+    // character any number of times.  
+    char* flagPattern = "^(\\+|\\-)\t";
+    char* datePatten =  "^(\\+|\\-)(\t[0-9]{1,10}\t)";
+    char* currencyPattern = "^(\\+|\\-)(\t[0-9]{1,10}\t([0-9]{1,7}\\.[0-9]{2})\t)";
+    char* descPattern = "^(\\+|\\-)(\t[0-9]{1,10}\t([0-9]{1,7}\\.[0-9]{2})\t)\\w+";
+    // char* linePattern = "(\\+|\\-)(\t([0-9]{1,10})\t([0-9]{1,7}\\.[0-9]{2})\t[A-Za-z0-9_]+)";
+
+   
+    matchPattern(line, flagPattern, FlagFormat);
+    matchPattern(line, datePatten, DateFormat);
+    matchPattern(line, currencyPattern, CurrencyFormat);
+    matchPattern(line, descPattern, DescFormat);
 
     //verify line width
     int i;
@@ -391,8 +426,11 @@ void validateLine(char* line) {
         if (line[i] == '\n') break;
     }
 
-    if (formatFail) exitOnError(MalformedLine);
+    // if (formatFail) exitOnError(MalformedLine);
     if (i + 1 > MAX_LINE) exitOnError(LongLine);
+
+    // Redundant: regex matching would not allow this
+    if (i + 1 < MIN_LINE) exitOnError(LineTooShort);
 
 }
 
@@ -417,6 +455,7 @@ int readInput(My402List* pList, char* fileName, FILE* inStream) {
 
     char buffer [BUFFERSIZE];
     FILE* file;
+    lineNum = 1;
 
     if (fileName != NULL) {
 
@@ -430,7 +469,9 @@ int readInput(My402List* pList, char* fileName, FILE* inStream) {
         if (buffer[0] != '\n') {
             Transaction record = parseLine((char* ) &buffer);
             insertTransaction(pList, record);
+            lineNum++;
         }
+        else exitOnError(EmptyLine);
         
     }
     fclose(file);
