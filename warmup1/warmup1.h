@@ -31,7 +31,9 @@ typedef enum {
 typedef enum {
 
 	DEPOSIT,
-	WITHDRAWAL
+	WITHDRAWAL,
+	NEGATIVE,
+	POSITIVE,
 } Flag;
 
 typedef struct TransactionRecord {
@@ -42,6 +44,7 @@ typedef struct TransactionRecord {
 	int balance;
 	int dateRaw;
 	Flag flag;
+	Flag balFlag;
 
 } Transaction;
 
@@ -153,6 +156,10 @@ extern char* cleanString(char*);
 	Free all the memory allocated for transaction recrods.
 */
 extern void freeMemory(My402List*, My402ListElem*);
+
+/*
+*/
+extern void computeBalance(My402List*);
 
 
 #endif /*_WARMUP1_H*/

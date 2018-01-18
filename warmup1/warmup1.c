@@ -91,7 +91,7 @@ void printHistory(My402List*  pList) {
         else fprintf(stdout, "|  %s  ", amount);
         
         char* balance = cleanString(formatCurrency(record.balance));
-        if (record.flag == WITHDRAWAL) fprintf(stdout, "| (%s) |\n", balance);
+        if (record.balFlag == NEGATIVE) fprintf(stdout, "| (%s) |\n", balance);
         else fprintf(stdout, "|  %s  |\n", balance);
 
         prev = curr;
@@ -214,7 +214,12 @@ char* formatCurrency(int value) {
    
     char* buffer = (char*) calloc(FIELD_WIDTH + 1, sizeof(char));
     double fAmount = (value / FACTOR);
+
+    // negate any negative values (we still retain the sign of the original value through
+    // the flags)
+    if (fAmount < 0) fAmount *= -1;
     sprintf(buffer, "%.2f", fAmount);
+
     int newLength = insertComma(buffer);
 
     int i, j = 0;
@@ -321,6 +326,44 @@ void insertTransaction(My402List* pList, Transaction record) {
 
     
 }
+void computeBalance(My402List* pList) {
+
+    My402ListElem *elem = NULL;
+    int balance;
+    for(elem = My402ListFirst(pList); elem != NULL; elem=My402ListNext(pList, elem)) {
+
+        Transaction* currRecordPtr = (Transaction*) elem->obj;
+        Transaction* prevRecordPtr;
+        if (elem->prev == &pList->anchor) {
+
+            balance = currRecordPtr->amount;
+            currRecordPtr->balance = currRecordPtr->flag == DEPOSIT ? balance : -1 * balance;
+            currRecordPtr->balFlag = currRecordPtr->flag == DEPOSIT ? POSITIVE : NEGATIVE;
+
+        }
+        else {
+
+            prevRecordPtr = (Transaction*) elem->prev->obj;
+            balance = prevRecordPtr->balance;
+            // balance = balance < 0 ? balance
+
+            if (currRecordPtr->flag == WITHDRAWAL) balance -= currRecordPtr->amount;
+            else balance += currRecordPtr->amount;
+
+            if (balance < 0) {
+
+                // balance *= -1;
+                currRecordPtr->balFlag = NEGATIVE; 
+            }
+            else currRecordPtr->balFlag = POSITIVE;
+            currRecordPtr->balance = balance;    
+        }
+        fprintf(stdout, "balance %d\n", balance);
+
+        if ( currRecordPtr->balance >= MAX_AMOUNT) exitOnError(HighBalance);
+        else if ( currRecordPtr->balance <= -1 * MAX_AMOUNT) exitOnError(LowBalance);
+    }
+}
 
 void validateLine(char* line) {
 
@@ -426,7 +469,7 @@ int main(int argc, char* argv[])
     readInput(&list, fileName, inStream);
     if (list.num_members) {
 
-        // computeBalance(&list)
+        computeBalance(&list);
         printHistory(&list);
 
     } 
