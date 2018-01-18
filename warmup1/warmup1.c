@@ -316,14 +316,13 @@ Transaction getTransaction(char* flag, char* date, char* amount, char* desc) {
 
     tFlag = getFlag(flag);
     tRawDate = getRawDate(date);
-    tDate = formatDate(tRawDate); // no need to do error handling since getDate() succeeded
-    tDesc = getDesc(desc); //, check that it's not empty
+    tDate = formatDate(tRawDate);
+    tDesc = getDesc(desc);
    
     tAmount = getAmount(amount);
 
 
-    tBalance = 0; //for now; will be computed after sorting; when iterating through the sorted list, 
-    //keep local max abs(balance). Handle >=10mil accordingly 
+    tBalance = 0;
 
     Transaction record = {tDate, tDesc, tAmount, tBalance, tRawDate, tFlag};
     return record;

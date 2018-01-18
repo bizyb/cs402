@@ -62,23 +62,68 @@ typedef struct TransactionRecord {
 } Transaction;
 
 
-
-#endif /*_WARMUP1_H*/
 /*
+	Read input data either from a file or stdin one line at a time. 
 */
 extern int readInput(My402List*, char*, FILE*);
+
+/*
+	Evaluate a flag string and return the corresponding flag of 
+	type Flag. 
+*/
 extern Flag getFlag(char*);
+
+/*
+	Perform type-casting on an amount string and return a value one 
+	hundred times the float value so as to avoid future precision and 
+	rounding errors. 
+*/
 extern int getAmount(char*);
+
+/*
+	Perform type-casting on a tokenized date string and return its 
+	integral equivalent.
+*/
 extern int getRawDate(char*);
+
+/*
+	Print an error message and exit program. 
+*/
 extern void exitOnError(ErrorType);
+
+/*
+	Perform the appropriate type casting and formatting for each 
+	transaction attribute and return a Transaction record.
+*/
 extern Transaction getTransaction(char*, char*, char*, char*);
-extern int validateFormat(char*, char*, char*, char*);
+
+
+/*
+	Parse an input line by tokenizing it. Return a new Transaction record
+	with the tokenized information.
+*/
 extern Transaction parseLine(char*);
+
+/*
+	Copy a transaction record from the stack to the heap and return
+	the new recrod.
+*/
 extern Transaction* copyTransaction(Transaction, Transaction*);
+
+/*
+	Insert 
+*/
 extern void insertTransaction(My402List*, Transaction);
+
+/*
+	Print a sorted list of all transactions.
+*/
 extern void printHistory(My402List*);
 
-
+/*
+	Given a Unix timestamp in seconds, return its corresponding date in the 
+	format of Day Month Date Year.
+*/
 extern char* formatDate(int);
 
 /*
@@ -103,8 +148,27 @@ extern int insertComma(char*);
 */
 extern void validateLine(char* );
 
+/*
+	Parse command line arguments. If there are three command line arguments,,
+	set the file stream to the third argument. Otherwise, se the file stream
+	to stdin.
+*/
 extern void processArgs(int, char* [], char**, FILE**);
 
+/*
+	Remove any new line characters that was added into a string during 
+	the string manipulation steps. NB: strtok() appends a new line character
+	for data read in from stdin if certain columns do not conform to an expected
+	length. This is true for the date column. Although we expect ten characters
+	for the date, a single character is also valid but not properly tokenized. 
+
+*/
 extern char* cleanString(char*);
 
+/*
+	Free all the memory allocated for transaction recrods.
+*/
 extern void freeMemory(My402List*, My402ListElem*);
+
+
+#endif /*_WARMUP1_H*/
