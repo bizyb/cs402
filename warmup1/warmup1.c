@@ -1,25 +1,7 @@
-/******************************************************************************/
-/* Important CSCI 402 usage information:                                     */
-/*                                                                           */
-/* This fils is part of CSCI 402 programming assignments at USC.             */
-/*         53616c7465645f5f2e8d450c0c5851acd538befe33744efca0f1c4f9fb5f      */
-/*         3c8feabc561a99e53d4d21951738da923cd1c7bbd11b30a1afb11172f80b      */
-/*         984b1acfbbf8fae6ea57e0583d2610a618379293cb1de8e1e9d07e6287e8      */
-/*         de7e82f3d48866aa2009b599e92c852f7dbf7a6e573f1c7228ca34b9f368      */
-/*         faaef0c0fcf294cb                                                  */
-/* Please understand that you are NOT permitted to distribute or publically  */
-/*         display a copy of this file (or ANY PART of it) for any reason.   */
-/* If anyone (including your prospective employer) asks you to post the code,*/
-/*         you must inform them that you do NOT have permissions to do so.   */
-/* You are also NOT permitted to remove or alter this comment block.         */
-/* If this comment block is removed or altered in a submitted file, 20 points*/
-/*         will be deducted.                                                 */
-/******************************************************************************/
-
 /*
-*  Author:      Bizuwork Melesse
-* 
-*  
+*  Author: Bizuwork Melesse
+*  USC Spring 2018 - CS402
+*  Assignment: Warmup 1
 */
 
 #include <stdio.h>
@@ -34,8 +16,6 @@
 #include <regex.h>
 
 
-
-// static char gszProgName[MAXPATHLENGTH];
 const int BUFFERSIZE = 1028;
 const int MAX_LINE = 1024;
 const double FACTOR = 100.00;
@@ -47,23 +27,24 @@ const int BASE = 10;
 /* ----------------------- Utility Functions -----------------------*/
 void exitOnError(ErrorType e) {
 
-    // TODO: do we have to handle line length?
+   
     char* msg;
     switch(e) {
-        case FileOpen: msg = "Failed to open file."; break;
-        case LongLine: msg = "Line exceeds acceptable length."; break;
+        case FileOpen:      msg = "Failed to open file."; break;
+        case LongLine:      msg = "Line exceeds acceptable length."; break;
         case MalformedLine: msg = "Invalid line formatting."; break;
-        case Duplicate: msg = "Found entries with duplicate timestamp."; break;
-        case HighAmount: msg = "Amount exceeds allowed limit."; break;
-        case HighBalance: msg = "Balance exceeds allowed limit."; break;
-        case UnknownFlag: msg = "Unknown transaction flag."; break;
+        case Duplicate:     msg = "Found entries with duplicate timestamp."; break;
+        case HighAmount:    msg = "Amount exceeds allowed limit."; break;
+        case HighBalance:   msg = "Balance exceeds allowed limit."; break;
+        case LowBalance:    msg = "Balance is below allowed limit."; break;
+        case UnknownFlag:   msg = "Unknown transaction flag."; break;
         case UnknownAmount: msg = "Unable to parse amount."; break;
-        case InvalidTimestamp: msg = "Invalid timestamp."; break;
-        case Malloc: msg = "Failed to allocate memory"; break;
+        case Timestamp:     msg = "Invalid timestamp."; break;
+        case Malloc:        msg = "Failed to allocate memory"; break;
         case ListInsertion: msg = "Failed to add transaction record into list."; break;
-        case TooManyArgs: msg = "Too many command line arguments."; break;
-        case TooFewArgs: msg = "Not enough command line arguments."; break;
-        case UnknownCmd: msg = "Unknown command. Did you mean to say 'sort'?"; break;
+        case TooManyArgs:   msg = "Too many command line arguments."; break;
+        case TooFewArgs:    msg = "Not enough command line arguments."; break;
+        case UnknownCmd:    msg = "Unknown command. Did you mean to say 'sort'?"; break;
         default: msg = "Unknown error";
     }
 
@@ -79,8 +60,6 @@ void freeMemory(My402List* pList, My402ListElem* elem) {
     free(recPtr->desc);
     free(recPtr);
     My402ListUnlink(pList, elem);
-    
-
 
 }
 
@@ -88,7 +67,7 @@ void printHistory(My402List*  pList) {
 
     
     // TODO: add ???.. for amount/balance exceeding 10mil
-    // TODO: date formatting
+  
 
     My402ListElem* curr = pList->anchor.next;
     My402ListElem* prev = NULL;
@@ -119,10 +98,10 @@ void printHistory(My402List*  pList) {
         curr = My402ListNext(pList, curr);
 
         freeMemory(pList, prev);
-        // My402ListUnlink(pList, prev);
         free(amount);
         free(balance);
     }
+
     fprintf(stdout, "%s\n", border);
     My402ListUnlinkAll(pList);
 
@@ -145,29 +124,21 @@ Flag getFlag(char* flag) {
 
     if (*flag == '-') tFlag = WITHDRAWAL;
     else if (*flag == '+') tFlag = DEPOSIT;
-    else {
-        ErrorType e = UnknownFlag;
-        exitOnError(e);
-    }
+    else  exitOnError(UnknownFlag);
+
     return tFlag;
 }
 int getAmount(char* amount) {
 
     char* end;
     double dAmount = strtod(amount, &end);
-    if (amount == end) {
-        // if conversion fails, address of amount gets stored at address of end
-        // fprintf(stdout, "failed on amount: %s\n", amount);
-        ErrorType e = UnknownAmount;
-        exitOnError(e);
-    }
+
+    // if conversion fails, address of amount gets stored at address of end
+    if (amount == end)  exitOnError(UnknownAmount);
 
     int iAmount = round(dAmount * FACTOR);
-    if (iAmount >= MAX_AMOUNT) {
+    if (iAmount >= MAX_AMOUNT) exitOnError(HighAmount);
 
-        ErrorType e = HighAmount;
-        exitOnError(e);
-    }
     return iAmount;
 
 }
@@ -177,11 +148,8 @@ int getRawDate(char* date) {
     unsigned int length = strlen(date);
     char* end;
     int iDate = strtol(date, &end, BASE);
-    if (length > MAX_DATE_LENGTH || date == end) {
 
-        ErrorType e = InvalidTimestamp;
-        exitOnError(e);
-    }
+    if (length > MAX_DATE_LENGTH || date == end) exitOnError(Timestamp);
 
     return iDate;
 }
@@ -192,9 +160,7 @@ char* getDesc(char* desc) {
     const unsigned int DESC_LENGTH = 23;
     const unsigned int CELL_LENGTH = 26;
 
-    // TODO: This will lead to some leakage so need to do something about it
     char * abridged = (char *) calloc(CELL_LENGTH +1, sizeof(char)); 
-
     unsigned int i;
 
     if (length < DESC_LENGTH) {
@@ -223,7 +189,7 @@ char* formatDate(int rawDate) {
     const int DATE_LENGTH = 16;
     char* delim = " ";
     char* day, *month, *date, *year;
-    char* buffer = (char* ) calloc(DATE_LENGTH +1, sizeof(char)); //TODO: malloc needs to be freed
+    char* buffer = (char* ) calloc(DATE_LENGTH +1, sizeof(char)); 
     time_t t = rawDate;
     char* fTime = ctime(&t);
 
@@ -246,7 +212,6 @@ char* formatCurrency(int value) {
 
     const int FIELD_WIDTH = 12;
    
-   //TODO: free up the memory in printHistory
     char* buffer = (char*) calloc(FIELD_WIDTH + 1, sizeof(char));
     double fAmount = (value / FACTOR);
     sprintf(buffer, "%.2f", fAmount);
@@ -318,10 +283,7 @@ Transaction getTransaction(char* flag, char* date, char* amount, char* desc) {
     tRawDate = getRawDate(date);
     tDate = formatDate(tRawDate);
     tDesc = getDesc(desc);
-   
     tAmount = getAmount(amount);
-
-
     tBalance = 0;
 
     Transaction record = {tDate, tDesc, tAmount, tBalance, tRawDate, tFlag};
@@ -334,6 +296,8 @@ Transaction* copyTransaction(Transaction record, Transaction* recPtr) {
     
     recPtr->date = (char* ) calloc(strlen(record.date) + 1, sizeof(char));
     recPtr->desc = (char* ) calloc(strlen(record.desc) + 1, sizeof(char));
+
+    if (recPtr->date == NULL || recPtr->desc == NULL) exitOnError(Malloc);
    
     (void)memcpy((void* ) recPtr->date, (void* ) record.date, (strlen(record.date)+1)*sizeof(char));
     (void)memcpy((void* ) recPtr->desc, (void* ) record.desc, (strlen(record.desc)+1)*sizeof(char));
@@ -344,36 +308,28 @@ Transaction* copyTransaction(Transaction record, Transaction* recPtr) {
     
     free(record.date);
     free(record.desc);
-    // if (recPtr == NULL) {
-    //     ErrorType e = Malloc;
-    //     exitOnError(e);
-    // }
     return recPtr;
 
 }
 
 void insertTransaction(My402List* pList, Transaction record) {
 
-    //iterate through the list and insert the record in a sorted order
-    // if another record with the same timestamp exists, call exitOnError to exit the program
    
     Transaction* recPtr = (Transaction* ) calloc(1, sizeof(Transaction));
     int result = My402ListAppend(pList, (void* ) copyTransaction(record, recPtr));
-    if (result == FALSE) {
-
-        ErrorType e = ListInsertion;
-        exitOnError(e);
-    }
+    if (result == FALSE) exitOnError(ListInsertion);
 
     
 }
 
 void validateLine(char* line) {
 
-    //match formatting
+    //verify formatting
     regex_t patternBuffer;
+    int formatFail;
     char* pattern = "(\\+|\\-)(\t([0-9]{1,10})\t([0-9]{1,7}\\.[0-9]{2})\t\\w+)";
-    int formatFail = regcomp(&patternBuffer, pattern, REG_EXTENDED);
+
+    formatFail  = regcomp(&patternBuffer, pattern, REG_EXTENDED);
     formatFail = regexec(&patternBuffer, line, 0, NULL, 0);
     regfree(&patternBuffer);
 
@@ -384,16 +340,8 @@ void validateLine(char* line) {
         if (line[i] == '\n') break;
     }
 
-    if (formatFail) {
-
-        ErrorType e = MalformedLine;
-        exitOnError(e);
-    }
-    if (i + 1 > MAX_LINE) {
-
-        ErrorType e = LongLine;
-        exitOnError(e);
-    }
+    if (formatFail) exitOnError(MalformedLine);
+    if (i + 1 > MAX_LINE) exitOnError(LongLine);
 
 }
 
@@ -422,14 +370,11 @@ int readInput(My402List* pList, char* fileName, FILE* inStream) {
     if (fileName != NULL) {
 
         file = fopen(fileName, "r");
-        if (file == NULL) {
-            ErrorType e = FileOpen;
-            exitOnError(e);
-        }
+        if (file == NULL)  exitOnError(FileOpen);
     }
+
     else file = inStream;
 
-    
     while (fgets(buffer, BUFFERSIZE,  file) != NULL) {
         if (buffer[0] != '\n') {
             Transaction record = parseLine((char* ) &buffer);
@@ -474,11 +419,18 @@ int main(int argc, char* argv[])
     My402List list;
 
     processArgs(argc, argv, &fileName, &inStream);
+
     memset(&list, 0, sizeof(My402List));
     (void)My402ListInit(&list);
+
     readInput(&list, fileName, inStream);
-    if (list.num_members) printHistory(&list);
-    // freeMemory(&list);
-    
+    if (list.num_members) {
+
+        // computeBalance(&list)
+        printHistory(&list);
+
+    } 
+  
     return(0);
 }
+
