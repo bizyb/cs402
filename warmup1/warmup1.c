@@ -65,10 +65,6 @@ void freeMemory(My402List* pList, My402ListElem* elem) {
 
 void printHistory(My402List*  pList) {
 
-    
-    // TODO: add ???.. for amount/balance exceeding 10mil
-  
-
     My402ListElem* curr = pList->anchor.next;
     My402ListElem* prev = NULL;
     char* border = "+-----------------+--------------------------+----------------+----------------+";
@@ -215,8 +211,8 @@ char* formatCurrency(int value) {
     char* buffer = (char*) calloc(FIELD_WIDTH + 1, sizeof(char));
     double fAmount = (value / FACTOR);
 
-    // negate any negative values (we still retain the sign of the original value through
-    // the flags)
+    // negate any negative value (we still retain the sign of the original 
+    // value through the one of the currency flags)
     if (fAmount < 0) fAmount *= -1;
     sprintf(buffer, "%.2f", fAmount);
 
@@ -320,10 +316,27 @@ Transaction* copyTransaction(Transaction record, Transaction* recPtr) {
 void insertTransaction(My402List* pList, Transaction record) {
 
    
-    Transaction* recPtr = (Transaction* ) calloc(1, sizeof(Transaction));
-    int result = My402ListAppend(pList, (void* ) copyTransaction(record, recPtr));
-    if (result == FALSE) exitOnError(ListInsertion);
+    My402ListElem *elem = NULL;
+    int inserted = FALSE;
 
+    Transaction* recPtr = (Transaction* ) calloc(1, sizeof(Transaction));
+    recPtr =  copyTransaction(record, recPtr);
+
+    for(elem = My402ListFirst(pList); elem != NULL; elem=My402ListNext(pList, elem)) {
+
+        Transaction* currRecordPtr = (Transaction*) elem->obj;
+
+        if (currRecordPtr->dateRaw == recPtr->dateRaw) exitOnError(Duplicate);
+        else if (currRecordPtr->dateRaw > recPtr->dateRaw) {
+
+            inserted = My402ListInsertBefore(pList, (void*)recPtr, elem);
+            if (!inserted) exitOnError(ListInsertion);
+            break;
+
+        }
+
+    }
+    if (!inserted) My402ListPrepend(pList, (void*)recPtr);
     
 }
 void computeBalance(My402List* pList) {

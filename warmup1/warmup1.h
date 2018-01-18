@@ -158,6 +158,8 @@ extern char* cleanString(char*);
 extern void freeMemory(My402List*, My402ListElem*);
 
 /*
+	Compute the balance after the current transaction takes place
+	for every record of transaction. 
 */
 extern void computeBalance(My402List*);
 
