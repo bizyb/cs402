@@ -3,9 +3,10 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "cs402.h"
+// #include "cs402.h"
 #include "error.h"
 #include "warmup1.h"
+#include "cs402.h"
 
 void exitOnError(ErrorType e) {
 

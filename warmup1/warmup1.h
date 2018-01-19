@@ -10,28 +10,29 @@
 #include "cs402.h"
 #include "my402list.h"
 #include "error.h"
+#include "transaction.h"
 
 int lineNum;
 
-typedef enum {
+// typedef enum {
 
-	DEPOSIT,
-	WITHDRAWAL,
-	NEGATIVE,
-	POSITIVE,
-} Flag;
+// 	DEPOSIT,
+// 	WITHDRAWAL,
+// 	NEGATIVE,
+// 	POSITIVE,
+// } Flag;
 
-typedef struct TransactionRecord {
+// typedef struct TransactionRecord {
 
-	char* date;
-	char* desc;
-	int amount;
-	int balance;
-	int dateRaw;
-	Flag flag;
-	Flag balFlag;
+// 	char* date;
+// 	char* desc;
+// 	int amount;
+// 	int balance;
+// 	int dateRaw;
+// 	Flag flag;
+// 	Flag balFlag;
 
-} Transaction;
+// } Transaction;
 
 
 /*
@@ -43,27 +44,27 @@ extern int readInput(My402List*, char*, FILE*);
 	Evaluate a flag string and return the corresponding flag of 
 	type Flag. 
 */
-extern Flag getFlag(char*);
+// extern Flag getFlag(char*);
 
 /*
 	Perform type-casting on an amount string and return a value one 
 	hundred times the float value so as to avoid future precision and 
 	rounding errors. 
 */
-extern int getAmount(char*);
+// extern int getAmount(char*);
 
 /*
 	Perform type-casting on a tokenized date string and return its 
 	integral equivalent.
 */
-extern int getRawDate(char*);
+// extern int getRawDate(char*);
 
 
 /*
 	Perform the appropriate type casting and formatting for each 
 	transaction attribute and return a Transaction record.
 */
-extern Transaction getTransaction(char*, char*, char*, char*);
+// extern Transaction getTransaction(char*, char*, char*, char*);
 
 
 /*
@@ -76,12 +77,12 @@ extern Transaction parseLine(char*);
 	Copy a transaction record from the stack to the heap and return
 	the new recrod.
 */
-extern Transaction* copyTransaction(Transaction, Transaction*);
+// extern Transaction* copyTransaction(Transaction, Transaction*);
 
 /*
 	Insert a Transaction record in sorted order.
 */
-extern void insertTransaction(My402List*, Transaction);
+// extern void insertTransaction(My402List*, Transaction);
 
 /*
 	Print a sorted list of all transactions.
@@ -142,7 +143,7 @@ extern void freeMemory(My402List*, My402ListElem*);
 	Compute the balance after the current transaction takes place
 	for every record of transaction. 
 */
-extern void computeBalance(My402List*);
+// extern void computeBalance(My402List*);
 
 /*
 	Perform regex matching for a particular transaction attribute. 
