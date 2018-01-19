@@ -11,9 +11,9 @@ output file format (matching regex: (\-|\+)(\t\d{1,10}\t\d{1,7}\.\d{2}\t\w+))
 
 
 '''
-NUM_TRANSACTIONS = 100000
+NUM_TRANSACTIONS = 1000
 MAX_LINE_LENGTH = 200
-MAX_AMOUNT = 100
+MAX_AMOUNT = 100000
 MAX_32_BIT_INT = (2**31) - 1
 dates = {}
 

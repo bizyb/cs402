@@ -12,7 +12,7 @@
 int lineNum;
 
 typedef enum {
-	// FileOpen,
+	FileOpen,
 	LongLine,
 	// MalformedLine,
 	Duplicate,

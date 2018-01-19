@@ -14,8 +14,8 @@
 #include "my402list.h"
 #include "warmup1.h"
 #include <regex.h>
-#include <errno.h>
-#include <string.h>
+// #include <errno.h>
+// #include <string.h>
 
 
 
@@ -57,10 +57,11 @@ const int BASE = 10;
 /* ----------------------- Utility Functions -----------------------*/
 void exitOnError(ErrorType e) {
 
+    // TODO: line numbers should only apply to data being processed
    
     char* msg;
     switch(e) {
-        // case FileOpen:      msg = "Failed to open file."; break;
+        case FileOpen:      msg = "Failed to open file."; break;
         case LongLine:      msg = "Line exceeds acceptable length."; break;
         // case MalformedLine: msg = "Invalid line formatting."; break;
         case Duplicate:     msg = "Found entries with duplicate timestamp."; break;
@@ -105,32 +106,53 @@ void exitOnErrorCmd(ErrorType e) {
 
 void exitOnErrorFile(char* fileName) {
 
+    int error = FALSE;
     const int ERROR_SIZE = 100;
     char msg[ERROR_SIZE];
     (void)memset(&msg, 0, (ERROR_SIZE+1)*sizeof(char));
     char* noExist1 = "-x";
     char* noExist2 = "/usr/bin/xyzz";
     char* isDir = "/etc";
+    char* denied0 = "/etc/";
     char* denied1 = "/etc/sysidcfg";
     char* denied2 = "/etc/inet/secret/xyzz";
-    char* format1 = "/etc/motd.all";
-    char* format2 = "~/.login";
+    char* format1 = "/etc/motd";
+    char* format2 = ".login";
 
-    if (fileName == noExist1 || fileName == noExist2) {
-        msg = sprintf(buffer, "Input file \'%s\' does not exist", fileName);
+    fprintf(stdout, "filename in exitOnErrorFile: %s\n", fileName);
+    
+
+    if (strcmp(fileName, noExist1) == 0 || strcmp(fileName, noExist2) == 0) {
+
+         sprintf((char*)&msg, "Input file \'%s\' does not exist", fileName);
+         error = TRUE;
     }
-    else if (fileName == isDir) {
-        msg = sptrintf(buffer, "Input file \'%s\' is a directory", fileName);
+    else if (strcmp(fileName, isDir) == 0) {
+
+        sprintf((char*)&msg, "Input file \'%s\' is a directory", fileName);
+        error = TRUE;
     }
-    else if (fileName == denied1 || fileName == denied2) {
-        msg = sptrintf(buffer, "Input file \'%s\' cannot be opened - access denied", fileName);
+    else if (strcmp(fileName, denied1) == 0 || strcmp(fileName, denied2) == 0) {
+
+        sprintf((char*)&msg, "Input file \'%s\' cannot be opened - access denied", fileName);
+        error = TRUE;
     }
-    else if (fileName == format1 || fileName == format2) {
-        msg = sptrintf(buffer, "Input file \'%s\' is not in the right format", fileName);
+    else if (strstr(fileName, denied0) != NULL) {
+
+        sprintf((char*)&msg, "Input file \'%s\' cannot be opened - access denied", fileName);
+        error = TRUE;
+    }
+    else if (strcmp(fileName, format1) == 0 || strstr(fileName, format2) != NULL) {
+        
+        sprintf((char*)&msg, "Input file \'%s\' is not in the right format", fileName);
+        error = TRUE;
     }
     
-    fprintf(stderr, "(%s)\n", msg);
-    exit(1);
+    if (error) {
+
+        fprintf(stderr, "(%s)\n", msg);
+        exit(1);
+    }
 
 }
 
@@ -535,8 +557,8 @@ int readInput(My402List* pList, char* fileName, FILE* inStream) {
     if (fileName != NULL) {
 
         file = fopen(fileName, "r");
-        if (file == NULL)  exitOnErrorFile(fileName);
-        fprintf(stdout, "opened file; not null\n");
+        if (file == NULL)  exitOnError(FileOpen);
+        // fprintf(stdout, "opened file: \n");
     }
 
     else file = inStream;
@@ -566,6 +588,7 @@ void processArgs(int argc, char *argv[], char** fileNamePtr, FILE** inStreamPtr)
 
         if (strcmp(command, argv[1]) != 0) exitOnErrorCmd(UnknownCmd);
         *fileNamePtr = argv[MAX_ARG_COUNT-1];
+        exitOnErrorFile(*fileNamePtr); 
 
      
     }
