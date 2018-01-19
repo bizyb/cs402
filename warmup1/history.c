@@ -7,9 +7,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-// #include <sys/time.h>
+#include <sys/time.h>
 
-#include <time.h>
+// #include <time.h>
 
 #include "cs402.h"
 #include "transaction.h"
@@ -95,7 +95,10 @@ char* formatDate(int rawDate) {
     year = strtok(NULL, delim);
 
 
-    sprintf(buffer, "%s %s %s %s", day, month, date, year);
+    // add an extra spacing if the date is single digit
+    if (strlen(date) > 1) sprintf(buffer, "%s %s %s %s", day, month, date, year);
+    else sprintf(buffer, "%s %s  %s %s", day, month, date, year);
+
     buffer[DATE_LENGTH-1] = '\0';
    
     return buffer;

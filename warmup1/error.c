@@ -78,7 +78,7 @@ void exitOnErrorFile(char* fileName) {
     char* format1 = "/etc/motd";
     char* format2 = ".login";
 
-    fprintf(stdout, "filename in exitOnErrorFile: %s\n", fileName);
+    // fprintf(stdout, "filename in exitOnErrorFile: %s\n", fileName);
     
 
     if (strcmp(fileName, noExist1) == 0 || strcmp(fileName, noExist2) == 0) {

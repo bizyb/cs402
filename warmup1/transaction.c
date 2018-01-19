@@ -54,7 +54,7 @@ int getRawDate(char* date) {
 char* getDesc(char* desc) {
 
     unsigned int length = strlen(desc);
-    const unsigned int DESC_LENGTH = 23;
+    const unsigned int DESC_LENGTH = 24;
     const unsigned int CELL_LENGTH = 26;
 
     char * abridged = (char *) calloc(CELL_LENGTH +1, sizeof(char)); 

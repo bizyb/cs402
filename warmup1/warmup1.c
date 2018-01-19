@@ -47,7 +47,7 @@ void validateLine(char* line) {
     char* flagPattern = "^(\\+|\\-)\t";
     char* datePatten =  "^(\\+|\\-)(\t[0-9]{1,10}\t)";
     char* currencyPattern = "^(\\+|\\-)(\t[0-9]{1,10}\t([0-9]{1,7}\\.[0-9]{2})\t)";
-    char* descPattern = "^(\\+|\\-)(\t[0-9]{1,10}\t([0-9]{1,7}\\.[0-9]{2})\t)\\w+";
+    char* descPattern = "^(\\+|\\-)(\t[0-9]{1,10}\t([0-9]{1,7}\\.[0-9]{2})\t)[A-Za-z0-9_]+";
     // char* linePattern = "(\\+|\\-)(\t([0-9]{1,10})\t([0-9]{1,7}\\.[0-9]{2})\t[A-Za-z0-9_]+)";
 
    
