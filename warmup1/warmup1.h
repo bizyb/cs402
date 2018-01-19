@@ -82,9 +82,14 @@ extern int getAmount(char*);
 extern int getRawDate(char*);
 
 /*
-	Print an error message and exit program. 
+	Print data processing-related error message and exit program. 
 */
 extern void exitOnError(ErrorType);
+
+/*
+	Print command line argument-related error message and exit program.
+*/
+extern void exitOnErrorCmd(ErrorType);
 
 /*
 	Perform the appropriate type casting and formatting for each 

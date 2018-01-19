@@ -43,9 +43,6 @@ void exitOnError(ErrorType e) {
         case Timestamp:     msg = "Invalid timestamp."; break;
         case Malloc:        msg = "Failed to allocate memory"; break;
         case ListInsertion: msg = "Failed to add transaction record into list."; break;
-        case TooManyArgs:   msg = "Too many command line arguments."; break;
-        case TooFewArgs:    msg = "Not enough command line arguments."; break;
-        case UnknownCmd:    msg = "Unknown command. Did you mean to say 'sort'?"; break;
         case EmptyLine:     msg = "Empty line."; break;
         case LineTooShort:  msg = "Not enough characters."; break;
         case FlagFormat:    msg = "Invalid transaction flag."; break;
@@ -58,6 +55,23 @@ void exitOnError(ErrorType e) {
     fprintf(stderr, "Error on line %d: %s\n", lineNum, msg);
     exit(1);
 
+}
+
+void exitOnErrorCmd(ErrorType e) {
+
+    char* usage = "Usage: ./warmup1 sort [optinalFileName]";
+    char* msg;
+
+    switch(e) {
+
+        case TooFewArgs:    msg = "Not enough arguments."; break;
+        case TooManyArgs:   msg = "Too many arguments."; break;
+        case UnknownCmd:    msg = "Command not recognized."; break;
+        default: msg = "Unknown error";
+    }
+
+    fprintf(stderr, "Malformed Command: %s\n%s\n", msg, usage);
+    exit(1);
 }
 
 void freeMemory(My402List* pList, My402ListElem* elem) {
@@ -406,7 +420,8 @@ void validateLine(char* line) {
     // Note that the pattens are additive. If the previous patten fails, the next
     // one never gets executed since the program exits. This helps us avoid any 
     // ambiguities when it comes to matching the description, which can contain
-    // character any number of times.  
+    // character any number of times. 
+
     char* flagPattern = "^(\\+|\\-)\t";
     char* datePatten =  "^(\\+|\\-)(\t[0-9]{1,10}\t)";
     char* currencyPattern = "^(\\+|\\-)(\t[0-9]{1,10}\t([0-9]{1,7}\\.[0-9]{2})\t)";
@@ -482,25 +497,27 @@ int readInput(My402List* pList, char* fileName, FILE* inStream) {
 void processArgs(int argc, char *argv[], char** fileNamePtr, FILE** inStreamPtr) {
 
     const int MAX_ARG_COUNT = 3;
-
+    
     char* command = "sort";
-    if (argc > MAX_ARG_COUNT) exitOnError(TooManyArgs);
+    if (argc > MAX_ARG_COUNT) exitOnErrorCmd(TooManyArgs);
     else if (argc == MAX_ARG_COUNT) {
 
-        if (strcmp(command, argv[1]) != 0) exitOnError(UnknownCmd);
+        if (strcmp(command, argv[1]) != 0) exitOnErrorCmd(UnknownCmd);
         *fileNamePtr = argv[MAX_ARG_COUNT-1];
      
     }
     else if (argc == MAX_ARG_COUNT - 1) {
 
-        if (strcmp(command, argv[1]) != 0) exitOnError(UnknownCmd);
+        if (strcmp(command, argv[1]) != 0) exitOnErrorCmd(UnknownCmd);
         *inStreamPtr = stdin;
     }
 
-    else exitOnError(TooFewArgs); 
+    else exitOnErrorCmd(TooFewArgs); 
 
     
 }
+
+
 
 /* ----------------------- main() -----------------------*/
 
