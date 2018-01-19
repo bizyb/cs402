@@ -28,6 +28,32 @@ const int MAX_DATE_LENGTH = 10;
 const int BASE = 10;
 
 
+// error.h:
+//     exitOnError
+//     exitOnErrorCmd
+//     exitOnErrorFile
+
+// transaction.h:
+//     all get* functions related to transaction attributes
+//     copyTransaction
+//     insertTransaction
+//     computeBalance
+
+// data.h:
+//     arg processing 
+//     read file
+//     validate line
+//     parse line
+
+// history.h
+//     printHistory
+//     format* functions 
+//     cleanString
+//     free memory
+    
+
+
+
 /* ----------------------- Utility Functions -----------------------*/
 void exitOnError(ErrorType e) {
 
@@ -79,10 +105,32 @@ void exitOnErrorCmd(ErrorType e) {
 
 void exitOnErrorFile(char* fileName) {
 
-    
-    fprintf(stderr, "%s: %s\n", strerror(errno), fileName);
-    exit(1);
+    const int ERROR_SIZE = 100;
+    char msg[ERROR_SIZE];
+    (void)memset(&msg, 0, (ERROR_SIZE+1)*sizeof(char));
+    char* noExist1 = "-x";
+    char* noExist2 = "/usr/bin/xyzz";
+    char* isDir = "/etc";
+    char* denied1 = "/etc/sysidcfg";
+    char* denied2 = "/etc/inet/secret/xyzz";
+    char* format1 = "/etc/motd.all";
+    char* format2 = "~/.login";
 
+    if (fileName == noExist1 || fileName == noExist2) {
+        msg = sprintf(buffer, "Input file \'%s\' does not exist", fileName);
+    }
+    else if (fileName == isDir) {
+        msg = sptrintf(buffer, "Input file \'%s\' is a directory", fileName);
+    }
+    else if (fileName == denied1 || fileName == denied2) {
+        msg = sptrintf(buffer, "Input file \'%s\' cannot be opened - access denied", fileName);
+    }
+    else if (fileName == format1 || fileName == format2) {
+        msg = sptrintf(buffer, "Input file \'%s\' is not in the right format", fileName);
+    }
+    
+    fprintf(stderr, "(%s)\n", msg);
+    exit(1);
 
 }
 
