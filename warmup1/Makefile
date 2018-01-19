@@ -1,3 +1,7 @@
+#   Author: Bizuwork Melesse
+#   USC Spring 2018 - CS402
+#   Assignment: Warmup 1
+# 
 warmup1: warmup1.o my402list.o error.o transaction.o history.o
 	gcc -o warmup1 -g warmup1.o my402list.o error.o transaction.o history.o
 

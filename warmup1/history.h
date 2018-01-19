@@ -1,3 +1,8 @@
+/*
+*  Author: Bizuwork Melesse
+*  USC Spring 2018 - CS402
+*  Assignment: Warmup 1
+*/
 
 #ifndef _WARMUP1_HISTORY
 #define _WARMUP1_HISTORY

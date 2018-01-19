@@ -1,3 +1,8 @@
+/*
+*  Author: Bizuwork Melesse
+*  USC Spring 2018 - CS402
+*  Assignment: Warmup 1
+*/
 
 #include <stdlib.h>
 #include <string.h>
