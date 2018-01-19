@@ -7,7 +7,6 @@
 typedef enum {
 	FileOpen,
 	LongLine,
-	// MalformedLine,
 	Duplicate,
 	HighAmount,
 	HighBalance,

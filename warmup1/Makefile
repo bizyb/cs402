@@ -19,5 +19,5 @@ history.o: history.c history.h
 
 
 clean:
-	rm -f *.o warmup1
+	rm -f *.o *.h.gch warmup1
 

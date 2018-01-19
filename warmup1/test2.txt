@@ -1,1 +1,35 @@
-+	1219359033	993.00	Notice the difference betweeen the first strtok call and the second, which is why you need to go home betwix the nights of sire Notice the difference betweeen the first strtok call and the second, which is why you need to go home betwix the nights of sire Notice the difference betweeen the first strtok call and the second, which is why you need to go home betwix the nights of sire Notice the difference betweeen the first strtok call and the second, which is why you need to go home betwix the nights of sire Notice the difference betweeen the first strtok call and the second, which is why you need to go home betwix the nights of sire Notice the difference betweeen the first strtok call and the second, which is why you need to go home betwix the nights of sire Notice the difference betweeen the first strtok call and the second, which is why you need to go home betwix the nights of sire Notice the difference betweeen the first strtok call and the second, which is why you need to go home betwix the nights of sire Old man
++-----------------+--------------------------+----------------+----------------+
+|       Date      | Description              |         Amount |        Balance |
++-----------------+--------------------------+----------------+----------------+
+| Thu Aug 21 2008 | ...                      |      1,723.00  |      1,723.00  |
+| Wed Dec 31 2008 | ...                      | (       45.33) |      1,677.67  |
+| Mon Jul 13 2009 | ...                      | (9,999,999.99) |     12,065.74  |
+| Sun Jan 10 2010 | ...                      | (      654.32) |     11,411.42  |
++-----------------+--------------------------+----------------+----------------+
++-----------------+--------------------------+----------------+----------------+
+|       Date      | Description              |         Amount |        Balance |
++-----------------+--------------------------+----------------+----------------+
+| 1230728833      | Phone bill               | (        5.33) | (        5.33) |
+| 1263142433      | Beemer monthly paymentx  | (      654.32) | (      654.32) |
+| 1247542433      | Dear parents             |      10388.06  |      10388.06  |
+| 1219356033      | Initial deposit          |       1723.00  |       1723.00  |
++-----------------+--------------------------+----------------+----------------+
+| a                        |
+| Initial deposit          | 
+
+
++-----------------+--------------------------+----------------+----------------+
+|       Date      | Description              |         Amount |        Balance |
++-----------------+--------------------------+----------------+----------------+
+| 1230728833      | Phone bill               |4532 0 1230728833
+| 1263142433      | Beemer monthly paymentx  |65432 0 1263142433
+| 1247542433      | Dear parents             |1038806 0 1247542433
+| 1219356033      | Initial deposit          |172300 0 1219356033
++-----------------+--------------------------+----------------+----------------+
+
+|         Amount |
+| (    45.32) |
+
+| (       45.33) |
+| (9,999,999.99) |
+| (9,999,999.00) |
