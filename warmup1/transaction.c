@@ -186,3 +186,4 @@ void computeBalance(My402List* pList) {
         else if ( currRecordPtr->balance <= -1 * MAX_AMOUNT) exitOnError(LowBalance);
     }
 }
+
