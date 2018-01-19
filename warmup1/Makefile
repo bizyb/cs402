@@ -1,11 +1,27 @@
-listtest: listtest.o my402list.o
-	gcc -o listtest -g listtest.o my402list.o
+#   Author: Bizuwork Melesse
+#   USC Spring 2018 - CS402
+#   Assignment: Warmup 1
+# 
+warmup1: warmup1.o my402list.o error.o transaction.o history.o
+	gcc -o warmup1 -g warmup1.o my402list.o error.o transaction.o history.o
 
-listtest.o: listtest.c my402list.h
-	gcc -g -c -Wall listtest.c
+warmup1.o: warmup1.c my402list.h error.h
+	gcc -g -c -Wall warmup1.c
 
 my402list.o: my402list.c my402list.h
 	gcc -g -c -Wall my402list.c
 
+error.o: error.c error.h 
+	 gcc -g -c -Wall error.c error.h
+
+transaction.o: transaction.c transaction.h
+	gcc -g -c -Wall transaction.c
+
+history.o: history.c history.h
+	gcc -g -c -Wall history.c
+
+
+
 clean:
-	rm -f *.o listtest
+	rm -f *.o *.h.gch warmup1
+
