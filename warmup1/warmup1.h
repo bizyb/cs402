@@ -87,25 +87,25 @@ extern Transaction parseLine(char*);
 /*
 	Print a sorted list of all transactions.
 */
-extern void printHistory(My402List*);
+// extern void printHistory(My402List*);
 
 /*
 	Given a Unix timestamp in seconds, return its corresponding date in the 
 	format of Day Month Date Year.
 */
-extern char* formatDate(int);
+// extern char* formatDate(int);
 
 /*
 	Format a currency value by defining its width and justifying the final value
 	to the right. Return the formatted value as a string. 
 */
-extern char* formatCurrency(int);
+// extern char* formatCurrency(int);
 
 /*
 	Insert a thousands separator into currency values about to be printed to
 	stdout. If insertion is successfull, return TRUE. Return FALSE otherwsie. 
 */
-extern int insertComma(char*);
+// extern int insertComma(char*);
 
 /*
 	Perform input line validation using regex pattern matching. Perform additional 
@@ -132,12 +132,12 @@ extern void processArgs(int, char* [], char**, FILE**);
 	for the date, a single character is also valid but not properly tokenized. 
 
 */
-extern char* cleanString(char*);
+// extern char* cleanString(char*);
 
 /*
 	Free all the memory allocated for transaction recrods.
 */
-extern void freeMemory(My402List*, My402ListElem*);
+// extern void freeMemory(My402List*, My402ListElem*);
 
 /*
 	Compute the balance after the current transaction takes place

@@ -7,6 +7,7 @@
 #include "cs402.h"
 #include "transaction.h"
 #include "warmup1.h"
+#include "history.h"
 #include "global.h"
 
 Flag getFlag(char* flag) {
