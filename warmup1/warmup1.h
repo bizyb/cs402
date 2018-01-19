@@ -12,7 +12,7 @@
 int lineNum;
 
 typedef enum {
-	FileOpen,
+	// FileOpen,
 	LongLine,
 	// MalformedLine,
 	Duplicate,
@@ -91,6 +91,10 @@ extern void exitOnError(ErrorType);
 */
 extern void exitOnErrorCmd(ErrorType);
 
+/*
+	Print file processing-related error message and exit program. 
+*/
+extern void exitOnErrorFile(char*);
 /*
 	Perform the appropriate type casting and formatting for each 
 	transaction attribute and return a Transaction record.

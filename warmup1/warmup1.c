@@ -14,6 +14,9 @@
 #include "my402list.h"
 #include "warmup1.h"
 #include <regex.h>
+#include <errno.h>
+#include <string.h>
+
 
 
 const int BUFFERSIZE = 1028;
@@ -31,7 +34,7 @@ void exitOnError(ErrorType e) {
    
     char* msg;
     switch(e) {
-        case FileOpen:      msg = "Failed to open file."; break;
+        // case FileOpen:      msg = "Failed to open file."; break;
         case LongLine:      msg = "Line exceeds acceptable length."; break;
         // case MalformedLine: msg = "Invalid line formatting."; break;
         case Duplicate:     msg = "Found entries with duplicate timestamp."; break;
@@ -72,6 +75,15 @@ void exitOnErrorCmd(ErrorType e) {
 
     fprintf(stderr, "Malformed Command: %s\n%s\n", msg, usage);
     exit(1);
+}
+
+void exitOnErrorFile(char* fileName) {
+
+    
+    fprintf(stderr, "%s: %s\n", strerror(errno), fileName);
+    exit(1);
+
+
 }
 
 void freeMemory(My402List* pList, My402ListElem* elem) {
@@ -475,7 +487,8 @@ int readInput(My402List* pList, char* fileName, FILE* inStream) {
     if (fileName != NULL) {
 
         file = fopen(fileName, "r");
-        if (file == NULL)  exitOnError(FileOpen);
+        if (file == NULL)  exitOnErrorFile(fileName);
+        fprintf(stdout, "opened file; not null\n");
     }
 
     else file = inStream;
@@ -496,14 +509,16 @@ int readInput(My402List* pList, char* fileName, FILE* inStream) {
 
 void processArgs(int argc, char *argv[], char** fileNamePtr, FILE** inStreamPtr) {
 
-    const int MAX_ARG_COUNT = 3;
     
+    const int MAX_ARG_COUNT = 3;
+
     char* command = "sort";
     if (argc > MAX_ARG_COUNT) exitOnErrorCmd(TooManyArgs);
     else if (argc == MAX_ARG_COUNT) {
 
         if (strcmp(command, argv[1]) != 0) exitOnErrorCmd(UnknownCmd);
         *fileNamePtr = argv[MAX_ARG_COUNT-1];
+
      
     }
     else if (argc == MAX_ARG_COUNT - 1) {
