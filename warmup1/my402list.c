@@ -175,6 +175,8 @@ int addToEmpty(My402List* pList, My402ListElem *elem) {
  int My402ListInit(My402List *pList) {
 
  	pList->num_members = 0;
+ 	My402ListElem anchor = {NULL, NULL, NULL};
+ 	pList->anchor = anchor;
  	return TRUE;
  }
 
