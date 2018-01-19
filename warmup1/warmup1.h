@@ -8,33 +8,10 @@
 #define _WARMUP1_H
 
 #include "cs402.h"
+#include "my402list.h"
+#include "error.h"
 
 int lineNum;
-
-typedef enum {
-	FileOpen,
-	LongLine,
-	// MalformedLine,
-	Duplicate,
-	HighAmount,
-	HighBalance,
-	LowBalance,
-	UnknownFlag,
-	UnknownAmount,
-	Timestamp,
-	Malloc,
-	ListInsertion,
-	TooManyArgs,
-	UnknownCmd,
-	TooFewArgs,
-	FlagFormat,
-	DateFormat,
-	CurrencyFormat,
-	DescFormat,
-	EmptyLine,
-	LineTooShort
-
-} ErrorType;
 
 typedef enum {
 
@@ -81,20 +58,7 @@ extern int getAmount(char*);
 */
 extern int getRawDate(char*);
 
-/*
-	Print data processing-related error message and exit program. 
-*/
-extern void exitOnError(ErrorType);
 
-/*
-	Print command line argument-related error message and exit program.
-*/
-extern void exitOnErrorCmd(ErrorType);
-
-/*
-	Print file processing-related error message and exit program. 
-*/
-extern void exitOnErrorFile(char*);
 /*
 	Perform the appropriate type casting and formatting for each 
 	transaction attribute and return a Transaction record.
