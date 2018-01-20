@@ -1,0 +1,1000 @@
+-	800439672	90607.44	Porttitor massa id neque aliquam vestibulum morbi blandit cursus
+-	1239522803	17449.01	Euismod lacinia at quis risus sed vulputate
++	1753746459	70257.68	Purus semper eget duis at
++	1353561006	19653.99	Aenean euismod elementum nisi quis eleifend quam adipiscing
++	1455827267	88793.88	Ac auctor augue mauris augue
++	778271296	72068.19	Nisl vel pretium lectus quam id leo
+-	1762037766	16964.17	In egestas erat imperdiet sed euismod nisi porta lorem mollis
++	991088615	90310.02	Nunc vel risus commodo viverra maecenas accumsan lacus vel facilisis
++	788283993	54273.16	Vestibulum sed arcu non odio euismod
++	1240889506	90437.20	Dictum fusce ut placerat orci nulla pellentesque
++	2044946667	21097.51	Enim ut tellus elementum sagittis
+-	1990469118	71336.46	Facilisis gravida neque convallis a cras
+-	540870451	44414.37	Vestibulum sed arcu non odio euismod lacinia at quis risus
+-	705210174	5718.75	Et pharetra pharetra massa massa ultricies mi
++	2095164964	20221.34	Et magnis dis parturient montes nascetur
+-	1398213971	56314.91	Sit amet nisl suscipit adipiscing bibendum est
+-	1100262893	55704.44	Semper eget duis at tellus at urna
++	2069451385	61327.81	Facilisis sed odio morbi quis commodo odio aenean sed adipiscing
++	207972556	29354.51	Volutpat ac tincidunt vitae semper quis lectus nulla at
++	1423919081	57266.13	Enim ut sem viverra aliquet eget sit amet tellus cras
+-	1495060182	24819.13	Aliquam ut porttitor leo a diam sollicitudin tempor
++	1577620092	17303.24	Scelerisque fermentum dui faucibus in
+-	1639278378	63247.38	Vulputate eu scelerisque felis imperdiet proin
+-	885164401	69348.80	Cras pulvinar mattis nunc sed blandit
+-	1802089065	61820.17	Arcu dui vivamus arcu felis bibendum ut
+-	1088662850	15681.94	Gravida cum sociis natoque penatibus et magnis dis parturient
++	148759615	16435.58	Amet mattis vulputate enim nulla aliquet porttitor lacus luctus accumsan
+-	2034140622	18734.63	Nec feugiat in fermentum posuere
++	1957498351	22156.00	Vestibulum lectus mauris ultrices eros
++	1114436704	40103.10	Porttitor eget dolor morbi non arcu risus
+-	930157285	48332.21	Viverra maecenas accumsan lacus vel facilisis
+-	259239311	62227.27	Dolor purus non enim praesent elementum facilisis leo
++	1642812280	10916.41	Ipsum dolor sit amet consectetur adipiscing elit pellentesque habitant
++	1021495922	11123.73	Eget gravida cum sociis natoque penatibus et magnis
+-	961200821	15135.50	Nec ultrices dui sapien eget mi proin
+-	393091897	56100.70	Libero id faucibus nisl tincidunt eget nullam non nisi est
++	753786962	76802.16	Erat nam at lectus urna duis convallis convallis
++	1241284440	10855.22	In massa tempor nec feugiat nisl
+-	889898700	42949.69	Placerat in egestas erat imperdiet sed euismod nisi porta
++	927152699	13362.82	Egestas purus viverra accumsan in nisl nisi scelerisque eu ultrices
+-	680099821	38693.48	Viverra aliquet eget sit amet tellus cras
+-	389909577	47743.20	Maecenas sed enim ut sem viverra aliquet eget sit amet
+-	589277186	36596.92	Urna neque viverra justo nec ultrices dui
++	1372686834	3081.44	Scelerisque fermentum dui faucibus in ornare quam viverra
+-	2122252784	72104.34	Molestie at elementum eu facilisis
++	1348353243	46441.84	At varius vel pharetra vel turpis nunc eget lorem dolor
+-	730138780	32214.73	Nisl vel pretium lectus quam id leo in
++	409972047	72512.91	Potenti nullam ac tortor vitae purus
++	875580391	49023.88	Eget nunc scelerisque viverra mauris in aliquam sem fringilla ut
++	163356679	8145.06	Dictumst vestibulum rhoncus est pellentesque elit
++	1710928539	70718.45	Cursus risus at ultrices mi tempus
+-	273568211	38607.53	Phasellus faucibus scelerisque eleifend donec pretium vulputate sapien nec sagittis
++	2138200059	77475.71	Nulla facilisi morbi tempus iaculis urna id volutpat lacus
++	106825707	30993.25	Scelerisque fermentum dui faucibus in
+-	1043563613	75207.03	Non arcu risus quis varius quam quisque id diam vel
+-	911900664	36361.76	Nulla facilisi nullam vehicula ipsum a
++	1664608163	35519.57	Euismod in pellentesque massa placerat
+-	2090100097	69200.48	Tempor orci dapibus ultrices in iaculis nunc
++	171556352	33179.03	Venenatis urna cursus eget nunc scelerisque viverra mauris
+-	1873240120	39292.35	Egestas pretium aenean pharetra magna ac placerat vestibulum lectus mauris
++	1348997497	35251.72	Consectetur a erat nam at lectus urna
+-	441300481	90341.87	Dapibus ultrices in iaculis nunc sed augue lacus
+-	253848882	99891.86	Dignissim suspendisse in est ante in nibh mauris cursus mattis
++	1463972883	74082.33	Mi quis hendrerit dolor magna eget est lorem ipsum dolor
+-	1651486627	35524.54	Volutpat odio facilisis mauris sit amet
+-	137327755	32789.76	Sed felis eget velit aliquet sagittis id
++	542472624	15101.30	Tempor nec feugiat nisl pretium
+-	1864222770	65718.34	Nunc faucibus a pellentesque sit amet porttitor eget
+-	1391471160	94986.97	Nunc lobortis mattis aliquam faucibus purus
+-	1825298636	14914.49	Lectus vestibulum mattis ullamcorper velit sed ullamcorper
+-	1646492495	31230.30	Dui sapien eget mi proin sed libero enim
++	1829377851	2834.63	Urna neque viverra justo nec ultrices dui
++	1697818130	73929.31	Augue mauris augue neque gravida in fermentum et
++	725987227	39392.65	Magna fringilla urna porttitor rhoncus
+-	1534949985	11847.15	Mauris nunc congue nisi vitae suscipit tellus
+-	77811656	22003.83	Hac habitasse platea dictumst vestibulum rhoncus est pellentesque elit
+-	1841328998	69168.22	Interdum velit laoreet id donec
++	1557697264	34513.45	Sit amet dictum sit amet justo donec enim diam vulputate
++	85681429	17242.36	Gravida cum sociis natoque penatibus et magnis dis parturient montes
+-	921840169	76553.18	Semper risus in hendrerit gravida rutrum quisque non tellus orci
++	3017192	56433.57	Sit amet mauris commodo quis imperdiet
+-	2137194396	87696.46	Semper viverra nam libero justo laoreet
+-	910023673	93325.39	Ultrices in iaculis nunc sed augue lacus viverra vitae congue
+-	754015236	32302.82	Magna fringilla urna porttitor rhoncus
+-	1310669504	31267.23	Tellus molestie nunc non blandit massa
++	1230270631	77061.37	Odio morbi quis commodo odio aenean
++	123324023	58836.01	Amet dictum sit amet justo donec enim diam vulputate ut
++	1289542754	49621.17	Ut pharetra sit amet aliquam id
++	194973611	63244.81	Orci porta non pulvinar neque laoreet suspendisse interdum consectetur libero
+-	1648358255	30597.95	Egestas quis ipsum suspendisse ultrices gravida dictum
++	343532635	70648.82	Arcu ac tortor dignissim convallis aenean et
++	2023112896	13403.87	A lacus vestibulum sed arcu non odio
++	1459320280	39202.91	Turpis massa sed elementum tempus egestas sed sed risus pretium
+-	462882683	56487.92	Mi bibendum neque egestas congue quisque egestas
++	2096846600	78465.79	Dignissim suspendisse in est ante in nibh mauris cursus mattis
++	1390190704	26727.87	In hac habitasse platea dictumst vestibulum rhoncus est pellentesque
++	704603553	52933.49	Mattis ullamcorper velit sed ullamcorper
+-	851433299	75253.04	Feugiat sed lectus vestibulum mattis ullamcorper
+-	1801783858	87095.35	Molestie a iaculis at erat pellentesque adipiscing commodo elit at
++	1804347711	7266.91	Faucibus ornare suspendisse sed nisi lacus sed viverra
++	1473620089	69408.63	Facilisis mauris sit amet massa vitae
++	2094995955	36072.04	Sit amet facilisis magna etiam tempor orci eu lobortis
+-	1102715827	94123.71	Aliquam nulla facilisi cras fermentum odio eu feugiat pretium
+-	426612845	9144.55	Tortor id aliquet lectus proin nibh
++	1639283387	30517.22	Aliquam ut porttitor leo a diam sollicitudin tempor id eu
++	1860719772	43563.63	Ut sem nulla pharetra diam
+-	36518946	82662.21	Cursus mattis molestie a iaculis at
++	73842189	42680.64	Amet aliquam id diam maecenas ultricies mi eget mauris
+-	531702473	70889.12	Nulla aliquet enim tortor at auctor urna nunc id
+-	1949732091	97447.45	Massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin
+-	1891456899	5133.15	Egestas purus viverra accumsan in nisl nisi scelerisque eu ultrices
+-	1055725101	37767.22	Eu mi bibendum neque egestas congue quisque egestas
++	1656135254	55376.70	Purus semper eget duis at tellus at urna condimentum mattis
++	1483650063	40864.09	Ridiculus mus mauris vitae ultricies leo integer malesuada
++	1163597338	45482.55	Eget egestas purus viverra accumsan in nisl
++	464844316	13535.24	Vel pretium lectus quam id leo in vitae
++	465972161	39528.74	Nulla pharetra diam sit amet nisl suscipit
++	864207103	71086.42	Scelerisque varius morbi enim nunc faucibus a pellentesque
++	1486518998	52565.66	Aliquam vestibulum morbi blandit cursus risus at ultrices
++	2068781659	21500.23	Amet est placerat in egestas erat
+-	1939280778	97958.51	Amet consectetur adipiscing elit duis tristique sollicitudin nibh sit amet
++	1797091695	5977.49	Viverra maecenas accumsan lacus vel facilisis
+-	1764689467	14067.77	Ultricies mi eget mauris pharetra et ultrices neque ornare aenean
+-	575520194	93911.35	Pretium fusce id velit ut tortor pretium viverra
++	241166403	5664.94	Donec et odio pellentesque diam
+-	1725438025	6498.25	Pretium lectus quam id leo in vitae turpis massa
++	1827047777	25840.71	Adipiscing elit pellentesque habitant morbi tristique senectus et netus et
+-	1905341143	22036.71	Posuere lorem ipsum dolor sit amet
++	774877083	87229.13	Adipiscing elit ut aliquam purus sit amet luctus
++	1594317492	31591.92	Sed ullamcorper morbi tincidunt ornare massa eget egestas
++	816720865	2959.43	Dis parturient montes nascetur ridiculus
+-	467206382	86754.76	Pulvinar pellentesque habitant morbi tristique senectus et
+-	1090194251	26185.12	Amet massa vitae tortor condimentum lacinia
++	1030930620	66084.08	Lacus viverra vitae congue eu consequat
+-	1152833176	77159.51	Non tellus orci ac auctor augue
++	1083401108	28700.83	Sem et tortor consequat id porta
++	449713352	62082.74	Tempus quam pellentesque nec nam aliquam sem et
+-	437522409	39188.36	Aliquam purus sit amet luctus venenatis
++	1848620324	72912.33	Elementum integer enim neque volutpat
++	1788507608	82040.23	Pretium aenean pharetra magna ac placerat vestibulum lectus mauris
++	997645715	71254.85	Nunc sed velit dignissim sodales ut eu sem
++	2013152283	75680.50	Congue nisi vitae suscipit tellus mauris a diam maecenas sed
++	583699383	84763.01	Sed adipiscing diam donec adipiscing tristique risus nec feugiat in
++	1149811191	96699.03	Dignissim cras tincidunt lobortis feugiat vivamus at augue
+-	1984345683	65398.04	Mi in nulla posuere sollicitudin aliquam ultrices sagittis
++	1411406520	70952.27	Leo vel fringilla est ullamcorper eget nulla facilisi etiam dignissim
++	1049621711	90385.30	Facilisi etiam dignissim diam quis enim lobortis
+-	742770550	50702.69	Ante in nibh mauris cursus
++	529617072	54172.78	Adipiscing at in tellus integer feugiat scelerisque
++	1219509861	9832.80	Urna cursus eget nunc scelerisque viverra mauris in aliquam sem
+-	156445218	82301.88	Egestas integer eget aliquet nibh praesent tristique magna sit amet
++	494873292	83236.39	Enim praesent elementum facilisis leo
+-	1425779597	92064.04	Egestas purus viverra accumsan in nisl
+-	2065066574	21257.05	Molestie a iaculis at erat pellentesque adipiscing
+-	1894450587	18709.52	Donec ac odio tempor orci dapibus ultrices in
++	1524413564	50040.36	Felis imperdiet proin fermentum leo
++	1036939738	8427.24	Egestas purus viverra accumsan in nisl nisi scelerisque eu ultrices
++	699155401	94684.22	Sagittis orci a scelerisque purus semper eget duis
+-	207037019	78560.54	Dis parturient montes nascetur ridiculus
+-	2055977748	31645.46	Sit amet commodo nulla facilisi nullam vehicula ipsum a
+-	1946013279	27435.69	Praesent tristique magna sit amet purus gravida quis
++	51489660	58725.70	Semper eget duis at tellus at urna
++	504282192	30311.41	Nibh ipsum consequat nisl vel pretium lectus
+-	2139469694	62537.60	Et odio pellentesque diam volutpat commodo sed egestas egestas
+-	2052672403	46855.19	Arcu vitae elementum curabitur vitae nunc sed
++	602572993	9762.63	Consectetur purus ut faucibus pulvinar elementum integer enim
+-	1131521371	28267.64	Donec ac odio tempor orci dapibus ultrices in
+-	845765556	65899.54	Maecenas ultricies mi eget mauris pharetra et ultrices neque
+-	340507822	58224.74	Augue interdum velit euismod in pellentesque massa
+-	895689331	84687.68	Proin libero nunc consequat interdum varius sit amet mattis vulputate
+-	1025581413	46834.48	Cursus mattis molestie a iaculis at
+-	268621269	15464.12	Mattis aliquam faucibus purus in massa tempor nec
+-	1111541892	69756.75	Volutpat consequat mauris nunc congue nisi vitae suscipit tellus mauris
++	546219531	77959.37	Etiam sit amet nisl purus in
++	1609840820	31130.31	Sem integer vitae justo eget magna fermentum
+-	1999711545	30191.16	Netus et malesuada fames ac turpis egestas maecenas pharetra convallis
++	90164250	69590.62	In cursus turpis massa tincidunt dui ut ornare lectus sit
++	1657939004	85236.06	Faucibus in ornare quam viverra orci sagittis eu volutpat odio
++	1677913159	93361.26	Mi tempus imperdiet nulla malesuada pellentesque elit eget gravida
+-	959072582	66435.81	Enim tortor at auctor urna nunc id cursus metus aliquam
++	2142554624	7632.89	At tellus at urna condimentum mattis
++	1704663448	20737.50	Sapien nec sagittis aliquam malesuada bibendum arcu
++	199121071	98191.56	Amet dictum sit amet justo donec enim diam vulputate
++	282061633	73872.60	Maecenas sed enim ut sem viverra aliquet eget sit amet
+-	2010412826	31184.41	Est ultricies integer quis auctor
++	443202478	29304.50	Non quam lacus suspendisse faucibus interdum posuere lorem ipsum
++	451391400	86348.69	Duis convallis convallis tellus id interdum velit
++	1613926781	83881.08	Pretium quam vulputate dignissim suspendisse
++	445614964	29947.72	Nunc sed augue lacus viverra vitae congue
++	1972065181	33926.63	Felis donec et odio pellentesque
++	1359263586	16669.85	Augue mauris augue neque gravida in fermentum et
+-	1972024235	65201.05	Pellentesque nec nam aliquam sem et tortor consequat id porta
+-	2011856179	52590.77	Nunc consequat interdum varius sit amet
+-	568995816	13125.31	Suspendisse interdum consectetur libero id
++	1776962266	38079.20	Purus gravida quis blandit turpis cursus in hac habitasse platea
++	1383768796	2658.24	Nisl vel pretium lectus quam id leo in
++	980733103	9217.30	Dignissim suspendisse in est ante
++	140369711	3417.18	Nullam eget felis eget nunc lobortis
+-	561748148	84618.72	Consectetur libero id faucibus nisl tincidunt eget nullam
++	1954868142	11670.87	Dignissim cras tincidunt lobortis feugiat vivamus at augue
++	1400517322	32779.81	Tincidunt eget nullam non nisi est sit amet facilisis magna
+-	1256376181	72345.66	Blandit cursus risus at ultrices mi tempus
+-	1444012688	33301.98	Mattis ullamcorper velit sed ullamcorper
++	1080037181	40691.16	Arcu bibendum at varius vel pharetra vel turpis nunc
++	1422064170	57888.77	Sed cras ornare arcu dui vivamus arcu
++	72241368	46398.46	Vestibulum morbi blandit cursus risus at ultrices mi
++	781653899	86168.44	Erat nam at lectus urna duis convallis
+-	119713373	47128.47	Arcu cursus euismod quis viverra nibh cras pulvinar
++	732045181	72172.83	Etiam non quam lacus suspendisse faucibus interdum posuere
++	1577066914	79545.23	Porttitor rhoncus dolor purus non enim praesent
+-	372419050	81961.51	Nulla pharetra diam sit amet nisl
++	9782031	74452.85	Non pulvinar neque laoreet suspendisse interdum
++	188759650	2299.93	Lacinia quis vel eros donec ac odio tempor orci
+-	1470530384	69470.31	In tellus integer feugiat scelerisque
++	1583951254	83195.97	Duis convallis convallis tellus id interdum velit laoreet id donec
++	1054434780	66481.80	Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus
+-	1035717809	37528.97	Pretium viverra suspendisse potenti nullam ac tortor vitae purus
++	808213500	69737.17	Rutrum quisque non tellus orci ac auctor augue
++	1700340142	86013.39	Adipiscing vitae proin sagittis nisl rhoncus
+-	1904350670	12746.19	Accumsan lacus vel facilisis volutpat est velit
+-	2129542472	14778.35	Egestas integer eget aliquet nibh praesent tristique magna sit amet
+-	1064589054	60106.96	Arcu non odio euismod lacinia
++	1813067138	46121.35	Auctor augue mauris augue neque gravida in fermentum
+-	1006713240	38546.12	Nec nam aliquam sem et tortor consequat id
+-	876879087	94824.79	Vel pretium lectus quam id
+-	708452175	5243.86	Eu scelerisque felis imperdiet proin fermentum leo vel orci porta
++	1766680092	74987.45	Nec feugiat in fermentum posuere
++	1912489475	62420.32	Arcu bibendum at varius vel
+-	472780845	13652.09	Sit amet venenatis urna cursus
++	1482061820	64571.67	Bibendum enim facilisis gravida neque convallis
++	282575218	62734.61	Eu feugiat pretium nibh ipsum consequat nisl vel
++	1128264233	84812.19	In hac habitasse platea dictumst quisque
+-	1549784008	31014.28	Hendrerit dolor magna eget est
+-	799685582	81811.17	Cras pulvinar mattis nunc sed
++	1108125955	53619.13	Donec ac odio tempor orci dapibus ultrices in
++	1456435822	77936.10	Potenti nullam ac tortor vitae purus faucibus
++	1848132775	95108.20	Diam phasellus vestibulum lorem sed
++	2005989411	45949.64	Vulputate eu scelerisque felis imperdiet proin
+-	1035863771	76907.07	Sit amet aliquam id diam maecenas
++	326242628	62962.20	Tempus iaculis urna id volutpat lacus laoreet
++	312095069	29409.41	Donec enim diam vulputate ut pharetra sit amet aliquam
++	344470039	63448.92	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+-	29572792	33810.10	Vestibulum sed arcu non odio euismod lacinia at quis risus
+-	1386276099	23132.72	Sed cras ornare arcu dui vivamus arcu
+-	67696892	38368.01	Venenatis cras sed felis eget velit
++	451029326	40298.56	Odio morbi quis commodo odio aenean
+-	1003817586	33906.98	Quam vulputate dignissim suspendisse in est ante in nibh mauris
++	918851807	26388.79	Nunc congue nisi vitae suscipit tellus
+-	891842195	99174.65	Morbi tristique senectus et netus et
++	1073438087	42408.78	Nec feugiat nisl pretium fusce id velit ut tortor pretium
+-	1337106672	76768.49	Nunc sed augue lacus viverra vitae congue eu
++	1716000570	86955.26	Fringilla urna porttitor rhoncus dolor purus non enim praesent
++	1272380919	45650.90	Hendrerit dolor magna eget est
+-	830744350	13790.74	Urna neque viverra justo nec ultrices dui sapien
++	535232639	62897.18	Nec sagittis aliquam malesuada bibendum
+-	1683714377	12661.46	Vitae tempus quam pellentesque nec nam aliquam sem et tortor
+-	662630932	37030.53	Rhoncus urna neque viverra justo nec
+-	1638235453	18205.39	Adipiscing elit duis tristique sollicitudin nibh sit amet
+-	689789214	97156.97	Aliquam ut porttitor leo a diam sollicitudin tempor id eu
++	51151504	85587.70	Diam vulputate ut pharetra sit amet
++	1375174291	49477.13	Pharetra sit amet aliquam id diam maecenas ultricies mi
+-	2036776685	91515.60	Ac tincidunt vitae semper quis lectus nulla at
++	1994340408	30210.19	Condimentum lacinia quis vel eros donec
+-	84183598	8885.02	Pretium aenean pharetra magna ac placerat vestibulum lectus
++	1850898425	85219.23	Amet dictum sit amet justo donec enim diam vulputate ut
+-	1495634972	15843.88	Arcu bibendum at varius vel
++	1280277114	96718.10	Pretium quam vulputate dignissim suspendisse
+-	890639072	86589.57	Varius morbi enim nunc faucibus a pellentesque sit amet
+-	988704050	83133.39	Leo vel fringilla est ullamcorper eget nulla facilisi etiam dignissim
+-	822346077	10806.48	Orci a scelerisque purus semper eget duis at tellus
+-	1911618022	98181.11	Nisi vitae suscipit tellus mauris a diam maecenas sed enim
+-	1593669242	22573.73	Vitae suscipit tellus mauris a diam maecenas sed enim ut
++	431029349	75467.07	Mauris nunc congue nisi vitae suscipit
++	1594838664	8784.45	Pellentesque elit eget gravida cum
++	1989020798	74281.79	Est ultricies integer quis auctor
++	1491800546	52384.48	Risus at ultrices mi tempus
+-	1724999055	42486.05	Enim sed faucibus turpis in eu
+-	129281392	19364.97	Amet consectetur adipiscing elit pellentesque habitant morbi
+-	621173830	88386.30	Consectetur lorem donec massa sapien faucibus
+-	1790612092	68976.27	Lectus nulla at volutpat diam ut venenatis tellus
++	480144557	9981.48	Venenatis a condimentum vitae sapien pellentesque habitant morbi tristique senectus
+-	2120758522	34403.67	Sagittis orci a scelerisque purus semper eget duis
++	360266281	33466.12	Massa tincidunt nunc pulvinar sapien et ligula
++	566925798	45253.45	Convallis a cras semper auctor
++	1471125608	60366.08	At auctor urna nunc id cursus
++	1353018963	23254.18	Libero nunc consequat interdum varius sit amet
++	1115132529	78815.99	Volutpat odio facilisis mauris sit amet
+-	320387345	81428.71	Egestas quis ipsum suspendisse ultrices gravida dictum
++	413298610	71291.00	Mus mauris vitae ultricies leo integer
+-	795624099	61170.45	Fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate sapien
++	700184759	33909.72	Senectus et netus et malesuada fames ac turpis
++	900562167	7242.27	Tristique senectus et netus et malesuada
+-	780820449	43634.92	A condimentum vitae sapien pellentesque habitant morbi tristique
+-	520900958	12064.08	Feugiat in ante metus dictum at tempor commodo
++	1697699740	75068.57	Varius vel pharetra vel turpis
++	523213207	9785.07	Id neque aliquam vestibulum morbi blandit cursus risus at ultrices
+-	1904430291	75978.86	Nunc faucibus a pellentesque sit amet
++	1513059206	82507.48	Ipsum dolor sit amet consectetur
++	235609322	82027.27	Tristique et egestas quis ipsum suspendisse ultrices gravida dictum fusce
++	1460578521	3034.86	Sapien pellentesque habitant morbi tristique senectus et netus
++	110781121	30574.87	Est ullamcorper eget nulla facilisi
++	1296585985	40751.45	Senectus et netus et malesuada fames ac turpis
+-	704276671	63829.73	Ac auctor augue mauris augue
+-	1032859930	53797.92	Lorem ipsum dolor sit amet consectetur adipiscing
+-	1049235789	12689.35	Praesent tristique magna sit amet purus gravida quis
+-	1270650714	81147.48	Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin nibh
++	2108317066	5928.41	Nisi est sit amet facilisis magna etiam tempor orci
++	1812983177	18130.88	Adipiscing elit ut aliquam purus sit amet luctus
++	862631577	16542.81	Phasellus faucibus scelerisque eleifend donec pretium vulputate sapien nec
++	393955021	97379.64	Sed adipiscing diam donec adipiscing tristique risus nec feugiat in
++	94294656	16716.32	Non tellus orci ac auctor augue mauris augue neque
+-	1858654694	58674.37	Ut tellus elementum sagittis vitae et leo duis ut diam
+-	2037813652	33037.87	Maecenas accumsan lacus vel facilisis volutpat est velit
+-	1136199040	80874.90	In hac habitasse platea dictumst
+-	1962610278	27186.49	Ultricies lacus sed turpis tincidunt id aliquet risus
++	1421750138	50691.04	Sociis natoque penatibus et magnis dis parturient montes nascetur
+-	195575521	56676.70	Sit amet mauris commodo quis imperdiet
++	86925813	83289.32	Quis enim lobortis scelerisque fermentum dui faucibus in ornare
+-	442981787	96726.19	Quisque egestas diam in arcu
++	1529039452	80853.91	Porta non pulvinar neque laoreet
+-	329701301	16252.49	Tortor at risus viverra adipiscing at
+-	1551422725	17133.45	Enim facilisis gravida neque convallis a cras semper
+-	631495491	68042.26	Posuere morbi leo urna molestie
+-	1616909747	98847.60	Ac tincidunt vitae semper quis lectus nulla at
++	557234163	5187.48	Nunc eget lorem dolor sed viverra ipsum
+-	1975680490	60962.01	Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat
+-	1699910863	23853.64	Magna ac placerat vestibulum lectus mauris
+-	1877276364	46883.75	Elit eget gravida cum sociis natoque
+-	404770004	8428.11	Arcu bibendum at varius vel pharetra vel turpis nunc
++	1739889217	34865.64	In est ante in nibh
++	596123164	40603.17	Maecenas accumsan lacus vel facilisis volutpat est velit
++	2004536735	40769.92	Fames ac turpis egestas integer eget aliquet
+-	1777020713	48017.47	Egestas maecenas pharetra convallis posuere
++	500926099	38730.49	Pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus faucibus
+-	1915911735	47673.09	Volutpat diam ut venenatis tellus in metus vulputate eu scelerisque
+-	1920055723	17104.84	Facilisis magna etiam tempor orci eu lobortis elementum nibh
++	557842132	20200.15	Nisi est sit amet facilisis magna etiam tempor orci
+-	416703164	53227.87	Habitant morbi tristique senectus et netus
+-	1373593556	9983.26	Pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus faucibus
++	1802870937	33980.70	Aliquam ut porttitor leo a
+-	1062067449	73465.88	Turpis nunc eget lorem dolor
+-	136432180	75440.96	Platea dictumst vestibulum rhoncus est pellentesque elit ullamcorper dignissim
++	969055019	96134.55	Nullam ac tortor vitae purus faucibus ornare
+-	471855579	63754.51	Ridiculus mus mauris vitae ultricies leo integer malesuada
++	1503115007	30690.65	Dui ut ornare lectus sit
+-	92393373	39826.60	Tortor aliquam nulla facilisi cras fermentum odio
+-	525664327	60665.22	Sed felis eget velit aliquet sagittis id consectetur purus ut
+-	956081613	31676.51	Consectetur libero id faucibus nisl tincidunt eget nullam
+-	679391624	67962.52	Magna fermentum iaculis eu non diam phasellus
+-	1346178620	23552.98	Est velit egestas dui id ornare
+-	262559038	99743.19	At risus viverra adipiscing at
+-	677997369	70723.94	Scelerisque viverra mauris in aliquam sem fringilla ut
+-	309236051	91528.24	Dui sapien eget mi proin sed libero enim
+-	1110241861	22341.07	Mauris nunc congue nisi vitae suscipit tellus
+-	1458851416	29472.72	Tortor consequat id porta nibh
++	1644544194	25701.44	Elementum eu facilisis sed odio morbi quis
+-	1838808293	17087.13	Volutpat blandit aliquam etiam erat velit scelerisque
++	1447826030	99347.54	Morbi non arcu risus quis
++	1429704216	93212.36	Amet consectetur adipiscing elit ut aliquam purus sit
++	1734203480	67624.44	Sapien faucibus et molestie ac
+-	1244158824	81512.42	Tristique et egestas quis ipsum suspendisse ultrices gravida dictum fusce
+-	1903943130	3750.30	Nec feugiat in fermentum posuere urna nec tincidunt
++	1861773459	40094.05	Feugiat sed lectus vestibulum mattis ullamcorper
++	1464246259	30321.55	Eget sit amet tellus cras
+-	278876399	61012.40	Malesuada nunc vel risus commodo viverra maecenas accumsan lacus
+-	372379452	86705.60	Facilisi cras fermentum odio eu feugiat pretium
++	1969181402	74352.67	Urna molestie at elementum eu facilisis sed
++	722918212	82682.96	Gravida quis blandit turpis cursus in hac habitasse
++	1960565219	68208.62	Praesent semper feugiat nibh sed pulvinar
++	194625269	6624.41	Euismod lacinia at quis risus sed vulputate
+-	995832439	96528.10	Vitae aliquet nec ullamcorper sit amet risus nullam eget
+-	661674501	33776.56	Nec tincidunt praesent semper feugiat nibh sed pulvinar
++	886849095	68371.50	Nibh mauris cursus mattis molestie a iaculis at erat pellentesque
++	932603217	21246.12	Pellentesque nec nam aliquam sem et tortor
+-	1987284663	89345.66	Diam donec adipiscing tristique risus
++	1740870616	9191.19	Cras pulvinar mattis nunc sed blandit
++	914991226	19648.29	Malesuada fames ac turpis egestas integer eget aliquet
++	1060936431	37399.33	Duis convallis convallis tellus id interdum velit
++	1876466198	45556.13	Quis commodo odio aenean sed adipiscing diam donec adipiscing tristique
++	541103819	60293.04	Massa tincidunt nunc pulvinar sapien et ligula
++	1579470860	86059.68	Quam elementum pulvinar etiam non quam lacus
+-	1006032113	59579.31	Morbi leo urna molestie at elementum eu facilisis sed
++	87491234	64326.70	Scelerisque eleifend donec pretium vulputate sapien nec sagittis
++	363674485	81942.24	Sed turpis tincidunt id aliquet risus feugiat
+-	1568702532	86653.11	Posuere sollicitudin aliquam ultrices sagittis
+-	1128689461	22348.77	Blandit cursus risus at ultrices mi tempus imperdiet nulla
++	397277931	29736.95	Pellentesque eu tincidunt tortor aliquam nulla facilisi cras
++	496574718	14029.95	Pretium viverra suspendisse potenti nullam ac tortor vitae purus
+-	266426844	35713.16	In egestas erat imperdiet sed
++	1577891436	98744.48	Aliquam ultrices sagittis orci a scelerisque
+-	1556891958	41102.13	Vitae tempus quam pellentesque nec nam aliquam sem et tortor
+-	566514554	11788.06	Odio eu feugiat pretium nibh ipsum consequat nisl vel
++	1068185079	28146.30	Duis at tellus at urna condimentum mattis
+-	118976582	56252.89	Gravida quis blandit turpis cursus in hac habitasse
+-	752114436	81765.73	Diam in arcu cursus euismod quis viverra
+-	933935694	75625.82	Ipsum dolor sit amet consectetur
+-	434808535	50047.81	Pulvinar neque laoreet suspendisse interdum consectetur libero id faucibus
+-	55688331	62198.58	Et magnis dis parturient montes nascetur
+-	1659374989	97205.26	Suspendisse in est ante in nibh
++	1318309814	17763.39	Egestas maecenas pharetra convallis posuere morbi leo urna
+-	308839947	24349.64	Fusce ut placerat orci nulla pellentesque dignissim enim
+-	1396557024	87280.44	Eu nisl nunc mi ipsum faucibus
++	798029434	1339.18	Orci porta non pulvinar neque laoreet suspendisse interdum consectetur libero
++	952105475	35778.75	Ut diam quam nulla porttitor massa id neque aliquam vestibulum
++	2012514293	13287.67	Dignissim sodales ut eu sem integer vitae
++	377257326	1006.81	Euismod elementum nisi quis eleifend quam
+-	843071319	23398.83	Et tortor consequat id porta nibh venenatis cras sed felis
+-	305668619	95932.96	Ipsum nunc aliquet bibendum enim facilisis gravida neque convallis
++	1514051059	30701.62	Vivamus at augue eget arcu dictum varius duis at consectetur
++	1768347110	79370.44	Volutpat ac tincidunt vitae semper quis lectus nulla at
+-	664804948	62073.70	Leo vel fringilla est ullamcorper eget nulla facilisi etiam dignissim
++	1262076128	88110.92	Amet justo donec enim diam vulputate ut pharetra sit
++	906036954	1768.47	Elit scelerisque mauris pellentesque pulvinar
++	609400774	22793.07	Nibh mauris cursus mattis molestie a iaculis at erat pellentesque
+-	1418216657	11100.94	Malesuada fames ac turpis egestas integer eget aliquet
+-	713180825	9187.69	Nisl vel pretium lectus quam id leo in
++	1705689333	66567.23	Mi ipsum faucibus vitae aliquet nec ullamcorper sit amet
++	1696543899	46268.46	Egestas tellus rutrum tellus pellentesque
++	1445970281	76790.61	Pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus faucibus
+-	1375848355	77677.48	In egestas erat imperdiet sed euismod nisi porta lorem mollis
++	1331553027	29951.96	Rhoncus est pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat
++	72280889	23310.41	Diam vulputate ut pharetra sit
++	313320153	44002.14	Eu turpis egestas pretium aenean pharetra
++	1548735870	53341.78	Quam vulputate dignissim suspendisse in est ante in nibh mauris
+-	549263161	21294.53	Fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate sapien nec
++	14673790	88928.07	Viverra aliquet eget sit amet tellus cras adipiscing enim eu
+-	430902609	46567.46	Tortor at risus viverra adipiscing at in tellus integer
+-	165413090	74278.61	Vitae tempus quam pellentesque nec nam aliquam sem et tortor
+-	1394507648	72755.50	Adipiscing elit ut aliquam purus sit amet luctus
++	1297878038	59839.20	Ut tortor pretium viverra suspendisse potenti nullam ac
++	1615704894	59272.12	Pretium fusce id velit ut tortor pretium viverra
+-	531320430	52344.83	Habitant morbi tristique senectus et netus et
++	1087791702	13025.87	Ullamcorper velit sed ullamcorper morbi tincidunt ornare massa eget
++	1703785687	92493.90	Purus ut faucibus pulvinar elementum integer enim neque
+-	6196267	41057.45	At varius vel pharetra vel turpis
+-	736014153	20834.40	Tristique senectus et netus et malesuada fames ac turpis
+-	1127815301	87102.48	Suspendisse sed nisi lacus sed viverra tellus
+-	362441563	38592.90	Nec tincidunt praesent semper feugiat
+-	149979016	17790.98	Tristique et egestas quis ipsum suspendisse ultrices gravida dictum fusce
++	169744284	59279.88	Ornare massa eget egestas purus viverra
+-	486985065	72421.17	Urna molestie at elementum eu facilisis sed
++	1570598789	6705.62	Sapien faucibus et molestie ac
+-	1231212527	19225.19	Aliquam ut porttitor leo a diam sollicitudin tempor id eu
++	1211470734	36862.21	Augue neque gravida in fermentum et sollicitudin ac orci
+-	1150254459	49022.16	Condimentum vitae sapien pellentesque habitant morbi
+-	1082115893	58491.02	Sed lectus vestibulum mattis ullamcorper velit sed ullamcorper
+-	1004651602	31473.71	Suspendisse in est ante in nibh
++	718832561	48829.67	Scelerisque eleifend donec pretium vulputate sapien nec sagittis
++	317162199	62196.72	Eleifend quam adipiscing vitae proin
++	1272312062	43977.14	Aliquam ut porttitor leo a diam sollicitudin
+-	1947820960	31609.72	Mattis vulputate enim nulla aliquet porttitor lacus luctus accumsan
+-	686812203	29959.19	Pulvinar neque laoreet suspendisse interdum consectetur libero
++	189846375	93022.71	Pellentesque elit eget gravida cum
+-	1183930231	27645.85	Pulvinar neque laoreet suspendisse interdum consectetur libero
+-	1268724126	80734.45	Nec tincidunt praesent semper feugiat
++	1740739585	1262.45	Vitae proin sagittis nisl rhoncus mattis rhoncus
+-	95369026	81522.50	Donec enim diam vulputate ut pharetra sit
+-	2147123618	99002.33	Vel fringilla est ullamcorper eget nulla facilisi
++	1740782542	52774.40	Metus vulputate eu scelerisque felis imperdiet
+-	1245068279	34364.85	Amet consectetur adipiscing elit ut aliquam purus sit amet luctus
++	1567866906	6990.09	Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo
++	1398788481	17944.82	Ac feugiat sed lectus vestibulum mattis
++	836927945	7763.93	Donec et odio pellentesque diam
++	1457985735	49143.16	Tincidunt tortor aliquam nulla facilisi
++	1515278136	22215.09	Faucibus interdum posuere lorem ipsum dolor
++	692726353	61028.41	Ultrices sagittis orci a scelerisque purus
+-	2111089349	54105.02	Dolor magna eget est lorem ipsum dolor sit
++	205653155	13106.31	Ridiculus mus mauris vitae ultricies leo integer malesuada
++	581707361	48923.11	Consectetur adipiscing elit duis tristique sollicitudin
+-	369819501	47910.29	Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc consequat
+-	1273399722	32008.82	Id nibh tortor id aliquet lectus proin nibh nisl condimentum
++	552239629	95968.63	Tellus orci ac auctor augue mauris augue neque gravida
++	646871232	53945.11	Faucibus turpis in eu mi bibendum neque egestas congue
+-	1696926503	64601.87	Duis at tellus at urna condimentum mattis
+-	234699667	16138.83	Risus nec feugiat in fermentum posuere
+-	1180565254	71013.38	Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat
+-	774947311	3376.24	Amet est placerat in egestas erat
++	2124330820	53140.69	Tellus integer feugiat scelerisque varius
+-	736743805	71280.12	Bibendum ut tristique et egestas
+-	797344437	64203.38	Purus ut faucibus pulvinar elementum integer enim neque
++	1220374316	25689.45	Egestas erat imperdiet sed euismod nisi porta
+-	2084205672	46407.51	In est ante in nibh mauris
++	1899257952	72966.02	Ut tellus elementum sagittis vitae et leo duis ut
+-	1832354649	35412.25	Cursus vitae congue mauris rhoncus
+-	1669092138	13778.42	Et netus et malesuada fames
+-	585422921	97380.70	Vestibulum sed arcu non odio euismod lacinia at quis risus
+-	2144047539	70137.99	Justo eget magna fermentum iaculis
++	72266370	79682.81	Congue nisi vitae suscipit tellus mauris
++	1054170335	99214.54	Nulla at volutpat diam ut
+-	1992316680	21934.25	Diam vulputate ut pharetra sit amet
++	421019606	8552.51	Lorem sed risus ultricies tristique nulla aliquet enim tortor at
++	453409405	6063.37	Feugiat in fermentum posuere urna nec tincidunt praesent semper feugiat
+-	887206289	27549.95	Nunc non blandit massa enim nec dui
+-	794320592	37260.31	Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo
++	1646059943	32674.18	Eros in cursus turpis massa tincidunt dui ut
+-	871305821	62999.59	Natoque penatibus et magnis dis parturient montes
++	532662232	56144.79	Vitae auctor eu augue ut lectus arcu bibendum at varius
+-	419532655	40616.99	Vel fringilla est ullamcorper eget nulla facilisi
++	1795760834	21268.51	Facilisi etiam dignissim diam quis enim lobortis
++	426326497	47625.04	Neque ornare aenean euismod elementum nisi quis
+-	1171898830	25620.11	Eu feugiat pretium nibh ipsum consequat nisl vel
+-	137920049	90511.95	Dictumst quisque sagittis purus sit amet
+-	1172510576	31439.62	Diam phasellus vestibulum lorem sed risus ultricies
+-	1201971414	77971.90	In egestas erat imperdiet sed
++	1312083743	21872.99	Nunc vel risus commodo viverra maecenas accumsan lacus
+-	765169879	74563.58	Maecenas sed enim ut sem viverra aliquet eget sit amet
+-	880763470	19004.11	Sit amet venenatis urna cursus eget nunc scelerisque
+-	41645589	88586.83	Purus in mollis nunc sed id
+-	1373820872	79090.24	Faucibus a pellentesque sit amet porttitor
++	1513965065	99085.02	Vitae nunc sed velit dignissim sodales ut eu sem
++	1123383176	22169.92	Proin nibh nisl condimentum id venenatis
++	1320379225	43434.04	Fringilla urna porttitor rhoncus dolor purus non enim praesent
+-	1923156316	38082.12	Donec ac odio tempor orci dapibus ultrices
+-	671963138	28333.02	Laoreet sit amet cursus sit amet dictum
+-	647931386	19793.62	Gravida rutrum quisque non tellus
++	1514132876	43027.26	Vestibulum sed arcu non odio euismod lacinia at quis risus
+-	2055022599	57492.53	Aenean euismod elementum nisi quis eleifend quam
+-	2071327362	54888.12	Ut tortor pretium viverra suspendisse potenti nullam ac
++	2089616705	85550.43	Ultrices sagittis orci a scelerisque purus
+-	1983858854	93072.33	Quam viverra orci sagittis eu volutpat
+-	752052253	91461.08	Amet consectetur adipiscing elit pellentesque habitant morbi tristique senectus et
++	1778426443	664.23	Habitant morbi tristique senectus et netus et malesuada fames ac
+-	1471333591	46174.56	Sit amet risus nullam eget felis eget nunc lobortis mattis
+-	727362090	78499.87	Vulputate eu scelerisque felis imperdiet proin fermentum leo vel orci
++	1796849549	90570.65	Tellus pellentesque eu tincidunt tortor aliquam nulla
++	298331720	66665.59	Lacus viverra vitae congue eu consequat
+-	1845398264	66399.64	Adipiscing at in tellus integer
+-	1740209719	36780.33	Feugiat scelerisque varius morbi enim
+-	1548555119	23894.38	Lectus sit amet est placerat in egestas erat imperdiet sed
+-	1096245877	65516.51	Semper eget duis at tellus
+-	2082479682	98793.33	Ac tortor vitae purus faucibus ornare suspendisse sed nisi
+-	684987017	85535.23	Lacus suspendisse faucibus interdum posuere lorem ipsum dolor sit
+-	901484715	14612.95	Tortor at risus viverra adipiscing at in
++	1585837000	53879.75	Maecenas ultricies mi eget mauris pharetra et ultrices neque ornare
+-	1650243649	14058.45	Tempor orci dapibus ultrices in iaculis nunc
++	2091506113	47572.91	Eget mauris pharetra et ultrices neque ornare aenean euismod
++	2035125818	48394.89	Amet risus nullam eget felis eget nunc lobortis
++	1425076196	40013.22	Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat
+-	724307446	3830.38	Arcu vitae elementum curabitur vitae nunc
+-	1305681293	25662.83	Arcu dui vivamus arcu felis bibendum ut
++	388006055	59257.01	Nullam ac tortor vitae purus faucibus ornare suspendisse
++	670609503	97318.38	Pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus faucibus
+-	1328737663	76095.29	Non tellus orci ac auctor augue mauris augue neque
+-	296196235	73255.81	Elit eget gravida cum sociis natoque
+-	437858384	9901.17	Potenti nullam ac tortor vitae purus
++	421961353	23164.31	Amet consectetur adipiscing elit pellentesque habitant morbi
+-	820808469	86451.90	Gravida rutrum quisque non tellus
++	1247786149	46271.50	Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare
++	1527817330	63151.99	Et pharetra pharetra massa massa ultricies mi
++	1079449677	83336.76	Nunc non blandit massa enim nec dui
++	794207516	69539.04	Bibendum neque egestas congue quisque egestas
+-	173732979	98927.02	Dui ut ornare lectus sit
++	176850720	18482.75	Ut sem nulla pharetra diam sit
++	1296363795	82215.66	Cras ornare arcu dui vivamus arcu felis bibendum ut
++	1429798063	26071.90	Est velit egestas dui id ornare arcu
++	1221439865	15928.41	Tortor at auctor urna nunc id cursus metus aliquam
+-	1179946024	67775.47	Ante in nibh mauris cursus
++	508513263	4362.96	Habitant morbi tristique senectus et netus et
+-	326275505	63944.35	Fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate sapien nec
+-	1733599761	48552.87	Malesuada nunc vel risus commodo viverra maecenas accumsan lacus
+-	596767543	36604.77	In arcu cursus euismod quis
++	2023895367	90234.42	Vivamus arcu felis bibendum ut
++	1345676247	80459.05	Phasellus faucibus scelerisque eleifend donec pretium vulputate sapien nec sagittis
+-	2112271502	99353.31	Diam sit amet nisl suscipit adipiscing bibendum est
++	1598601483	69454.54	Suspendisse interdum consectetur libero id
++	598855638	19451.25	Iaculis eu non diam phasellus vestibulum lorem sed risus
+-	572266114	88373.97	Vestibulum sed arcu non odio euismod lacinia
+-	1543069119	64240.06	Aliquam id diam maecenas ultricies
++	1914364635	64.96	Cursus vitae congue mauris rhoncus
+-	83561656	80467.38	Integer vitae justo eget magna fermentum iaculis
+-	164506781	44608.03	Dignissim cras tincidunt lobortis feugiat vivamus at augue
+-	562085890	10898.22	Nec tincidunt praesent semper feugiat
++	710356740	5047.47	Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo
++	2040177115	49901.93	Tortor at risus viverra adipiscing at in tellus integer
+-	878371303	22088.87	Pharetra sit amet aliquam id
+-	178243939	6349.29	Enim eu turpis egestas pretium
+-	758234747	7621.57	Arcu vitae elementum curabitur vitae nunc
++	760228892	33944.23	Venenatis cras sed felis eget velit
++	1595530411	31898.25	Ridiculus mus mauris vitae ultricies leo integer malesuada
+-	241948089	51317.84	Et pharetra pharetra massa massa ultricies mi
++	476831692	21225.28	Aliquam etiam erat velit scelerisque in dictum non consectetur a
+-	848359144	76690.95	Ipsum nunc aliquet bibendum enim facilisis gravida neque convallis
++	880452478	74064.82	In eu mi bibendum neque egestas congue quisque
+-	1753250666	9520.72	Tincidunt dui ut ornare lectus sit amet est
++	992311769	46167.26	Suspendisse in est ante in nibh mauris cursus
+-	283814083	70757.08	Morbi tincidunt augue interdum velit euismod in pellentesque
++	2025249578	80437.20	Id ornare arcu odio ut sem nulla pharetra
+-	1659618355	21217.07	Urna condimentum mattis pellentesque id nibh tortor id
+-	871279756	1896.01	Cursus vitae congue mauris rhoncus aenean vel
+-	1148672304	29928.74	Rhoncus est pellentesque elit ullamcorper dignissim cras
++	102972895	65483.44	Pharetra sit amet aliquam id
++	1977186842	53622.97	In mollis nunc sed id
++	893227691	90906.36	Purus semper eget duis at
++	1911963119	95739.73	Leo in vitae turpis massa sed elementum tempus egestas sed
+-	352043596	37771.61	Platea dictumst vestibulum rhoncus est pellentesque elit ullamcorper dignissim
++	1783289699	73472.59	Libero nunc consequat interdum varius sit amet
++	377643535	64380.41	Integer vitae justo eget magna fermentum iaculis
+-	199539468	2124.53	Eu non diam phasellus vestibulum
+-	92218997	64034.84	Hendrerit dolor magna eget est lorem ipsum dolor sit
++	2123771884	44654.32	At volutpat diam ut venenatis tellus in
++	270117331	8319.50	Condimentum vitae sapien pellentesque habitant morbi
+-	46394452	96981.72	Tincidunt arcu non sodales neque sodales ut etiam sit
++	627976495	94566.80	Sed cras ornare arcu dui vivamus arcu
+-	2011492678	26314.43	Et odio pellentesque diam volutpat
++	577657781	29103.71	Mauris nunc congue nisi vitae suscipit
++	1315043796	17264.97	Hac habitasse platea dictumst quisque sagittis
+-	1574386377	84138.92	Volutpat lacus laoreet non curabitur gravida arcu ac tortor dignissim
+-	1747890692	11870.71	Eros in cursus turpis massa tincidunt dui ut
+-	508864657	79820.53	Odio euismod lacinia at quis risus sed
+-	1483975393	52045.40	Laoreet non curabitur gravida arcu ac
++	961176622	14864.05	Odio morbi quis commodo odio aenean
+-	568472392	49753.87	Fermentum posuere urna nec tincidunt praesent semper feugiat nibh sed
+-	1524947442	78780.57	Libero id faucibus nisl tincidunt eget nullam
++	46611196	38775.39	Dis parturient montes nascetur ridiculus
+-	723407794	27954.64	Et egestas quis ipsum suspendisse ultrices gravida dictum
+-	1841760004	43027.25	Viverra vitae congue eu consequat ac felis
++	2075263037	43173.97	Magna ac placerat vestibulum lectus mauris ultrices eros in
+-	1617957428	33929.38	Sapien nec sagittis aliquam malesuada bibendum arcu
++	146600304	17241.19	Et magnis dis parturient montes
++	2078835863	833.76	Nec nam aliquam sem et tortor consequat id
++	1308131410	87163.82	Tellus id interdum velit laoreet
++	570988390	65018.32	Tortor at risus viverra adipiscing at
+-	1022004822	96685.12	Ultricies mi eget mauris pharetra et ultrices neque ornare aenean
+-	1886742610	71406.37	Ac odio tempor orci dapibus
+-	1901464008	56142.97	In hac habitasse platea dictumst
++	752314164	46415.55	Molestie at elementum eu facilisis sed odio morbi quis
+-	258441111	42172.26	Consectetur purus ut faucibus pulvinar elementum integer enim
+-	241900695	22028.93	Arcu felis bibendum ut tristique et egestas
++	1652082717	57948.40	Mi quis hendrerit dolor magna eget est
++	1532245401	2952.40	Netus et malesuada fames ac
++	1152166562	77888.22	Leo vel fringilla est ullamcorper eget nulla facilisi etiam dignissim
++	717646285	586.99	Diam donec adipiscing tristique risus
++	980938307	38183.20	Ipsum dolor sit amet consectetur
+-	973645960	32298.09	Dictumst vestibulum rhoncus est pellentesque elit
+-	882078845	47517.69	Erat nam at lectus urna duis convallis
++	1845746677	81737.04	Pretium aenean pharetra magna ac placerat vestibulum
++	1556364542	79267.26	Tellus id interdum velit laoreet
++	1811395099	57441.89	Rutrum quisque non tellus orci ac
++	1237277011	92761.17	Adipiscing elit duis tristique sollicitudin nibh sit amet commodo
+-	299618005	77450.90	Semper viverra nam libero justo laoreet
+-	21614798	57390.99	Non curabitur gravida arcu ac tortor
++	258840714	87197.94	Nisi scelerisque eu ultrices vitae auctor eu
++	15436826	83594.05	In nisl nisi scelerisque eu ultrices vitae
+-	1475370701	89952.48	Magna ac placerat vestibulum lectus mauris ultrices eros in
++	906397284	47683.87	Vulputate ut pharetra sit amet aliquam id diam
++	584596600	39554.61	Non tellus orci ac auctor augue
+-	435747225	26318.70	Vitae aliquet nec ullamcorper sit amet risus nullam eget
+-	794321525	28314.07	Faucibus a pellentesque sit amet porttitor
+-	1877746692	18140.27	Leo vel fringilla est ullamcorper eget nulla facilisi etiam dignissim
++	115586220	51565.06	In est ante in nibh mauris cursus mattis molestie a
+-	478201216	30960.65	Auctor augue mauris augue neque gravida in fermentum et sollicitudin
++	322797468	78306.71	Et malesuada fames ac turpis
+-	759706534	6551.00	Ipsum suspendisse ultrices gravida dictum fusce ut placerat
++	1254490624	55070.20	Rhoncus est pellentesque elit ullamcorper dignissim cras
+-	1497785743	81750.35	Vitae ultricies leo integer malesuada nunc vel risus commodo viverra
++	1079070133	14897.61	Bibendum enim facilisis gravida neque convallis
++	771646433	77958.17	Bibendum est ultricies integer quis auctor
+-	979010168	7402.65	Potenti nullam ac tortor vitae purus
+-	473626957	11543.15	Semper eget duis at tellus at urna condimentum mattis
++	460014705	12636.68	Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat
++	557616689	13392.15	Faucibus scelerisque eleifend donec pretium vulputate sapien nec sagittis aliquam
++	1355571999	87000.22	Nibh mauris cursus mattis molestie a iaculis at erat pellentesque
+-	1092357061	85065.01	Diam in arcu cursus euismod quis viverra
++	1667469712	32179.68	Pretium aenean pharetra magna ac placerat vestibulum lectus mauris
+-	173994429	40945.37	Suspendisse interdum consectetur libero id
++	2034087561	24335.14	A diam sollicitudin tempor id eu nisl nunc mi ipsum
++	279927640	73351.56	Rhoncus mattis rhoncus urna neque viverra
++	2117147097	32329.61	Pharetra magna ac placerat vestibulum lectus mauris ultrices eros in
++	1264672352	39134.67	In iaculis nunc sed augue lacus
+-	2063757954	86294.74	Nisi porta lorem mollis aliquam ut porttitor leo a diam
++	927973564	46304.99	Lacus vestibulum sed arcu non
+-	595470096	83890.04	Enim ut tellus elementum sagittis
+-	230652978	53499.38	Sit amet nisl suscipit adipiscing bibendum est ultricies integer quis
+-	1504310235	65446.34	Eget velit aliquet sagittis id consectetur purus ut
+-	1228417495	66988.27	Cursus risus at ultrices mi tempus imperdiet
+-	995320898	93741.03	In vitae turpis massa sed elementum tempus
+-	626417994	74511.62	Vitae auctor eu augue ut lectus arcu bibendum at varius
++	881466509	12313.82	Facilisi etiam dignissim diam quis enim lobortis
+-	457589457	33414.37	Ac odio tempor orci dapibus
++	961561112	53150.89	Platea dictumst vestibulum rhoncus est pellentesque elit ullamcorper dignissim
+-	1543274468	19265.78	Facilisi cras fermentum odio eu feugiat pretium
+-	2031881027	90334.12	Sit amet aliquam id diam maecenas
++	119428184	63934.55	Commodo nulla facilisi nullam vehicula ipsum
+-	1492151229	91436.33	Elit at imperdiet dui accumsan sit amet nulla facilisi morbi
+-	1744670528	6991.65	Neque convallis a cras semper
++	1222781681	75827.18	Vivamus at augue eget arcu dictum varius duis at consectetur
++	81383253	42176.12	Diam ut venenatis tellus in metus vulputate
+-	1900851754	56161.02	Tempus iaculis urna id volutpat lacus laoreet
++	427207743	83308.07	Lectus mauris ultrices eros in
+-	1747685265	8958.23	Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida
++	909787978	90954.17	Cursus eget nunc scelerisque viverra
+-	3751725	36310.17	Sem fringilla ut morbi tincidunt augue interdum velit
+-	647466544	84389.15	Imperdiet dui accumsan sit amet nulla facilisi morbi
+-	1350225777	84443.90	Pharetra sit amet aliquam id diam maecenas ultricies mi
+-	1228727226	55465.20	Cras ornare arcu dui vivamus arcu felis bibendum ut
++	1540710781	40706.57	In est ante in nibh mauris
++	112970875	56801.93	Cras ornare arcu dui vivamus arcu felis bibendum ut
+-	635125478	84692.32	Vitae congue mauris rhoncus aenean vel elit
++	1629098715	68435.57	Cursus risus at ultrices mi tempus
++	74390212	36283.72	Tortor id aliquet lectus proin
+-	383375635	30518.40	Amet venenatis urna cursus eget nunc scelerisque viverra
+-	1772868490	22120.34	Vitae semper quis lectus nulla at volutpat
++	180410841	76157.79	Orci sagittis eu volutpat odio
+-	917848716	31120.73	Nibh sed pulvinar proin gravida hendrerit lectus a
++	886945188	15724.97	Netus et malesuada fames ac turpis egestas sed tempus urna
++	736226829	91416.11	Tincidunt eget nullam non nisi est sit amet facilisis magna
++	76712746	45621.11	Phasellus vestibulum lorem sed risus ultricies
+-	1073190922	27995.56	Fermentum posuere urna nec tincidunt praesent semper feugiat
+-	1431996619	98985.90	Dignissim diam quis enim lobortis scelerisque fermentum dui faucibus in
++	1106780720	74484.38	In eu mi bibendum neque egestas congue quisque
++	912240016	46033.58	Massa tempor nec feugiat nisl pretium
++	853287310	15805.83	Orci nulla pellentesque dignissim enim sit amet venenatis urna
++	1649895422	69180.51	Fringilla est ullamcorper eget nulla facilisi etiam dignissim diam
+-	1493335015	22477.34	Dignissim convallis aenean et tortor at risus
+-	1765543763	75.67	Sit amet facilisis magna etiam tempor orci eu lobortis
++	671101185	36307.95	Commodo nulla facilisi nullam vehicula ipsum a arcu
++	860387	90337.84	Donec ac odio tempor orci dapibus ultrices in
++	2141107873	89150.64	Libero id faucibus nisl tincidunt eget nullam non nisi
++	1308134470	34017.15	Habitant morbi tristique senectus et netus
++	846791740	77786.98	Amet mattis vulputate enim nulla aliquet porttitor lacus luctus accumsan
++	1635226917	63669.75	Suspendisse faucibus interdum posuere lorem ipsum
++	1522606607	98845.76	Natoque penatibus et magnis dis parturient montes
+-	1808032377	99507.65	Nisi vitae suscipit tellus mauris a diam
+-	1160903259	64769.35	Quam id leo in vitae
+-	1413903158	79635.09	Sapien et ligula ullamcorper malesuada proin libero nunc consequat
+-	1398961926	21431.44	Nisl vel pretium lectus quam id leo in
++	1280590755	94432.54	Luctus venenatis lectus magna fringilla urna
++	1696088160	20247.30	Semper eget duis at tellus
++	470793372	72132.43	Aliquam ultrices sagittis orci a scelerisque
++	1790691716	16829.91	Cursus in hac habitasse platea dictumst quisque sagittis purus sit
+-	2123260899	48858.39	Auctor augue mauris augue neque gravida in fermentum et sollicitudin
++	938047592	32965.73	Ac feugiat sed lectus vestibulum mattis ullamcorper velit sed ullamcorper
++	1608577847	18980.43	Nulla facilisi etiam dignissim diam quis enim lobortis
++	2012561116	14571.53	Eros donec ac odio tempor
+-	75987427	79453.69	Tristique senectus et netus et malesuada fames ac turpis egestas
++	1747489655	14636.51	Mus mauris vitae ultricies leo integer malesuada
++	1656910886	21450.99	Bibendum at varius vel pharetra vel turpis nunc eget lorem
+-	1957748688	11596.25	Nunc non blandit massa enim nec dui
+-	606385373	35484.49	Maecenas ultricies mi eget mauris pharetra et ultrices neque ornare
++	2088722133	98965.32	Euismod in pellentesque massa placerat duis ultricies
++	1501835825	40057.45	Cursus in hac habitasse platea dictumst quisque sagittis purus sit
++	1265980576	62517.86	Facilisis mauris sit amet massa vitae
+-	1568201146	95303.83	Mi tempus imperdiet nulla malesuada pellentesque elit eget gravida
++	116033942	94550.69	A diam sollicitudin tempor id eu nisl nunc mi
+-	1196615465	85377.45	Mauris vitae ultricies leo integer malesuada nunc vel risus commodo
++	1404466390	12072.37	Feugiat nisl pretium fusce id velit ut tortor pretium viverra
++	1555498617	52478.18	Risus ultricies tristique nulla aliquet enim tortor at auctor urna
+-	1646712946	72462.07	Non arcu risus quis varius quam quisque id diam vel
++	1990844699	67848.23	Feugiat nibh sed pulvinar proin gravida hendrerit lectus
++	762194411	76050.86	Felis imperdiet proin fermentum leo vel orci porta non pulvinar
+-	1415652060	8032.10	Laoreet non curabitur gravida arcu ac tortor dignissim convallis aenean
+-	89563464	86884.24	Arcu dictum varius duis at consectetur
+-	1689705375	11125.50	Nullam eget felis eget nunc lobortis
+-	534441819	45436.35	Ut enim blandit volutpat maecenas volutpat
+-	1011460858	21734.86	Blandit cursus risus at ultrices mi tempus imperdiet nulla
++	665057078	81425.92	Varius vel pharetra vel turpis nunc eget
+-	758354428	29001.20	Tortor dignissim convallis aenean et tortor at risus
+-	2011418478	93096.61	Sit amet commodo nulla facilisi nullam vehicula ipsum a
+-	1381461030	97098.21	Aliquam faucibus purus in massa tempor
++	1426380329	4607.92	Purus faucibus ornare suspendisse sed nisi
++	1564874393	63985.26	Aliquam ut porttitor leo a diam sollicitudin tempor id eu
+-	2122893880	95955.64	Scelerisque fermentum dui faucibus in
++	1299298523	44465.40	Ac turpis egestas sed tempus urna et pharetra pharetra
++	535819540	73270.43	Non arcu risus quis varius quam
+-	476232498	24535.46	Pulvinar neque laoreet suspendisse interdum consectetur libero
++	1421523527	36661.26	A erat nam at lectus urna duis convallis
++	1948937689	4291.89	Elit eget gravida cum sociis natoque
++	514940036	97675.33	Etiam sit amet nisl purus in
+-	1902331208	35306.42	Nunc congue nisi vitae suscipit tellus mauris
+-	1907712771	10961.48	Pellentesque dignissim enim sit amet venenatis urna
++	1460090216	22974.65	Et egestas quis ipsum suspendisse ultrices gravida dictum fusce ut
++	990964596	30573.33	Dignissim cras tincidunt lobortis feugiat vivamus at augue
+-	284526564	19669.12	Nisl pretium fusce id velit ut tortor pretium viverra
+-	601108008	24007.32	Nullam ac tortor vitae purus faucibus ornare
+-	53471654	64262.43	Quam adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus urna
++	2064401610	33376.95	Cursus in hac habitasse platea dictumst quisque sagittis purus sit
++	1792462430	55254.40	Eget arcu dictum varius duis
+-	85390555	25313.89	Dapibus ultrices in iaculis nunc sed augue
++	2102799481	909.18	Vel pharetra vel turpis nunc
++	718289812	45077.58	Ut tellus elementum sagittis vitae et leo duis ut
+-	1906409005	33322.46	Ut etiam sit amet nisl purus in mollis nunc
+-	1558444736	61306.25	Tellus integer feugiat scelerisque varius
+-	853331567	18982.04	Eros in cursus turpis massa tincidunt dui ut
+-	719373301	57014.61	Facilisis magna etiam tempor orci eu lobortis
+-	1752146755	44840.50	Egestas purus viverra accumsan in nisl
+-	1697753674	27633.60	Aliquam id diam maecenas ultricies
+-	1128437150	62187.62	Neque egestas congue quisque egestas diam in arcu cursus euismod
++	228881739	80926.46	Neque aliquam vestibulum morbi blandit cursus risus at ultrices mi
++	448262757	79510.04	Enim praesent elementum facilisis leo vel fringilla est
++	1594936043	41585.71	Arcu non sodales neque sodales ut etiam sit amet
+-	268546593	46088.47	Egestas sed tempus urna et pharetra pharetra massa
+-	399937959	92861.90	Elit at imperdiet dui accumsan sit
++	219918225	730.15	Faucibus a pellentesque sit amet porttitor
++	1597837882	66266.76	Nisi porta lorem mollis aliquam ut porttitor leo a diam
++	1901545754	97112.52	Sit amet aliquam id diam maecenas
+-	426185930	52572.63	Quam adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus urna
++	1198157474	92532.16	Consequat semper viverra nam libero justo laoreet sit amet
+-	522554102	84906.97	A arcu cursus vitae congue
++	699662780	54704.45	In nulla posuere sollicitudin aliquam ultrices sagittis orci a
++	1439913064	14802.11	Sed nisi lacus sed viverra tellus in
++	1208661327	7391.33	Interdum posuere lorem ipsum dolor sit
++	230315059	88634.68	Nec nam aliquam sem et tortor consequat id porta nibh
+-	829923970	97884.86	Morbi non arcu risus quis
+-	52687039	86485.73	Risus at ultrices mi tempus imperdiet nulla malesuada pellentesque elit
++	492961924	90936.31	Cursus vitae congue mauris rhoncus aenean vel
++	421091209	72595.21	Arcu odio ut sem nulla pharetra diam sit
++	837533383	39367.09	Diam in arcu cursus euismod quis viverra
++	1273927743	91253.09	Arcu vitae elementum curabitur vitae nunc sed
++	627762953	46195.32	Sem integer vitae justo eget magna fermentum
++	1279433084	92709.88	Blandit aliquam etiam erat velit scelerisque in dictum non consectetur
+-	1536810808	91804.07	Orci nulla pellentesque dignissim enim sit amet venenatis urna cursus
++	1149843847	13388.39	Odio morbi quis commodo odio aenean sed adipiscing diam
++	514441294	43887.57	Tellus at urna condimentum mattis pellentesque
++	1442191923	61522.35	Arcu vitae elementum curabitur vitae nunc sed velit
+-	1696555932	53676.04	In est ante in nibh mauris
+-	1244456328	49578.37	Urna condimentum mattis pellentesque id nibh tortor id
++	901605916	30871.31	Lectus proin nibh nisl condimentum id venenatis
++	1711313148	82598.88	Eu nisl nunc mi ipsum faucibus
++	564206226	14937.06	Integer malesuada nunc vel risus commodo viverra maecenas
+-	1679278026	50742.61	Purus in mollis nunc sed id semper risus in hendrerit
+-	529228091	64003.49	Venenatis cras sed felis eget velit
++	717813759	90663.24	Molestie at elementum eu facilisis
+-	1172589444	94725.47	Nibh mauris cursus mattis molestie a iaculis at erat pellentesque
+-	1963691603	76232.09	Egestas congue quisque egestas diam
++	775409308	6881.88	Eget felis eget nunc lobortis mattis aliquam faucibus
++	464091935	68635.15	Scelerisque varius morbi enim nunc faucibus a pellentesque
++	762949460	35419.22	Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu
++	190494898	84443.25	Aliquam purus sit amet luctus venenatis
++	1204659251	27510.50	Tortor vitae purus faucibus ornare suspendisse sed
+-	2023891149	83410.31	Cursus vitae congue mauris rhoncus aenean vel
++	1759787127	14384.19	Ut diam quam nulla porttitor massa id
++	404364206	59078.97	Sem integer vitae justo eget magna fermentum iaculis eu non
+-	1601765500	94466.13	Elementum eu facilisis sed odio morbi quis commodo odio
++	629242183	20683.10	At erat pellentesque adipiscing commodo elit at imperdiet
++	426406904	41875.08	Tellus orci ac auctor augue mauris augue
+-	820933603	79219.59	Tristique risus nec feugiat in fermentum posuere
+-	1409852005	44137.51	Ut diam quam nulla porttitor
++	1077622260	67510.20	Tempor id eu nisl nunc mi ipsum faucibus vitae
+-	385618365	94089.41	Hac habitasse platea dictumst quisque sagittis
++	62171757	18304.98	Id neque aliquam vestibulum morbi blandit
++	1857992718	12431.78	Arcu cursus euismod quis viverra nibh cras pulvinar
+-	1734094419	76767.51	Nec tincidunt praesent semper feugiat
++	1644699370	10949.08	Dolor magna eget est lorem ipsum dolor sit amet consectetur
++	773968325	52178.31	Magna sit amet purus gravida
+-	250531195	34303.04	Habitant morbi tristique senectus et netus et
++	1875882897	64782.80	Tincidunt ornare massa eget egestas purus viverra accumsan
+-	308541019	13449.70	Arcu dui vivamus arcu felis bibendum
++	313631653	55485.59	Facilisis magna etiam tempor orci eu lobortis elementum nibh
++	1765228678	94195.66	Velit scelerisque in dictum non
++	2045722201	4850.34	Tortor consequat id porta nibh
+-	1323086941	2000.85	Mauris nunc congue nisi vitae suscipit
++	1103477829	84497.99	Mi sit amet mauris commodo
++	1529913505	6410.19	Ut ornare lectus sit amet est
++	1007602686	4071.66	Sed risus ultricies tristique nulla aliquet enim tortor at auctor
++	1176859926	28219.16	Ut diam quam nulla porttitor massa id
+-	1968025485	88040.92	Lorem dolor sed viverra ipsum nunc aliquet bibendum enim facilisis
+-	1165405692	22237.18	Scelerisque fermentum dui faucibus in
++	1869890661	34757.70	Dapibus ultrices in iaculis nunc sed augue lacus
++	1677148342	40022.48	Dolor morbi non arcu risus
++	377392723	55276.19	Aliquam id diam maecenas ultricies
+-	1064748034	92725.54	Euismod nisi porta lorem mollis aliquam ut
++	97796539	37181.95	Neque gravida in fermentum et sollicitudin ac orci phasellus
+-	1368748637	67591.16	Risus sed vulputate odio ut enim blandit volutpat maecenas
++	913398989	78088.99	In est ante in nibh mauris cursus mattis molestie a
+-	715276997	64193.24	Nam libero justo laoreet sit amet
++	1005920408	96187.30	Tempor id eu nisl nunc mi ipsum faucibus vitae aliquet
+-	745763151	75188.48	Habitant morbi tristique senectus et netus
+-	1330004008	84268.97	Urna molestie at elementum eu facilisis sed odio
++	1028879102	2348.10	Eget felis eget nunc lobortis mattis aliquam faucibus
++	575287969	29985.39	Cras pulvinar mattis nunc sed blandit
++	825203457	46137.66	Nisl suscipit adipiscing bibendum est ultricies integer quis
++	1527424651	68567.72	Suspendisse sed nisi lacus sed viverra tellus
+-	1747078976	44454.82	Consequat mauris nunc congue nisi
+-	1025699296	36731.22	Orci ac auctor augue mauris
++	1778123896	2347.11	Et odio pellentesque diam volutpat commodo sed egestas egestas
++	754842717	63477.86	Amet mattis vulputate enim nulla aliquet porttitor lacus luctus accumsan
+-	1201470643	28554.38	Sapien nec sagittis aliquam malesuada bibendum arcu
+-	2124690180	69385.97	Amet est placerat in egestas erat
+-	1324660742	52119.46	Vitae justo eget magna fermentum iaculis eu non diam
++	1740039572	72790.68	Donec et odio pellentesque diam
+-	1103221592	59881.89	Adipiscing elit duis tristique sollicitudin nibh sit amet commodo
+-	817418664	66309.74	Integer eget aliquet nibh praesent tristique magna sit amet
+-	15203792	3607.52	Bibendum at varius vel pharetra vel turpis nunc eget lorem
+-	1628597675	56029.05	Sodales ut eu sem integer
++	819468996	72178.40	Nibh ipsum consequat nisl vel pretium lectus
++	315937144	44283.33	Aliquam vestibulum morbi blandit cursus risus at ultrices
+-	1864460476	76551.78	Eu tincidunt tortor aliquam nulla facilisi cras fermentum
+-	1606933398	61110.31	Massa tincidunt dui ut ornare lectus
+-	1838447873	75473.41	Lectus urna duis convallis convallis tellus
++	837625476	17626.93	Vestibulum lectus mauris ultrices eros in cursus turpis massa
++	1291719667	72062.94	Ac odio tempor orci dapibus ultrices in iaculis nunc
++	221443195	5995.06	Ac feugiat sed lectus vestibulum mattis
++	24593153	5577.71	Sit amet nisl suscipit adipiscing bibendum est
++	961148081	88787.58	Diam phasellus vestibulum lorem sed risus ultricies tristique nulla
++	505666401	24781.23	Tortor dignissim convallis aenean et tortor at risus viverra
+-	1504082037	5955.80	Et odio pellentesque diam volutpat
+-	1258396203	50137.08	Felis donec et odio pellentesque
+-	1219904933	73675.21	Fermentum posuere urna nec tincidunt praesent semper feugiat
++	1702437861	55268.66	Et tortor at risus viverra
++	1824032586	39994.49	Nulla pharetra diam sit amet nisl suscipit
++	996961462	36171.02	Et ultrices neque ornare aenean
+-	1509557616	43159.29	Platea dictumst quisque sagittis purus sit amet volutpat
+-	233067568	86479.46	Ultrices tincidunt arcu non sodales neque sodales
++	1665020177	13467.78	Quam vulputate dignissim suspendisse in est ante in
+-	454140835	69149.52	Neque viverra justo nec ultrices
+-	38425916	82345.20	Porttitor eget dolor morbi non arcu risus quis varius quam
++	168811524	47582.55	Eget gravida cum sociis natoque
++	583969147	32485.17	Varius morbi enim nunc faucibus a pellentesque sit amet
++	50822175	86975.00	Ut diam quam nulla porttitor massa id neque aliquam vestibulum
+-	2091571755	46449.39	Sit amet venenatis urna cursus eget nunc scelerisque
++	954504148	31191.17	Integer vitae justo eget magna fermentum iaculis
+-	138896784	52943.70	Enim sed faucibus turpis in eu
++	1845266113	97392.68	Sapien pellentesque habitant morbi tristique senectus et netus
+-	1452544825	80573.03	Malesuada nunc vel risus commodo viverra maecenas accumsan lacus
++	1038295966	65253.72	Pretium lectus quam id leo in vitae turpis massa
+-	414314403	9276.45	Volutpat commodo sed egestas egestas fringilla phasellus
++	845533666	69688.17	Et odio pellentesque diam volutpat commodo sed egestas egestas
+-	1388700305	74432.97	Nisl suscipit adipiscing bibendum est ultricies integer quis
+-	890665317	97380.22	Duis at tellus at urna condimentum mattis pellentesque id nibh
++	183117099	25179.49	Mi sit amet mauris commodo quis imperdiet massa
++	179791968	58914.23	Odio eu feugiat pretium nibh
++	363626000	16054.76	Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat
++	1795962867	31611.41	Est velit egestas dui id ornare
++	678356920	57087.60	Rhoncus dolor purus non enim praesent
++	2104659551	14032.25	Ac turpis egestas sed tempus urna et pharetra pharetra
++	1083100362	55486.44	Amet consectetur adipiscing elit ut aliquam purus sit
++	821385059	35008.35	Consectetur a erat nam at lectus urna
++	1841541440	26569.35	Sapien nec sagittis aliquam malesuada bibendum arcu
++	866251281	54524.71	Dui nunc mattis enim ut tellus
+-	891179137	38769.73	In nisl nisi scelerisque eu ultrices vitae
+-	911825924	51975.57	Proin fermentum leo vel orci porta
+-	1224262350	51703.68	Lectus sit amet est placerat in egestas erat imperdiet sed
++	1940914832	42539.73	Consectetur a erat nam at lectus urna
+-	1314367686	27571.76	At risus viverra adipiscing at in tellus
+-	1747663480	23638.17	Senectus et netus et malesuada fames ac turpis egestas
++	780854296	70176.24	Quam adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus urna
+-	736858732	47033.58	Aenean euismod elementum nisi quis eleifend quam adipiscing
+-	1474352471	67561.21	Dis parturient montes nascetur ridiculus mus mauris vitae
+-	536950097	60673.16	Arcu vitae elementum curabitur vitae nunc sed velit
++	1857747132	41968.00	At tempor commodo ullamcorper a
+-	1516175801	2973.18	Risus viverra adipiscing at in tellus integer feugiat
++	1570755708	82515.57	Mi tempus imperdiet nulla malesuada pellentesque elit eget gravida
+-	75801390	24145.86	Nisl suscipit adipiscing bibendum est ultricies integer quis
++	655329866	54172.51	Scelerisque fermentum dui faucibus in ornare quam viverra orci
++	1396189417	37635.96	Velit egestas dui id ornare arcu odio ut
++	949101710	40119.62	Maecenas accumsan lacus vel facilisis volutpat est
++	1429058088	19332.27	Amet dictum sit amet justo donec enim diam vulputate ut
+-	497699250	9224.66	Vestibulum lectus mauris ultrices eros
++	1998692191	40018.36	Enim praesent elementum facilisis leo vel fringilla est
++	361418874	3414.34	Dignissim convallis aenean et tortor
++	1652543189	92722.11	Netus et malesuada fames ac
+-	1201957331	21875.66	Fames ac turpis egestas maecenas
+-	772195254	74613.75	Arcu dui vivamus arcu felis bibendum ut
++	1097473522	5383.22	Nisi vitae suscipit tellus mauris a diam
+-	489987623	54193.03	Morbi tristique senectus et netus et
+-	1080196820	45242.88	Sollicitudin tempor id eu nisl
++	1860761916	36540.11	Laoreet sit amet cursus sit amet dictum
++	524125521	31353.18	In hac habitasse platea dictumst quisque
++	1524659596	23168.54	Amet consectetur adipiscing elit duis tristique sollicitudin nibh sit amet
+-	181652320	27016.82	Sociis natoque penatibus et magnis dis parturient montes nascetur
+-	1563137388	54788.37	Eget nunc scelerisque viverra mauris in aliquam sem fringilla ut
++	1837401028	37305.87	Egestas quis ipsum suspendisse ultrices gravida dictum
++	409082635	76843.54	Mauris nunc congue nisi vitae suscipit
+-	1940631584	3419.07	Convallis convallis tellus id interdum velit laoreet id
++	636483879	2593.27	Tortor id aliquet lectus proin nibh
+-	1183837288	23126.41	Pretium fusce id velit ut tortor pretium viverra
+-	443734212	3097.36	Laoreet suspendisse interdum consectetur libero
++	2093759720	52405.28	In massa tempor nec feugiat nisl pretium
+-	1871574819	9023.25	Adipiscing bibendum est ultricies integer quis auctor elit sed vulputate
++	577282176	13270.48	Erat nam at lectus urna duis convallis convallis
+-	309630309	10626.70	Nec sagittis aliquam malesuada bibendum
+-	539449646	73442.66	Urna neque viverra justo nec ultrices dui sapien eget
+-	1089165059	56301.80	Ultrices in iaculis nunc sed
+-	1070709789	14916.06	Placerat orci nulla pellentesque dignissim
++	314396081	72696.21	Senectus et netus et malesuada fames ac
++	1686875701	89985.51	Tempus quam pellentesque nec nam aliquam sem et
++	1620144661	20818.94	Et pharetra pharetra massa massa ultricies mi
+-	755005934	25256.24	Et magnis dis parturient montes nascetur ridiculus mus mauris
+-	379853846	51710.68	Est sit amet facilisis magna etiam
+-	1659822507	65378.06	Nunc vel risus commodo viverra
++	436046907	37475.63	Nisi scelerisque eu ultrices vitae auctor
+-	2054645431	11115.86	Quam vulputate dignissim suspendisse in est ante in
++	278372454	40770.81	Tellus molestie nunc non blandit massa
++	1533953849	73526.15	Consequat semper viverra nam libero justo laoreet sit amet
+-	294984096	23342.35	Commodo nulla facilisi nullam vehicula ipsum a
+-	1672999559	28854.21	Interdum posuere lorem ipsum dolor sit
++	1126302986	64821.89	Quisque non tellus orci ac auctor augue mauris
+-	1266005447	61319.21	Sagittis orci a scelerisque purus semper eget duis
++	884642892	18275.57	Feugiat scelerisque varius morbi enim
++	738116974	45623.88	Condimentum id venenatis a condimentum vitae sapien pellentesque habitant morbi
+-	313272629	89161.74	Dignissim suspendisse in est ante
+-	356195879	55156.40	Faucibus a pellentesque sit amet porttitor
++	813440339	60916.95	Ut tortor pretium viverra suspendisse potenti nullam ac
+-	708077182	95495.70	Mi bibendum neque egestas congue quisque egestas diam in
+-	1307942601	62859.77	Purus ut faucibus pulvinar elementum integer enim neque
+-	542781314	1860.27	Eu turpis egestas pretium aenean pharetra
++	610543463	2473.72	Tellus molestie nunc non blandit massa
++	15606481	56584.80	Et pharetra pharetra massa massa ultricies mi
+-	1079967446	47057.46	Consectetur purus ut faucibus pulvinar elementum
+-	1901680363	36468.64	Vel facilisis volutpat est velit egestas dui id

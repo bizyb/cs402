@@ -1,0 +1,10 @@
++	1271299305	249.87	Sagittis orci a scelerisque purus semper eget duis at tellus
++	1622725701	422.16	Quis hendrerit dolor magna eget est
++	823835756	165.61	Nunc congue nisi vitae suscipit tellus
++	1559483204	351.33	Tempus iaculis urna id volutpat lacus laoreet
+-	1502916565	681.97	Ut morbi tincidunt augue interdum velit euismod
+-	150425834	13.85	Eget mi proin sed libero enim
+-	157092325	730.32	Gravida rutrum quisque non tellus
++	476272279	621.37	Orci eu lobortis elementum nibh tellus
++	653113183	811.22	Quisque non tellus orci ac auctor augue mauris augue
+-	110960054	719.39	Ac tincidunt vitae semper quis
