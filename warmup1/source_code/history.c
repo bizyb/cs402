@@ -7,7 +7,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <sys/time.h>
+// #include <sys/time.h>
+
+#include <time.h>
 
 #include "cs402.h"
 #include "transaction.h"

@@ -9,7 +9,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/stat.h>
-#include <errno.h>
 
 
 #include "error.h"
@@ -90,36 +89,24 @@ void exitOnFileError(char* fileName) {
         sprintf((char*)&msg, "Input file \'%s\' is a directory", fileName);
         error = TRUE;
     }
-    else {
 
-        FILE* f = fopen(fileName, "r");
-        if (errno == EACCES) {
+    else if (access(fileName, F_OK) != 0) {
 
-            sprintf((char*)&msg, "Input file \'%s\' cannot be opened - access denied", fileName);
-            error = TRUE;
+        sprintf((char*)&msg, "No such file or directory named \'%s\'", fileName);
+        error = TRUE;
 
-        }
+    }
 
-        else if (access(fileName, F_OK) != 0) {
+    else if (access(fileName, R_OK) != 0) {
 
-            sprintf((char*)&msg, "No such file or directory named \'%s\'", fileName);
-            error = TRUE;
+        sprintf((char*)&msg, "Input file \'%s\' cannot be opened - access denied", fileName);
+        error = TRUE;
 
-        }
-
-         else if (access(fileName, R_OK) != 0) {
-
-            sprintf((char*)&msg, "Input file \'%s\' cannot be opened - access denied", fileName);
-            error = TRUE;
-
-        }
-        fclose(f);
     }
 
 
     if (error) {
 
-       
         fprintf(stderr, "(%s)\n", msg);
         exit(1);
     }

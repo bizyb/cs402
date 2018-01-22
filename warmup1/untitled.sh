@@ -82,7 +82,7 @@ echo "===> testing malformed command"
 #(malformed command)
 
 
-echo "===> testing malformed file"
+echo "===> testing malformed file input"
 ./warmup1 sort -x
 #(malformed command or input file "-x" does not exist)
 ./warmup1 sort /usr/bin/xyzz
