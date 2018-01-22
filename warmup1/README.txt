@@ -1,3 +1,26 @@
+
+
+
+
+
+
+
+
+
+
+
+rename the file to w1_README or something. See specs. 
+
+
+
+
+
+
+
+
+
+
+
 /*
 *  Author: Bizuwork Melesse
 *  USC Spring 2018 - CS402
@@ -23,20 +46,20 @@ To compile your code, the grader should type: (make)
 
 Replace each "?" below with a numeric value:
 
-(A) Doubly-linked Circular List : ? out of 40 pts
+(A) Doubly-linked Circular List : 40 out of 40 pts
 
-(B.1) Sort (file) : ? out of 30 pts
-(B.2) Sort (stdin) : ? out of 30 pts
+(B.1) Sort (file) : 30 out of 30 pts
+(B.2) Sort (stdin) : 30 out of 30 pts
 
 Missing required section(s) in README file : -0 pts
 Cannot compile : -0 pts
 Compiler warnings : -0 pts
 "make clean" : -0 pts
 Segmentation faults : -0 pts
-Separate compilation : -? pts
-Malformed input : -? pts
+Separate compilation : -0 pts
+Malformed input : -0 pts
 Too slow : -0 pts
-Bad commandline : -? pts
+Bad commandline : -???? pts
 Did not use My402List and My402ListElem to implement "sort" in (B) : -0 pts
 
 +----------------------+

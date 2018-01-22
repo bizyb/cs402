@@ -7,9 +7,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <sys/time.h>
+// #include <sys/time.h>
 
-// #include <time.h>
+#include <time.h>
 
 #include "cs402.h"
 #include "transaction.h"
@@ -81,11 +81,15 @@ void freeMemory(My402List* pList, My402ListElem* elem) {
 char* formatDate(int rawDate) {
 
     const int DATE_LENGTH = 16;
+    const int DATE_BUFFER_SIZE = 26;
+    char fTime[DATE_BUFFER_SIZE];
+
     char* delim = " ";
     char* day, *month, *date, *year;
     char* buffer = (char* ) calloc(DATE_LENGTH +1, sizeof(char)); 
     time_t t = rawDate;
-    char* fTime = ctime(&t);
+    strncpy(fTime, ctime(&t), DATE_BUFFER_SIZE);
+    
 
     
     day = strtok(fTime, delim);

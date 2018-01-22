@@ -7,6 +7,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/stat.h>
 
 
 #include "error.h"
@@ -14,14 +16,11 @@
 #include "cs402.h"
 
 void exitOnError(ErrorType e) {
-
-    // TODO: line numbers should only apply to data being processed
-   
+ 
     char* msg;
     switch(e) {
         case FileOpen:      msg = "Failed to open file."; break;
         case LongLine:      msg = "Line exceeds acceptable length."; break;
-        // case MalformedLine: msg = "Invalid line formatting."; break;
         case Duplicate:     msg = "Found entries with duplicate timestamp."; break;
         case HighAmount:    msg = "Amount exceeds allowed limit."; break;
         case HighBalance:   msg = "Balance exceeds allowed limit."; break;
@@ -40,13 +39,23 @@ void exitOnError(ErrorType e) {
         default: msg = "Unknown error";
     }
 
-    fprintf(stderr, "Error on line %d: %s\n", lineNum, msg);
+    if (e == Malloc || e == ListInsertion || e == FileOpen || e == LowBalance
+        || e == HighBalance) {
+
+        fprintf(stderr, "%s\n", msg);
+    }
+    else {
+
+        fprintf(stderr, "Error on line %d: %s\n", lineNum, msg);
+
+    }
+    
     exit(1);
 
 }
 
 
-void exitOnErrorCmd(ErrorType e) {
+void exitOnCmdError(ErrorType e) {
 
     char* usage = "Usage: ./warmup1 sort [optinalFileName]";
     char* msg;
@@ -63,50 +72,39 @@ void exitOnErrorCmd(ErrorType e) {
     exit(1);
 }
 
-void exitOnErrorFile(char* fileName) {
+void exitOnFileError(char* fileName) {
 
     int error = FALSE;
-    const int ERROR_SIZE = 100;
-    char msg[ERROR_SIZE];
-    (void)memset(&msg, 0, (ERROR_SIZE+1)*sizeof(char));
-    char* noExist1 = "-x";
-    char* noExist2 = "/usr/bin/xyzz";
-    char* isDir = "/etc";
-    char* denied0 = "/etc/";
-    char* denied1 = "/etc/sysidcfg";
-    char* denied2 = "/etc/inet/secret/xyzz";
-    char* format1 = "/etc/motd";
-    char* format2 = ".login";
+    const int ERROR_BUFFER_SIZE = 100;
+    struct stat status;
 
-    // fprintf(stdout, "filename in exitOnErrorFile: %s\n", fileName);
+    char msg[ERROR_BUFFER_SIZE];
+    (void)memset(&msg, 0, (ERROR_BUFFER_SIZE)*sizeof(char));
+
     
+   stat(fileName, &status);
 
-    if (strcmp(fileName, noExist1) == 0 || strcmp(fileName, noExist2) == 0) {
-
-         sprintf((char*)&msg, "Input file \'%s\' does not exist", fileName);
-         error = TRUE;
-    }
-    else if (strcmp(fileName, isDir) == 0) {
+    if (S_ISDIR(status.st_mode)) {
 
         sprintf((char*)&msg, "Input file \'%s\' is a directory", fileName);
         error = TRUE;
     }
-    else if (strcmp(fileName, denied1) == 0 || strcmp(fileName, denied2) == 0) {
+
+    else if (access(fileName, F_OK) != 0) {
+
+        sprintf((char*)&msg, "No such file or directory named \'%s\'", fileName);
+        error = TRUE;
+
+    }
+
+    else if (access(fileName, R_OK) != 0) {
 
         sprintf((char*)&msg, "Input file \'%s\' cannot be opened - access denied", fileName);
         error = TRUE;
-    }
-    else if (strstr(fileName, denied0) != NULL) {
 
-        sprintf((char*)&msg, "Input file \'%s\' cannot be opened - access denied", fileName);
-        error = TRUE;
     }
-    else if (strcmp(fileName, format1) == 0 || strstr(fileName, format2) != NULL) {
-        
-        sprintf((char*)&msg, "Input file \'%s\' is not in the right format", fileName);
-        error = TRUE;
-    }
-    
+
+
     if (error) {
 
         fprintf(stderr, "(%s)\n", msg);

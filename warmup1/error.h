@@ -42,12 +42,12 @@ extern void exitOnError(ErrorType);
 /*
 	Print command line argument-related error message and exit program.
 */
-extern void exitOnErrorCmd(ErrorType);
+extern void exitOnCmdError(ErrorType);
 
 /*
 	Print file processing-related error message and exit program. 
 */
-extern void exitOnErrorFile(char*);
+extern void exitOnFileError(char*);
 
 
 #endif /*_WARMUP1_ERROR*/

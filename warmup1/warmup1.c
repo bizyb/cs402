@@ -98,7 +98,7 @@ int readInput(My402List* pList, char* fileName, FILE* inStream) {
 
         file = fopen(fileName, "r");
         if (file == NULL)  exitOnError(FileOpen);
-        // fprintf(stdout, "opened file: \n");
+
     }
 
     else file = inStream;
@@ -123,22 +123,22 @@ void processArgs(int argc, char *argv[], char** fileNamePtr, FILE** inStreamPtr)
     const int MAX_ARG_COUNT = 3;
 
     char* command = "sort";
-    if (argc > MAX_ARG_COUNT) exitOnErrorCmd(TooManyArgs);
+    if (argc > MAX_ARG_COUNT) exitOnCmdError(TooManyArgs);
     else if (argc == MAX_ARG_COUNT) {
 
-        if (strcmp(command, argv[1]) != 0) exitOnErrorCmd(UnknownCmd);
+        if (strcmp(command, argv[1]) != 0) exitOnCmdError(UnknownCmd);
         *fileNamePtr = argv[MAX_ARG_COUNT-1];
-        exitOnErrorFile(*fileNamePtr); 
+        exitOnFileError(*fileNamePtr); 
 
      
     }
     else if (argc == MAX_ARG_COUNT - 1) {
 
-        if (strcmp(command, argv[1]) != 0) exitOnErrorCmd(UnknownCmd);
+        if (strcmp(command, argv[1]) != 0) exitOnCmdError(UnknownCmd);
         *inStreamPtr = stdin;
     }
 
-    else exitOnErrorCmd(TooFewArgs); 
+    else exitOnCmdError(TooFewArgs); 
 
     
 }
