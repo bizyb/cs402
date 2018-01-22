@@ -1,26 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-rename the file to w1_README or something. See specs. 
-
-
-
-
-
-
-
-
-
-
-
 /*
 *  Author: Bizuwork Melesse
 *  USC Spring 2018 - CS402
@@ -59,7 +36,7 @@ Segmentation faults : -0 pts
 Separate compilation : -0 pts
 Malformed input : -0 pts
 Too slow : -0 pts
-Bad commandline : -???? pts
+Bad commandline : -0 pts
 Did not use My402List and My402ListElem to implement "sort" in (B) : -0 pts
 
 +----------------------+

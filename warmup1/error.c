@@ -57,7 +57,7 @@ void exitOnError(ErrorType e) {
 
 void exitOnCmdError(ErrorType e) {
 
-    char* usage = "Usage: ./warmup1 sort [optinalFileName]";
+    char* usage = "Usage: ./warmup1 sort [tfile]";
     char* msg;
 
     switch(e) {
