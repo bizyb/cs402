@@ -24,5 +24,13 @@ typedef enum {
 
 } ThreadType;
 
+typedef struct {
+
+
+} ThreadArgument;
+
+extern double deltaTime(struct timeval *, struct timeval *);
+extern void runEmulation(EmulationParams *, char*);
+extern void getThreadArgs(ThreadType, ThreadArgument*);
 extern void processArgs(int, char *[], EmulationParams *, char**, FILE**);
 #endif /*_PARENT_H*/
