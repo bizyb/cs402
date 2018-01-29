@@ -1,0 +1,34 @@
+./warmup2 -x -y -z
+
+./warmup2 -lambda -n 10
+
+./warmup2 -mu -n 10
+
+./warmup2 -r -n 10
+
+./warmup2 -B -n 10
+
+./warmup2 -n
+
+./warmup2 -r 5 -mu
+
+./warmup2 -y sort
+
+./warmup2 xyz
+
+./warmup2 abc def ghi
+
+./warmup2 ksjdfjwiejofjasdfjowkejokjaosijfioejfsiejriwjeirjwier
+
+./warmup2 -t /usr/bin/xyzz
+(input file /usr/bin/xyzz does not exist)
+./warmup2 -t /etc/sysidcfg
+(input file /etc/sysidcfg cannot be opened - access denies)
+./warmup2 -t /etc/inet/secret/xyzz
+(input file /etc/inet/secret/xyzz cannot be opened - access denies)
+./warmup2 -t /etc
+(malformed input - line 1 is not just a number)
+./warmup2 -t /etc/motd.all
+(malformed input - line 1 is not just a number)
+./warmup2 -t ~/.login
+(malformed input - line 1 is not just a number)

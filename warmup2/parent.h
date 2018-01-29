@@ -15,13 +15,13 @@ typedef struct {
 
 } EmulationParams;
 
-typedef struct {
+typedef enum {
 
 	Arrival,
 	TokenDeposit,
 	Server1,
 	Server2
-	
+
 } ThreadType;
 
 extern void processArgs(int, char *[], EmulationParams *, char**, FILE**);
