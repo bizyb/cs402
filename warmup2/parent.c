@@ -10,7 +10,26 @@
 #include "my402list.h"
 #include "arrival_thread.h"
 
+void printEmulParams(EmulationParams *ep) {
 
+	printf("Emulation Parameters:\n");
+	printf("\tnumber to arrive = %d\n", ep->numPackets);
+
+	if (ep->fileName == NULL) {
+		printf("\tlambda = %d\n", ep->lambda);
+		printf("\tmu = %.2f\n", ep->mu);
+	}
+
+	printf("\tr = %.2f\n", ep->r);
+	printf("\tB = %d\n", ep->B);
+	printf("\tP = %d\n", ep->P);
+
+	if (ep->fileName != NULL) printf("\ttsfile = %s\n", ep->fileName);
+
+	printf("\n");
+
+
+}
 void initThreadArgs(ThreadArgument *arrival_arg, ThreadArgument *deposit_arg,
 				ThreadArgument *server_arg, EmulationParams *ep) {
 
@@ -67,9 +86,11 @@ void runEmulation(EmulationParams *ep) {
     void *(*arrivalFuncPtr)(void*);
     arrivalFuncPtr = &arrival;
 
+    printEmulParams(ep);
 
     (void)gettimeofday(&startTime, NULL);
     dTime = deltaTime(&startTime, &startTime);
+    ep->time_emul_start = startTime;
 
  	printf("%012.3fms: emulation begins\n", dTime);
 

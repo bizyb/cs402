@@ -18,6 +18,7 @@ typedef struct {
 	int numPackets;
 	int deterministic;
 	char *fileName;
+	struct timeval time_emul_start;
 
 } EmulationParams;
 
@@ -43,6 +44,7 @@ typedef struct {
 
 } ThreadArgument;
 
+extern void printEmulParams(EmulationParams *);
 extern void initThreadArgs(ThreadArgument *, ThreadArgument *, ThreadArgument *,
 							EmulationParams *);
 extern void initEmulParams(EmulationParams *);
