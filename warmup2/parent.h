@@ -1,6 +1,10 @@
 #ifndef _PARENT_H
 #define _PARENT_H
 
+#include <pthread.h>
+
+#include "my402list.h"
+
 
 
 typedef struct {
@@ -9,9 +13,10 @@ typedef struct {
 	double r;
 	int B;
 	int P;
-	int n;
 	int lambda;
 	int numPackets;
+	int deterministic;
+	char *fileName;
 
 } EmulationParams;
 
@@ -26,11 +31,21 @@ typedef enum {
 
 typedef struct {
 
+	My402List *q1;
+	My402List *q2;
+	// My402List *packetList;
+	EmulationParams *epPtr;
+	// pthread_mutex_t q1_m;
+	// pthread_mutex_t q2_m;
+	pthread_mutex_t *token_m;
+	// pthread_mutex_t packetList_m;
 
 } ThreadArgument;
 
+extern void initThreadArgs(ThreadArgument *, ThreadArgument *, ThreadArgument *,
+							EmulationParams *);
+extern void initEmulParams(EmulationParams *);
 extern double deltaTime(struct timeval *, struct timeval *);
-extern void runEmulation(EmulationParams *, char*);
-extern void getThreadArgs(ThreadType, ThreadArgument*);
-extern void processArgs(int, char *[], EmulationParams *, char**, FILE**);
+extern void runEmulation(EmulationParams *);
+extern void processArgs(int, char *[], EmulationParams *, char**);
 #endif /*_PARENT_H*/
