@@ -6,7 +6,7 @@
 
 #include "my402list.h"
 
-
+extern int lineNum;
 
 typedef struct {
 
@@ -48,6 +48,7 @@ extern void printEmulParams(EmulationParams *);
 extern void initThreadArgs(ThreadArgument *, ThreadArgument *, ThreadArgument *,
 							EmulationParams *);
 extern void initEmulParams(EmulationParams *);
+extern void updateEmulParams(EmulationParams *);
 extern double deltaTime(struct timeval *, struct timeval *);
 extern void runEmulation(EmulationParams *);
 extern void processArgs(int, char *[], EmulationParams *, char**);

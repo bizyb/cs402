@@ -11,10 +11,19 @@
 
 typedef enum {
 	
-	Malloc,
+	
 	TooManyArgs,
 	UnknownCmd,
 	TooFewArgs,
+	InvalidEmulParams,
+	NumPackets,
+	InterArrival,
+	Tokens,
+	ServiceTime,
+	LongLine,
+	EmptyLine,
+	Malloc,
+	ListInsertion
 
 } ErrorType;
 
@@ -22,7 +31,7 @@ typedef enum {
 /*
 	Print miscellaneous error messages. 
 */
-// extern void exitOnError(ErrorType);
+extern void exitOnError(ErrorType);
 
 /*
 	Print command line argument-related error message and exit program.

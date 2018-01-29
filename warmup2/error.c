@@ -13,47 +13,41 @@
 
 
 #include "error.h"
-// #include "warmup2.h"
+#include "parent.h"
 #include "cs402.h"
 
-// void exitOnError(ErrorType e) {
+void exitOnError(ErrorType e) {
  
-//     char* msg;
-//     switch(e) {
-//         case FileOpen:      msg = "Failed to open file."; break;
-        // case LongLine:      msg = "Line exceeds acceptable length."; break;
-        // case Duplicate:     msg = "Found entries with duplicate timestamp."; break;
-        // case HighAmount:    msg = "Amount exceeds allowed limit."; break;
-        // case HighBalance:   msg = "Balance exceeds allowed limit."; break;
-        // case LowBalance:    msg = "Balance is below allowed limit."; break;
-        // case UnknownFlag:   msg = "Unknown transaction flag."; break;
-        // case UnknownAmount: msg = "Unable to parse amount."; break;
+    char* msg;
+    switch(e) {
+        
+        case LongLine:      msg = "Line exceeds acceptable length."; break;
+        case NumPackets:    msg = "Invalid Number of Packets."; break;
+        case InterArrival:  msg = "Invalid inter-arrival time."; break;
+        case Tokens:        msg = "Invalid number of tokens."; break;
+        case ServiceTime:   msg = "Invalid service time."; break;
         // case Timestamp:     msg = "Invalid timestamp."; break;
-        // case Malloc:        msg = "Failed to allocate memory"; break;
-        // case ListInsertion: msg = "Failed to add transaction record into list."; break;
-        // case EmptyLine:     msg = "Empty line."; break;
+        case Malloc:        msg = "Failed to allocate memory"; break;
+        case ListInsertion: msg = "Failed to enqueue packet."; break;
+        case EmptyLine:     msg = "Empty line."; break;
         // case LineTooShort:  msg = "Not enough characters."; break;
-        // case FlagFormat:    msg = "Invalid transaction flag."; break;
-        // case DateFormat:    msg = "Invalid date."; break;
-        // case CurrencyFormat:msg = "Invalid currency."; break;
-        // case DescFormat:    msg = "Invalid/missing description."; break;
-//         default: msg = "Unknown error";
-//     }
+        
+        default: msg = "Unknown error";
+    }
 
-//     if (e == Malloc || e == ListInsertion || e == FileOpen || e == LowBalance
-//         || e == HighBalance) {
+    if (e == Malloc || e == ListInsertion) {
 
-//         fprintf(stderr, "%s\n", msg);
-//     }
-//     else {
+        fprintf(stderr, "%s\n", msg);
+    }
+    else {
 
-//         fprintf(stderr, "Error on line %d: %s\n", lineNum, msg);
+        fprintf(stderr, "Error on line %d: %s\n", lineNum, msg);
 
-//     }
+    }
     
-//     exit(1);
+    exit(1);
 
-// }
+}
 
 
 void exitOnCmdError(ErrorType e) {

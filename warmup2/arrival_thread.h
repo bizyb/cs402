@@ -9,6 +9,8 @@
 
 #include <sys/time.h>
 
+#include "error.h"
+
 
 typedef struct {
 
@@ -29,5 +31,19 @@ typedef struct {
 
 } Packet;
 
+typedef struct {
+
+	int numPackets;
+	int interArrival;
+	int tokens;
+	int serviceTime;
+
+} PacketParams;
+extern void matchPattern(char*, char*, ErrorType);
+extern void validateLine(char* );
+extern PacketParams getPacketParams(char *, char *, char* );
+extern PacketParams getPacketParams_overload(char *);
+extern PacketParams parseLine(char*, int);
+extern PacketParams readInput(char*, int);
 extern void *arrival(void *);
 #endif /*_WARMUP2_ARRIVAL_THREAD*/

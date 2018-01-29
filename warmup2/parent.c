@@ -62,6 +62,19 @@ void initEmulParams(EmulationParams *ep) {
 	ep->fileName = NULL;
 }
 
+void updateEmulParams(EmulationParams *ep) {
+
+	int enumParams = TRUE;
+	PacketParams params = readInput(ep->fileName, enumParams);
+	ep->numPackets = params.numPackets;
+	ep->deterministic = FALSE;
+	// FILE* file;
+	// file = fopen(ep->fileName, "r");
+	// if (file == NULL)  exitOnFileError(ep->fileName);
+
+
+}
+
 double deltaTime(struct timeval *start, struct timeval *end) {
 
 	const double CONVERSION_FACTOR = 1000.00;
@@ -135,14 +148,15 @@ void processArgs(int argc, char *argv[], EmulationParams *ep, char** fileNamePtr
 			else if (strcmp("-n", command) == 0) ep->numPackets = atoi(param);
 			else if (strcmp("-t", command) == 0) {
 
-				*fileNamePtr = param;
-				exitOnFileError(*fileNamePtr);
+				ep->fileName = param;
+				exitOnFileError(ep->fileName);
 
 			} 
 			else exitOnCmdError(UnknownCmd);
 		}
 
-		if (fileNamePtr == NULL) ep->deterministic = TRUE;
+		if (ep->fileName == NULL) ep->deterministic = TRUE;
+		else updateEmulParams(ep);
 	}
 
 }
@@ -154,8 +168,7 @@ int main(int argc, char* argv[]) {
 
     initEmulParams(&ep);
     processArgs(argc, argv, &ep, &fileName);
-
-    ep.fileName = fileName;
+    // validateEmulParams(&ep);
     runEmulation(&ep);
 
 
