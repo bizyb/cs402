@@ -2,6 +2,7 @@
 #define _PARENT_H
 
 #include <pthread.h>
+#include <sys/time.h>
 
 #include "my402list.h"
 
