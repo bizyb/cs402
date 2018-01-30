@@ -11,10 +11,10 @@ extern int lineNum;
 typedef struct {
 
 	double mu;
+	double lambda;
 	double r;
 	int B;
 	int P;
-	int lambda;
 	int numPackets;
 	int deterministic;
 	char *fileName;

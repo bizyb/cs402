@@ -10,12 +10,15 @@
 #include <sys/time.h>
 
 #include "error.h"
+#include "parent.h"
 
+int packetCount;
 
 typedef struct {
 
 	int tokens;
-	int iServiceTime;
+	int interArrival;
+	int serviceTime;
 	int packetID;
 	int serverID;
 	double dServiceTime;;
@@ -34,16 +37,27 @@ typedef struct {
 typedef struct {
 
 	int numPackets;
-	int interArrival;
+	int interArrival; // in microseconds
 	int tokens;
-	int serviceTime;
+	int serviceTime; // in microseconds
 
 } PacketParams;
+
+// typedef struct {
+
+// 	double interArrival;
+// 	int tokens;
+// 	double serviceTime;
+
+// } DeterministicParams;
+
 extern void matchPattern(char*, char*, ErrorType);
 extern void validateLine(char* );
 extern PacketParams getPacketParams(char *, char *, char* );
 extern PacketParams getPacketParams_overload(char *);
 extern PacketParams parseLine(char*, int);
-extern PacketParams readInput(char*, int);
+extern PacketParams readInput(char*, int, ThreadArgument*);
+extern Packet *getPacket(PacketParams);
+extern void processPacket(ThreadArgument *, PacketParams);
 extern void *arrival(void *);
 #endif /*_WARMUP2_ARRIVAL_THREAD*/

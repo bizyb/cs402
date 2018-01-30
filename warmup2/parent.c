@@ -16,7 +16,7 @@ void printEmulParams(EmulationParams *ep) {
 	printf("\tnumber to arrive = %d\n", ep->numPackets);
 
 	if (ep->fileName == NULL) {
-		printf("\tlambda = %d\n", ep->lambda);
+		printf("\tlambda = %f\n", ep->lambda);
 		printf("\tmu = %.2f\n", ep->mu);
 	}
 
@@ -49,10 +49,11 @@ void initThreadArgs(ThreadArgument *arrival_arg, ThreadArgument *deposit_arg,
 
 void initEmulParams(EmulationParams *ep) {
 
-	const int LAMBDA = 1, NUM_PACKETS = 20, P = 3, B = 10;
-	const double MU = 0.35, R = 1.5; 
+	const int NUM_PACKETS = 20, P = 3, B = 10;
+	const double MU = 0.35, R = 1.5, LAMBDA = 1.0;
 
 	// Values ignored if trace file provided: lambda, mu, P, numPackets
+	// numPackets is read from the trace file and over-written later
 	ep->lambda = LAMBDA;
 	ep->mu = MU;
 	ep->r = R; // 1/r = token inter-arrival-time; permanent
@@ -65,14 +66,10 @@ void initEmulParams(EmulationParams *ep) {
 void updateEmulParams(EmulationParams *ep) {
 
 	int enumParams = TRUE;
-	PacketParams params = readInput(ep->fileName, enumParams);
+	PacketParams params = readInput(ep->fileName, enumParams, NULL);
 	ep->numPackets = params.numPackets;
 	ep->deterministic = FALSE;
-	// FILE* file;
-	// file = fopen(ep->fileName, "r");
-	// if (file == NULL)  exitOnFileError(ep->fileName);
-
-
+	
 }
 
 double deltaTime(struct timeval *start, struct timeval *end) {

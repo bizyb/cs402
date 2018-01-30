@@ -2,6 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <regex.h>
+#include <unistd.h>
+
 
 #include "parent.h"
 #include "error.h"
@@ -17,9 +19,8 @@ void matchPattern(char* line, char* pattern, ErrorType e) {
     int formatFail;
 
     formatFail  = regcomp(&patternBuffer, pattern, REG_EXTENDED);
-    fprintf(stdout, "compilation: %d\n", formatFail);
     formatFail = regexec(&patternBuffer, line, 0, NULL, 0);
-    fprintf(stdout, "matching: %d\n", formatFail);
+    // fprintf(stdout, "matching: %d\n", formatFail);
     regfree(&patternBuffer);
 
     if (formatFail) exitOnError(e);
@@ -37,14 +38,12 @@ void validateLine(char* line) {
     char* tokensPattern = "^([0-9]{1,10})\\s+([0-9]{1,10})\\s+";
     char* sTimePattern = "^([0-9]{1,10})\\s+([0-9]{1,10})\\s+([0-9]{1,10})\n";
 
-   
-    matchPattern(line, numPacketsPattern, NumPackets);
     if (lineNum > 1) {
-
 	    matchPattern(line, interArrivalPattern, InterArrival);
 	    matchPattern(line, tokensPattern, Tokens);
 	    matchPattern(line, sTimePattern, ServiceTime);
 	}
+	else matchPattern(line, numPacketsPattern, NumPackets);
 
     //verify line width
     int i;
@@ -59,11 +58,14 @@ void validateLine(char* line) {
 
 PacketParams getPacketParams(char *interArrival, char *tokens, char* serviceTime) {
 
+	// TODO: multiplying by THOUSAND_FACTOR may cause overflow; this would be incorrect since the 
+	// original input could have been valid;
+
 	int iArrival, iTokens, iSrvTime;
 
-	iArrival = atoi(interArrival);
+	iArrival = atoi(interArrival) * THOUSAND_FACTOR;
 	iTokens = atoi(tokens);
-	iSrvTime = atoi(serviceTime);
+	iSrvTime = atoi(serviceTime) * THOUSAND_FACTOR;
 
 	// TODO: what's the minimum number of tokens required?
 
@@ -90,7 +92,7 @@ PacketParams getPacketParams_overload(char *numPackets) {
 PacketParams parseLine(char* line, int enumParams) {
 
     // #TODO: the delimiter can be a space or tab character
-    char* delim = "\\s";
+    char* delim = " \t\n";
     char *numPackets, *interArrival, *tokens, *serviceTime;
     PacketParams params;
 
@@ -112,7 +114,7 @@ PacketParams parseLine(char* line, int enumParams) {
 	return params; 
 }
 
-PacketParams readInput(char* fileName, int enumParams) {
+PacketParams readInput(char* fileName, int enumParams, ThreadArgument *args) {
 
     char buffer [BUFFERSIZE];
     FILE* file;
@@ -132,6 +134,7 @@ PacketParams readInput(char* fileName, int enumParams) {
 
             params = parseLine((char* ) &buffer, enumParams);
             if (enumParams == TRUE) break;
+            if (lineNum > 1) processPacket(args, params);
             lineNum++;
 
         }
@@ -144,10 +147,95 @@ PacketParams readInput(char* fileName, int enumParams) {
 
 }
 
-void *arrival(void * obj) {
+Packet *getPacket(PacketParams params) {
 
+	// TODO: what if multiplying by 1000 causes an overflow?
+
+	
+	Packet *packet = (Packet*) calloc(1, sizeof(Packet));
+
+	packet->tokens = params.tokens;
+	packet->interArrival = params.interArrival;
+	packet->serviceTime = params.serviceTime;
+	packet->packetID = ++packetCount;
+
+	return packet;
+
+}
+
+PacketParams getDetParams(ThreadArgument *args) {
+
+	const int MAX_SECONDS = 10 * THOUSAND_FACTOR * THOUSAND_FACTOR;
+	double interArrival, serviceTime;
+	int tokens;
+
+
+	tokens = args->epPtr->P;
+	serviceTime = 1/(args->epPtr->mu) * THOUSAND_FACTOR * THOUSAND_FACTOR;
+	interArrival = 1/(args->epPtr->lambda) * THOUSAND_FACTOR * THOUSAND_FACTOR;
+
+	if (serviceTime > MAX_SECONDS) serviceTime = MAX_SECONDS;
+	if (interArrival > MAX_SECONDS) interArrival = MAX_SECONDS;
+
+	PacketParams params = {-1, interArrival, tokens, serviceTime};
+	return params;
+
+
+}
+void processPacket(ThreadArgument * args, PacketParams params) {
+
+	struct timeval then, now;
+	double dTime, dTotal;
+
+	(void)gettimeofday(&then, NULL);
+	usleep(params.interArrival);
+	(void)gettimeofday(&now, NULL);
+	
+
+	Packet *packet = getPacket(params);
+	packet->time_arrival = now;
+	dTime = deltaTime(&then, &now);
+	dTotal = deltaTime(&args->epPtr->time_emul_start, &now);
+	printf("%012.3fms: p%d arrives, needs %d tokens, inter-arrival time = %.3fms\n", 
+			dTotal, packet->packetID, packet->tokens, dTime);
+
+
+	// 	1. sleep for interArrival time;
+			// 	2. timestamp arrival time
+			// 	3. create a packet 
+			// 	4. queue the packet 
+			// 	5. go back to sleep for the interArrival time of the next packet 
+			// 		the sleep time is the next packets interArrival time minus 
+			// 		the time it took to create the current packet and queue it; 
+			// 		queueing could take a while since the mutex could be locked by 
+			// 		some other thread; 
+			// 		If the time difference is negative, sleep time should be zero,
+
+}
+
+void *arrival(void * obj) {
+	// TODO: the while loop should run till numPackets have been processed
+	packetCount = 0;
+	PacketParams detParams;
 	ThreadArgument *args = (ThreadArgument *) obj;
-	printf("in arrival thread. emul start time: %d\n", (int)args->epPtr->time_emul_start.tv_sec);
+	int numPackets = args->epPtr-> numPackets;
+
+	if (args->epPtr->deterministic == TRUE) {
+
+		detParams = getDetParams(args);
+		int i = 0;
+		while (i < numPackets) {
+			processPacket(args, detParams);
+			i++;
+		}
+	}
+	else {
+		int enumParams = FALSE;
+		(void) readInput(args->epPtr->fileName, enumParams, args);
+	}
+
+	// printf("in arrival thread. emul start time: %d\n", (int)args->epPtr->time_emul_start.tv_sec);
+
 	return NULL;
 }
 
