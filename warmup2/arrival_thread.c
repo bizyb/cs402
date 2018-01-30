@@ -182,6 +182,46 @@ PacketParams getDetParams(ThreadArgument *args) {
 
 
 }
+void enqueuePacketQ1(ThreadArgument * args, Packet *packet) {
+
+	struct timeval in_q1, out_q1, in_q2;
+	double dTime, dTotal;
+
+	My402ListAppend(args->q1, (void *) packet);
+	(void)gettimeofday(&in_q1, NULL);
+	packet->time_in_q1 = in_q1;
+	dTotal = deltaTime(&args->epPtr->time_emul_start, &packet->time_in_q1);
+	printf("%012.3fms: p%d enters Q1\n", dTotal, packet->packetID);
+
+	
+	if (args->q1->num_members == 1 && packet->tokens <= 100) {
+
+		My402ListElem *elem = My402ListFirst(args->q1);
+		My402ListUnlink(args->q1, elem);
+		(void)gettimeofday(&out_q1, NULL);
+		packet->time_out_q1 = out_q1;
+		dTotal = deltaTime(&args->epPtr->time_emul_start, &packet->time_out_q1);
+		dTime = deltaTime(&packet->time_in_q1, &packet->time_out_q1);
+
+
+		// decrement available tokens here
+
+
+		printf("%012.3fms: p%d leaves Q1, time in Q1 = %.3fms, token bucket now has %d tokens \n",
+			 dTotal, packet->packetID, dTime, 100);
+
+		My402ListAppend(args->q2, (void *) packet);
+		(void)gettimeofday(&in_q2, NULL);
+		packet->time_in_q2 = in_q2;
+		dTotal = deltaTime(&args->epPtr->time_emul_start, &packet->time_in_q2);
+		printf("%012.3fms: p%d enters Q2\n", dTotal, packet->packetID);
+
+		// broadcast signal here
+
+	}
+
+}
+
 void processPacket(ThreadArgument * args, PacketParams params) {
 
 	struct timeval then, now;
@@ -196,8 +236,17 @@ void processPacket(ThreadArgument * args, PacketParams params) {
 	packet->time_arrival = now;
 	dTime = deltaTime(&then, &now);
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &now);
+
 	printf("%012.3fms: p%d arrives, needs %d tokens, inter-arrival time = %.3fms\n", 
 			dTotal, packet->packetID, packet->tokens, dTime);
+
+	
+	pthread_mutex_lock(args->token_m);
+	enqueuePacketQ1(args, packet);
+	pthread_mutex_unlock(args->token_m);
+
+
+
 
 
 	// 	1. sleep for interArrival time;
@@ -233,8 +282,6 @@ void *arrival(void * obj) {
 		int enumParams = FALSE;
 		(void) readInput(args->epPtr->fileName, enumParams, args);
 	}
-
-	// printf("in arrival thread. emul start time: %d\n", (int)args->epPtr->time_emul_start.tv_sec);
 
 	return NULL;
 }
