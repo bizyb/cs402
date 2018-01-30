@@ -17,7 +17,7 @@ int getNumPackets(My402List *q) {
 
 double getPacketDropProb() {
 
-	return -1.733;
+	return droppedPacketCount/(double) packetCount;
 }
 double getTokenDropProb() {
 

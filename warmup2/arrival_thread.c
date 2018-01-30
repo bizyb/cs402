@@ -247,12 +247,21 @@ void processPacket(ThreadArgument * args, PacketParams params) {
 
 	// TODO: need to check if packet needs to be dropped before going further
 
-	printf("%012.3fms: p%d arrives, needs %d tokens, inter-arrival time = %.3fms\n", 
-			dTotal, packet->packetID, packet->tokens, dTime);
-
-	
 	pthread_mutex_lock(args->token_m);
-	enqueuePacketQ1(args, packet);
+	if (packet->tokens > args->epPtr->B) {
+
+		printf("%012.3fms: p%d arrives, needs %d tokens, inter-arrival time = %.3fms, dropped\n", 
+			dTotal, packet->packetID, packet->tokens, dTime);
+		droppedPacketCount++;
+
+	}
+	else {
+		printf("%012.3fms: p%d arrives, needs %d tokens, inter-arrival time = %.3fms\n", 
+				dTotal, packet->packetID, packet->tokens, dTime);
+
+		enqueuePacketQ1(args, packet);
+		
+	}
 	pthread_mutex_unlock(args->token_m);
 
 	(void)gettimeofday(&prevProcessingTime, NULL);
@@ -263,6 +272,7 @@ void *arrival(void * obj) {
 	// TODO: the while loop should run till numPackets have been processed
 	packetCount = 0;
 	firstPacket = TRUE;
+	droppedPacketCount = 0;
 	PacketParams detParams;
 	ThreadArgument *args = (ThreadArgument *) obj;
 	int numPackets = args->epPtr-> numPackets;
