@@ -10,6 +10,7 @@
 #include "cs402.h"
 #include "global.h"
 #include "arrival_thread.h"
+#include "token_thread.h"
 
 int lineNum = 1;
 
@@ -220,6 +221,14 @@ void enqueuePacketQ1(ThreadArgument * args, Packet *packet) {
 
 void processPacket(ThreadArgument * args, PacketParams params) {
 
+	// TODO: negative sleep time skipping is not yet tested
+			// 	5. go back to sleep for the interArrival time of the next packet 
+			// 		the sleep time is the next packets interArrival time minus 
+			// 		the time it took to create the current packet and queue it; 
+			// 		queueing could take a while since the mutex could be locked by 
+			// 		some other thread; 
+			// 		If the time difference is negative, sleep time should be zero,
+
 	struct timeval then, now;
 	double dTime, dTotal;
 
@@ -250,7 +259,7 @@ void processPacket(ThreadArgument * args, PacketParams params) {
 
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &now);
 	prevArrivalTime = now;
-	
+
 	printf("%012.3fms: p%d arrives, needs %d tokens, inter-arrival time = %.3fms\n", 
 			dTotal, packet->packetID, packet->tokens, dTime);
 
@@ -260,23 +269,6 @@ void processPacket(ThreadArgument * args, PacketParams params) {
 	pthread_mutex_unlock(args->token_m);
 
 	(void)gettimeofday(&prevProcessingTime, NULL);
-
-
-
-
-
-
-
-	// 	1. sleep for interArrival time;
-			// 	2. timestamp arrival time
-			// 	3. create a packet 
-			// 	4. queue the packet 
-			// 	5. go back to sleep for the interArrival time of the next packet 
-			// 		the sleep time is the next packets interArrival time minus 
-			// 		the time it took to create the current packet and queue it; 
-			// 		queueing could take a while since the mutex could be locked by 
-			// 		some other thread; 
-			// 		If the time difference is negative, sleep time should be zero,
 
 }
 

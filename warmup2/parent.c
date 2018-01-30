@@ -9,6 +9,7 @@
 #include "cs402.h"
 #include "my402list.h"
 #include "arrival_thread.h"
+#include "token_thread.h"
 
 void printEmulParams(EmulationParams *ep) {
 
@@ -42,6 +43,8 @@ void initThreadArgs(ThreadArgument *arrival_arg, ThreadArgument *deposit_arg,
 	// My402List *packetList = (My402List *) calloc(1, sizeof(My402List));
 
 	arrival_arg->q1 = q1, arrival_arg->q2 = q2, arrival_arg->epPtr = ep, arrival_arg->token_m = token_m;
+	deposit_arg->q1 = q1, deposit_arg->q2 = q2, deposit_arg->epPtr = ep, deposit_arg->token_m = token_m;
+
 
 
 
@@ -87,14 +90,16 @@ double deltaTime(struct timeval *start, struct timeval *end) {
 void runEmulation(EmulationParams *ep) {
 
 	
-	pthread_t arrival_t; //, token_deposit_t, s1_t, s2_t;
+	pthread_t arrival_t, token_deposit_t; //, s1_t, s2_t;
     ThreadArgument arrival_arg, deposit_arg, server_arg;
     struct timeval startTime, endTime;
     double dTime;
 
     initThreadArgs(&arrival_arg, &deposit_arg, &server_arg, ep);
     void *(*arrivalFuncPtr)(void*);
+    void *(*depositFuncPtr)(void*);
     arrivalFuncPtr = &arrival;
+    depositFuncPtr = &deposit;
 
     printEmulParams(ep);
 
@@ -106,12 +111,13 @@ void runEmulation(EmulationParams *ep) {
 
 
 	pthread_create(&arrival_t, 0, arrivalFuncPtr, (void *) &arrival_arg);
+	pthread_create(&token_deposit_t, 0, depositFuncPtr, (void *) &deposit_arg);
  //    pthread_create(&token_deposit_t, 0, deposit, getThreadArgs(TokenDeposit, &deposit_arg));
  //    pthread_create(&s1_t, 0, server, getThreadArgs(Server1, &server_arg));
  //    pthread_create(&s2_t, 0, server, getThreadArgs(Server2, &server_arg));
 
 	pthread_join(arrival_t, 0);
-	// pthread_join(token_deposit_t, 0);
+	pthread_join(token_deposit_t, 0);
 	// pthread_join(s1_t, 0);
 	// pthread_join(s2_t, 0);
 
