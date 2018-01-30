@@ -13,6 +13,10 @@
 #include "parent.h"
 
 int packetCount;
+int firstPacket;
+struct timeval prevProcessingTime;
+struct timeval prevArrivalTime;
+
 
 typedef struct {
 
@@ -43,13 +47,6 @@ typedef struct {
 
 } PacketParams;
 
-// typedef struct {
-
-// 	double interArrival;
-// 	int tokens;
-// 	double serviceTime;
-
-// } DeterministicParams;
 
 extern void matchPattern(char*, char*, ErrorType);
 extern void validateLine(char* );
@@ -58,6 +55,8 @@ extern PacketParams getPacketParams_overload(char *);
 extern PacketParams parseLine(char*, int);
 extern PacketParams readInput(char*, int, ThreadArgument*);
 extern Packet *getPacket(PacketParams);
+extern PacketParams getDetParams(ThreadArgument *);
+extern void enqueuePacketQ1(ThreadArgument *, Packet *);
 extern void processPacket(ThreadArgument *, PacketParams);
 extern void *arrival(void *);
 #endif /*_WARMUP2_ARRIVAL_THREAD*/

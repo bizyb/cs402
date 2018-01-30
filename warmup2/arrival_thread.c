@@ -91,7 +91,6 @@ PacketParams getPacketParams_overload(char *numPackets) {
 
 PacketParams parseLine(char* line, int enumParams) {
 
-    // #TODO: the delimiter can be a space or tab character
     char* delim = " \t\n";
     char *numPackets, *interArrival, *tokens, *serviceTime;
     PacketParams params;
@@ -149,9 +148,6 @@ PacketParams readInput(char* fileName, int enumParams, ThreadArgument *args) {
 
 Packet *getPacket(PacketParams params) {
 
-	// TODO: what if multiplying by 1000 causes an overflow?
-
-	
 	Packet *packet = (Packet*) calloc(1, sizeof(Packet));
 
 	packet->tokens = params.tokens;
@@ -228,15 +224,33 @@ void processPacket(ThreadArgument * args, PacketParams params) {
 	double dTime, dTotal;
 
 	(void)gettimeofday(&then, NULL);
-	usleep(params.interArrival);
+	if (firstPacket == TRUE) {
+		// account for the time elapsed since the start of the emulation and 
+		// the first invocation of processPacket()
+		dTime = deltaTime(&args->epPtr->time_emul_start, &then) * THOUSAND_FACTOR;
+		usleep(params.interArrival - (int) dTime);
+		
+	}
+	else {
+		dTime = deltaTime(&prevArrivalTime, &prevProcessingTime) * THOUSAND_FACTOR;
+		if (dTime > 0) usleep(params.interArrival - (int) dTime);
+	}
+	
 	(void)gettimeofday(&now, NULL);
 	
 
 	Packet *packet = getPacket(params);
 	packet->time_arrival = now;
-	dTime = deltaTime(&then, &now);
-	dTotal = deltaTime(&args->epPtr->time_emul_start, &now);
 
+	if (firstPacket == TRUE) {
+		dTime = deltaTime(&args->epPtr->time_emul_start, &now);
+		firstPacket = FALSE;
+	}
+	else dTime = deltaTime(&prevArrivalTime, &packet->time_arrival);
+
+	dTotal = deltaTime(&args->epPtr->time_emul_start, &now);
+	prevArrivalTime = now;
+	
 	printf("%012.3fms: p%d arrives, needs %d tokens, inter-arrival time = %.3fms\n", 
 			dTotal, packet->packetID, packet->tokens, dTime);
 
@@ -244,6 +258,10 @@ void processPacket(ThreadArgument * args, PacketParams params) {
 	pthread_mutex_lock(args->token_m);
 	enqueuePacketQ1(args, packet);
 	pthread_mutex_unlock(args->token_m);
+
+	(void)gettimeofday(&prevProcessingTime, NULL);
+
+
 
 
 
@@ -265,6 +283,7 @@ void processPacket(ThreadArgument * args, PacketParams params) {
 void *arrival(void * obj) {
 	// TODO: the while loop should run till numPackets have been processed
 	packetCount = 0;
+	firstPacket = TRUE;
 	PacketParams detParams;
 	ThreadArgument *args = (ThreadArgument *) obj;
 	int numPackets = args->epPtr-> numPackets;
