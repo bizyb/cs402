@@ -181,8 +181,8 @@ PacketParams getDetParams(ThreadArgument *args) {
 }
 void enqueuePacketQ1(ThreadArgument * args, Packet *packet) {
 
-	struct timeval in_q1, out_q1, in_q2;
-	double dTime, dTotal;
+	struct timeval in_q1;
+	double dTotal;
 
 	My402ListAppend(args->q1, (void *) packet);
 	(void)gettimeofday(&in_q1, NULL);
@@ -191,27 +191,10 @@ void enqueuePacketQ1(ThreadArgument * args, Packet *packet) {
 	printf("%012.3fms: p%d enters Q1\n", dTotal, packet->packetID);
 
 	
-	if (args->q1->num_members == 1 && packet->tokens <= 100) {
+	if (args->q1->num_members == 1 && packet->tokens <= avlblTokens) {
 
 		My402ListElem *elem = My402ListFirst(args->q1);
-		My402ListUnlink(args->q1, elem);
-		(void)gettimeofday(&out_q1, NULL);
-		packet->time_out_q1 = out_q1;
-		dTotal = deltaTime(&args->epPtr->time_emul_start, &packet->time_out_q1);
-		dTime = deltaTime(&packet->time_in_q1, &packet->time_out_q1);
-
-
-		// decrement available tokens here
-
-
-		printf("%012.3fms: p%d leaves Q1, time in Q1 = %.3fms, token bucket now has %d tokens \n",
-			 dTotal, packet->packetID, dTime, 100);
-
-		My402ListAppend(args->q2, (void *) packet);
-		(void)gettimeofday(&in_q2, NULL);
-		packet->time_in_q2 = in_q2;
-		dTotal = deltaTime(&args->epPtr->time_emul_start, &packet->time_in_q2);
-		printf("%012.3fms: p%d enters Q2\n", dTotal, packet->packetID);
+		dequeueEnqueue(args, elem);
 
 		// broadcast signal here
 
