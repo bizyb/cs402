@@ -61,16 +61,17 @@ void transferPacket(ThreadArgument *args) {
 
 	int done = FALSE;
 	while (!done) {
-
+		
 		My402ListElem *elem = My402ListFirst(args->q1);
-		if (elem != NULL) {
-
+		if (elem == NULL) done = TRUE;
+		else {
 			Packet *packet = (Packet*) elem->obj;
-			if (packet->tokens <= avlblTokens) {
+			if (packet != NULL && packet->tokens <= avlblTokens) {
 				dequeueEnqueue(args, elem);
 			}
+			else done = TRUE;
 		}
-		else done = TRUE;
+		
 	}
 }
 
