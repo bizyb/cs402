@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <regex.h>
 #include <unistd.h>
+#include <pthread.h>
 
 
 #include "parent.h"
@@ -196,7 +197,7 @@ void enqueuePacketQ1(ThreadArgument * args, Packet *packet) {
 		My402ListElem *elem = My402ListFirst(args->q1);
 		dequeueEnqueue(args, elem);
 
-		// broadcast signal here
+		pthread_cond_broadcast(args->Q2NotEmpty);
 
 	}
 
@@ -242,6 +243,8 @@ void processPacket(ThreadArgument * args, PacketParams params) {
 
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &now);
 	prevArrivalTime = now;
+
+	// TODO: need to check if packet needs to be dropped before going further
 
 	printf("%012.3fms: p%d arrives, needs %d tokens, inter-arrival time = %.3fms\n", 
 			dTotal, packet->packetID, packet->tokens, dTime);

@@ -33,20 +33,20 @@ typedef enum {
 
 typedef struct {
 
+	int serverID;
 	My402List *q1;
 	My402List *q2;
-	// My402List *packetList;
+	My402List *packetList;
 	EmulationParams *epPtr;
-	// pthread_mutex_t q1_m;
-	// pthread_mutex_t q2_m;
 	pthread_mutex_t *token_m;
-	// pthread_mutex_t packetList_m;
+	pthread_mutex_t *packetList_m;
+	pthread_cond_t *Q2NotEmpty;
 
 } ThreadArgument;
 
 extern void printEmulParams(EmulationParams *);
 extern void initThreadArgs(ThreadArgument *, ThreadArgument *, ThreadArgument *,
-							EmulationParams *);
+							ThreadArgument *, EmulationParams *);
 extern void initEmulParams(EmulationParams *);
 extern void updateEmulParams(EmulationParams *);
 extern double deltaTime(struct timeval *, struct timeval *);

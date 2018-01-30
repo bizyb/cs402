@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <pthread.h>
 
 #include "token_thread.h"
 #include "arrival_thread.h"
@@ -61,7 +62,7 @@ void transferPacket(ThreadArgument *args) {
 
 	int done = FALSE;
 	while (!done) {
-		
+
 		My402ListElem *elem = My402ListFirst(args->q1);
 		if (elem == NULL) done = TRUE;
 		else {
@@ -77,7 +78,8 @@ void transferPacket(ThreadArgument *args) {
 
 
 void *deposit(void * obj) {
-	
+	// TODO: this thread can only die if kill signal is received
+
 	firstToken = TRUE;
 	tokenCount = 0;
 	avlblTokens = 0;
@@ -111,7 +113,7 @@ void *deposit(void * obj) {
 		generateToken(args, dTotal);
 		transferPacket(args);
 
-		// broadcast signal here
+		pthread_cond_broadcast(args->Q2NotEmpty);
 
 		pthread_mutex_unlock(args->token_m);
 

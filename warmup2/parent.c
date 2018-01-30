@@ -10,6 +10,7 @@
 #include "my402list.h"
 #include "arrival_thread.h"
 #include "token_thread.h"
+#include "server_thread.h"
 
 void printEmulParams(EmulationParams *ep) {
 
@@ -32,22 +33,39 @@ void printEmulParams(EmulationParams *ep) {
 
 }
 void initThreadArgs(ThreadArgument *arrival_arg, ThreadArgument *deposit_arg,
-				ThreadArgument *server_arg, EmulationParams *ep) {
+				ThreadArgument *s1_arg, ThreadArgument *s2_arg, EmulationParams *ep) {
 
 	My402List *q1 = (My402List *) calloc(1, sizeof(My402List));
 	My402List *q2 = (My402List *) calloc(1, sizeof(My402List));
+	My402List *packetList = (My402List *) calloc(1, sizeof(My402List));
 	My402ListInit(q1);
 	My402ListInit(q2);
+	My402ListInit(packetList);
 
 	pthread_mutex_t *token_m = (pthread_mutex_t*) calloc(1, sizeof(pthread_mutex_t));
-	// My402List *packetList = (My402List *) calloc(1, sizeof(My402List));
+	pthread_mutex_t *packetList_m = (pthread_mutex_t*) calloc(1, sizeof(pthread_mutex_t));
+	pthread_cond_t *Q2NotEmpty = (pthread_cond_t*) calloc(1, sizeof(pthread_cond_t));
+	*token_m = (pthread_mutex_t) PTHREAD_MUTEX_INITIALIZER;
+	*packetList_m = (pthread_mutex_t) PTHREAD_MUTEX_INITIALIZER;
+	*Q2NotEmpty = (pthread_cond_t) PTHREAD_COND_INITIALIZER;
 
-	arrival_arg->q1 = q1, arrival_arg->q2 = q2, arrival_arg->epPtr = ep, arrival_arg->token_m = token_m;
-	deposit_arg->q1 = q1, deposit_arg->q2 = q2, deposit_arg->epPtr = ep, deposit_arg->token_m = token_m;
 
+	arrival_arg->q1 = q1, arrival_arg->q2 = q2, arrival_arg->epPtr = ep; 
+	arrival_arg->token_m = token_m;
 
+	deposit_arg->q1 = q1, deposit_arg->q2 = q2, deposit_arg->epPtr = ep; 
+	deposit_arg->token_m = token_m;
 
+	s1_arg->q2 = q2, s1_arg->epPtr = ep, s1_arg->token_m = token_m; 
+	s1_arg->packetList = packetList, s1_arg->packetList_m = packetList_m, s1_arg->serverID = 0;
 
+	s2_arg->q2 = q2, s2_arg->epPtr = ep, s2_arg->token_m = token_m; 
+	s2_arg->packetList = packetList, s2_arg->packetList_m = packetList_m, s2_arg->serverID = 1;
+
+	arrival_arg->Q2NotEmpty = Q2NotEmpty;
+	deposit_arg->Q2NotEmpty = Q2NotEmpty;
+	s1_arg->Q2NotEmpty = Q2NotEmpty;
+	s2_arg->Q2NotEmpty = Q2NotEmpty;
 }
 
 void initEmulParams(EmulationParams *ep) {
@@ -90,16 +108,19 @@ double deltaTime(struct timeval *start, struct timeval *end) {
 void runEmulation(EmulationParams *ep) {
 
 	
-	pthread_t arrival_t, token_deposit_t; //, s1_t, s2_t;
-    ThreadArgument arrival_arg, deposit_arg, server_arg;
+	pthread_t arrival_t, token_deposit_t, s1_t, s2_t;
+    ThreadArgument arrival_arg, deposit_arg, s1_arg, s2_arg;
     struct timeval startTime, endTime;
     double dTime;
 
-    initThreadArgs(&arrival_arg, &deposit_arg, &server_arg, ep);
+    initThreadArgs(&arrival_arg, &deposit_arg, &s1_arg, &s2_arg, ep);
     void *(*arrivalFuncPtr)(void*);
     void *(*depositFuncPtr)(void*);
+    void *(*serverFuncPtr)(void*);
     arrivalFuncPtr = &arrival;
     depositFuncPtr = &deposit;
+    serverFuncPtr = &server;
+
 
     printEmulParams(ep);
 
@@ -112,14 +133,13 @@ void runEmulation(EmulationParams *ep) {
 
 	pthread_create(&arrival_t, 0, arrivalFuncPtr, (void *) &arrival_arg);
 	pthread_create(&token_deposit_t, 0, depositFuncPtr, (void *) &deposit_arg);
- //    pthread_create(&token_deposit_t, 0, deposit, getThreadArgs(TokenDeposit, &deposit_arg));
- //    pthread_create(&s1_t, 0, server, getThreadArgs(Server1, &server_arg));
- //    pthread_create(&s2_t, 0, server, getThreadArgs(Server2, &server_arg));
+	pthread_create(&s1_t, 0, serverFuncPtr, (void *) &s1_arg);
+	pthread_create(&s2_t, 0, serverFuncPtr, (void *) &s2_arg);
 
 	pthread_join(arrival_t, 0);
 	pthread_join(token_deposit_t, 0);
-	// pthread_join(s1_t, 0);
-	// pthread_join(s2_t, 0);
+	pthread_join(s1_t, 0);
+	pthread_join(s2_t, 0);
 
 	(void)gettimeofday(&endTime, NULL);
 	dTime = deltaTime(&startTime, &endTime);
@@ -166,6 +186,8 @@ void processArgs(int argc, char *argv[], EmulationParams *ep, char** fileNamePtr
 
 int main(int argc, char* argv[]) {
 
+	// TODO: thread return values
+	
 	char* fileName = NULL;
     EmulationParams ep;
 
