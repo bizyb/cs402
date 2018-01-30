@@ -19,6 +19,12 @@ typedef enum {
 
 } TimeType;
 
+extern int getNumPackets(My402List *);
+extern double getPacketDropProb();
+extern double getTokenDropProb();
+extern double getAVgSysTime(My402List *, TimeType);
+extern double getStdv(My402List *, double);
 extern double getAvgPacketNum(My402List *, Facility, double);
 extern void printStats(ThreadArgument *);
+
 #endif /*_WARMUP2_STATS_THREAD*/

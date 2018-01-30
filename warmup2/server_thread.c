@@ -29,7 +29,7 @@ void transmitPacket(ThreadArgument *args) {
 	packet->time_out_q2 = out_q2;
 	// printf("packet->time_out_q2.tv_sec: %d\n", (int) packet->time_out_q2.tv_sec);
 	// printf("packet->time_in_q2.tv_sec: %d\n", (int) packet->time_in_q2.tv_sec);
-	
+
 	dTime = deltaTime(&packet->time_in_q2, &packet->time_out_q2);
 	// printf("just called delta for out_q2\n");
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &packet->time_out_q2);
@@ -81,7 +81,7 @@ void *server(void *obj) {
 
 	ThreadArgument *args = (ThreadArgument *) obj;
 	int i = 0;
-	while(i < 3) {
+	while(i < 10) {
 
 		pthread_cond_wait(args->Q2NotEmpty, args->token_m);
 		// check again that q2 is not empty

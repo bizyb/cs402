@@ -93,7 +93,7 @@ void *deposit(void * obj) {
 	ThreadArgument *args = (ThreadArgument *) obj;
 	tokenInterArrival = (1/args->epPtr->r) * THOUSAND_FACTOR * THOUSAND_FACTOR;
 
-	while (tokenCount < 3) {
+	while (tokenCount < 46) {
 
 		(void)gettimeofday(&then, NULL);
 		if (firstToken == TRUE) {
