@@ -15,6 +15,7 @@ void transmitPacket(ThreadArgument *args) {
 	struct timeval then, now, out_q2;
 	double dTime, dTotal, sysTime;
 
+	//dequeue packet
 	My402ListElem *elem = My402ListFirst(args->q2);
 	Packet *packet = (Packet *) elem->obj;
 
@@ -27,8 +28,10 @@ void transmitPacket(ThreadArgument *args) {
 	dTime = deltaTime(&packet->time_in_q2, &packet->time_out_q2);
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &packet->time_out_q2);
 
+	pthread_mutex_lock(args->token_m);
 	printf("%012.3fms: p%d leaves Q2, time in Q2 = %.3fms\n", 
 			dTotal, packet->packetID, dTime);
+	pthread_mutex_unlock(args->token_m);
 
 	(void)gettimeofday(&then, NULL);
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &then);
@@ -36,9 +39,13 @@ void transmitPacket(ThreadArgument *args) {
 
 	int serverID = args->serverID+1;
 	int serviceTime = packet->serviceTime/THOUSAND_FACTOR;
+
+	pthread_mutex_lock(args->token_m);
 	printf("%012.3fms: p%d begins service at S%d, requesting %dms of service\n", 
 			dTotal, packet->packetID, serverID, serviceTime);
+	pthread_mutex_unlock(args->token_m);
 
+	// service the packet
 	usleep(packet->serviceTime);
 	(void)gettimeofday(&now, NULL);
 	packet->time_out_server = now;
@@ -48,8 +55,12 @@ void transmitPacket(ThreadArgument *args) {
 	sysTime = deltaTime(&packet->time_arrival, &packet->time_out_server);
 	packet->dSysTime = sysTime;
 
+	pthread_mutex_lock(args->token_m);
 	printf("%012.3fms: p%d departs from S%d, service time = %.3fms, time in system =  %.3fms\n",
 	 dTotal, packet->packetID, serverID, dTime, packet->dSysTime);
+	pthread_mutex_unlock(args->token_m);
+
+
 
 	pthread_mutex_lock(args->packetList_m);
 	My402ListAppend(args->packetList, (void *)packet);
@@ -66,19 +77,9 @@ void *server(void *obj) {
 		if (args->q2->num_members > 0) {
 
 			transmitPacket(args);
-			
 
 		}
 		else pthread_mutex_unlock(args->token_m);
-		
-		//remove packet from q2, timestamp, serverID
-		//unlock token_m
-
-		//serve the packet by sleeping
-		//lock packetList
-		//timestamp ejection
-		//append packet to packetList
-		//unlock packetList
 
 	}
 	return NULL;
