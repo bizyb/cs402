@@ -7,7 +7,7 @@
 int firstToken;
 int tokenCount;
 int avlblTokens;
-int dropCount;
+int droppedTokenCount;
 struct timeval prevTokenProcTime;
 struct timeval prevTokenArrivaltime;
 

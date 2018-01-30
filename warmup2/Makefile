@@ -3,7 +3,7 @@
 #   Assignment: Warmup 2
 #
 warmup2: parent.o arrival_thread.o error.o my402list.o token_thread.o server_thread.o stats.o
-	gcc -o warmup2 -g parent.o arrival_thread.o error.o my402list.o token_thread.o server_thread.o stats.o -pthread
+	gcc -o warmup2 -g parent.o arrival_thread.o error.o my402list.o token_thread.o server_thread.o stats.o -pthread -lm
 
 parent.o: parent.c parent.h
 	gcc -g -c -Wall parent.c parent.h 

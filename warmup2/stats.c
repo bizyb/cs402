@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 
 #include "stats.h"
 #include "cs402.h"
@@ -20,12 +21,24 @@ double getPacketDropProb() {
 }
 double getTokenDropProb() {
 
-	return dropCount/(double)tokenCount;
+	return droppedTokenCount/(double)tokenCount;
 }
 
-double getStdv(My402List *p) {
+double getStdv(My402List *q, double avgSystime) {
 
-	return -1.732;
+	My402ListElem *elem = NULL;
+	double variance = 0, dTime = 0;
+	avgSystime = avgSystime*THOUSAND_FACTOR; // seconds to milliseconds
+
+	for (elem = My402ListFirst(q); elem != NULL; elem = My402ListNext(q, elem)) {
+
+		Packet *packet = (Packet *) elem->obj;
+		dTime = deltaTime(&packet->time_arrival, &packet->time_out_server);
+		variance += (dTime - avgSystime) * (dTime - avgSystime);
+	}
+	
+	variance = variance / (double) getNumPackets(q);
+	return sqrt(variance)/THOUSAND_FACTOR; //milliseconds to seconds
 }
 double getAVgSysTime(My402List *q, TimeType t) {
 
@@ -93,7 +106,7 @@ void printStats(ThreadArgument *args) {
 	avgServTime = getAVgSysTime(packetList, MeasuredServiceTime);
 	avgSysTime = getAVgSysTime(packetList, MeasuredSystemTime);
 
-	stdvSystime = getStdv(packetList);
+	stdvSystime = getStdv(packetList, avgSysTime);
 	tDropProb = getTokenDropProb();
 	pDropProp = getPacketDropProb();
 

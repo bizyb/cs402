@@ -26,7 +26,7 @@ void generateToken(ThreadArgument *args, double dTotal) {
 	else if (avlblTokens == args->epPtr->B) {
 
 		printf("%012.3fms: token t%d arrives, dropped\n", dTotal, ++tokenCount);
-		dropCount++;
+		droppedTokenCount++;
 
 	}	
 
@@ -85,7 +85,7 @@ void *deposit(void * obj) {
 	firstToken = TRUE;
 	tokenCount = 0;
 	avlblTokens = 0;
-	dropCount = 0;
+	droppedTokenCount = 0;
 	int tokenInterArrival;
 	struct timeval then, now;
 	double dTime, dTotal;
