@@ -21,12 +21,20 @@ void transmitPacket(ThreadArgument *args) {
 
 	My402ListUnlink(args->q2, elem);
 	(void)gettimeofday(&out_q2, NULL);
+	// printf("about to call delta for out_q2\n\n");
+	
 
 	pthread_mutex_unlock(args->token_m);
 
 	packet->time_out_q2 = out_q2;
+	// printf("packet->time_out_q2.tv_sec: %d\n", (int) packet->time_out_q2.tv_sec);
+	// printf("packet->time_in_q2.tv_sec: %d\n", (int) packet->time_in_q2.tv_sec);
+	
 	dTime = deltaTime(&packet->time_in_q2, &packet->time_out_q2);
+	// printf("just called delta for out_q2\n");
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &packet->time_out_q2);
+
+	// printf("dTotal: %f\n\n", dTotal);
 
 	pthread_mutex_lock(args->token_m);
 	printf("%012.3fms: p%d leaves Q2, time in Q2 = %.3fms\n", 

@@ -54,6 +54,7 @@ void dequeueEnqueue(ThreadArgument *args, My402ListElem *elem) {
 	(void)gettimeofday(&in_q2, NULL);
 
 	packet->time_in_q2 = in_q2;
+	// printf("packet->time_in_q2: %d\n", (int) packet->time_in_q2.tv_sec);
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &packet->time_in_q2);
 	printf("%012.3fms: p%d enters Q2\n", dTotal, packet->packetID);
 
