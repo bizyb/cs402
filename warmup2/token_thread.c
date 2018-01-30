@@ -26,6 +26,7 @@ void generateToken(ThreadArgument *args, double dTotal) {
 	else if (avlblTokens == args->epPtr->B) {
 
 		printf("%012.3fms: token t%d arrives, dropped\n", dTotal, ++tokenCount);
+		dropCount++;
 
 	}	
 
@@ -83,6 +84,7 @@ void *deposit(void * obj) {
 	firstToken = TRUE;
 	tokenCount = 0;
 	avlblTokens = 0;
+	dropCount = 0;
 	int tokenInterArrival;
 	struct timeval then, now;
 	double dTime, dTotal;
@@ -90,7 +92,7 @@ void *deposit(void * obj) {
 	ThreadArgument *args = (ThreadArgument *) obj;
 	tokenInterArrival = (1/args->epPtr->r) * THOUSAND_FACTOR * THOUSAND_FACTOR;
 
-	while (TRUE) {
+	while (tokenCount < 3) {
 
 		(void)gettimeofday(&then, NULL);
 		if (firstToken == TRUE) {

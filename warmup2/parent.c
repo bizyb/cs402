@@ -11,6 +11,7 @@
 #include "arrival_thread.h"
 #include "token_thread.h"
 #include "server_thread.h"
+#include "stats.h"
 
 void printEmulParams(EmulationParams *ep) {
 
@@ -143,8 +144,11 @@ void runEmulation(EmulationParams *ep) {
 
 	(void)gettimeofday(&endTime, NULL);
 	dTime = deltaTime(&startTime, &endTime);
+	ep->time_emul_end = endTime;
 
-	printf("%012.3fms: emulation ends\n", dTime);
+	printf("%012.3fms: emulation ends\n\n", dTime);
+
+	printStats(&s1_arg);
 
 }
 void processArgs(int argc, char *argv[], EmulationParams *ep, char** fileNamePtr) {

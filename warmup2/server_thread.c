@@ -54,10 +54,12 @@ void transmitPacket(ThreadArgument *args) {
 	dTime = deltaTime(&packet->time_in_server, &packet->time_out_server);
 	sysTime = deltaTime(&packet->time_arrival, &packet->time_out_server);
 	packet->dSysTime = sysTime;
+	// printf("sysTime: %g\n", sysTime);
 
 	pthread_mutex_lock(args->token_m);
 	printf("%012.3fms: p%d departs from S%d, service time = %.3fms, time in system =  %.3fms\n",
 	 dTotal, packet->packetID, serverID, dTime, packet->dSysTime);
+	// printf("packet->dSysTime: %g\n", packet->dSysTime);
 	pthread_mutex_unlock(args->token_m);
 
 
@@ -70,7 +72,8 @@ void transmitPacket(ThreadArgument *args) {
 void *server(void *obj) {
 
 	ThreadArgument *args = (ThreadArgument *) obj;
-	while(TRUE) {
+	int i = 0;
+	while(i < 3) {
 
 		pthread_cond_wait(args->Q2NotEmpty, args->token_m);
 		// check again that q2 is not empty
@@ -80,6 +83,7 @@ void *server(void *obj) {
 
 		}
 		else pthread_mutex_unlock(args->token_m);
+		i++;
 
 	}
 	return NULL;

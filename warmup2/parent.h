@@ -19,6 +19,7 @@ typedef struct {
 	int deterministic;
 	char *fileName;
 	struct timeval time_emul_start;
+	struct timeval time_emul_end;
 
 } EmulationParams;
 

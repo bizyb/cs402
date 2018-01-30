@@ -243,6 +243,7 @@ void processPacket(ThreadArgument * args, PacketParams params) {
 
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &now);
 	prevArrivalTime = now;
+	packet->iaMeasured = dTime;
 
 	// TODO: need to check if packet needs to be dropped before going further
 

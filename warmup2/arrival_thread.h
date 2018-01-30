@@ -25,7 +25,8 @@ typedef struct {
 	int serviceTime;
 	int packetID;
 	int serverID;
-	double dServiceTime;;
+	double iaMeasured;
+	double dServiceTime;
 	double dSysTime;
 	struct timeval time_arrival;
 	struct timeval time_in_q1;
@@ -34,6 +35,7 @@ typedef struct {
 	struct timeval time_out_q2;
 	struct timeval time_in_server;
 	struct timeval time_out_server;
+	int packetDropped;
 
 
 } Packet;
