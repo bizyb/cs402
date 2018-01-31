@@ -83,7 +83,7 @@ double getAvgPacketNum(My402List *q, Facility f, double emulTime) {
  		}
 	}
 
-	return (totalTime/emulTime)/THOUSAND_FACTOR;
+	return (totalTime/emulTime);
 }
 
 void printStats(ThreadArgument *args) {

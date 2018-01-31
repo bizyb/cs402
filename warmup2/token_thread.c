@@ -87,14 +87,25 @@ void *deposit(void * obj) {
 	avlblTokens = 0;
 	droppedTokenCount = 0;
 	int tokenInterArrival;
+	int exitThread = FALSE;
 	struct timeval then, now;
 	double dTime, dTotal;
 	
 	ThreadArgument *args = (ThreadArgument *) obj;
 	tokenInterArrival = (1/args->epPtr->r) * THOUSAND_FACTOR * THOUSAND_FACTOR;
 
-	while (tokenCount < 46) {
+	while (TRUE) {
 
+		if (packetCount == args->epPtr->numPackets) {
+
+			pthread_mutex_lock(args->token_m);
+
+			if (args->q1->num_members == 0) exitThread = TRUE;
+
+			pthread_mutex_unlock(args->token_m);
+			if (exitThread == TRUE) break;
+
+		}
 		(void)gettimeofday(&then, NULL);
 		if (firstToken == TRUE) {
 			// account for the time elapsed since the start of the emulation and 
@@ -122,9 +133,9 @@ void *deposit(void * obj) {
 
 		(void)gettimeofday(&prevTokenProcTime, NULL);
 
-
 	}
-	
+	pthread_cond_broadcast(args->NoMorePackets);
+	pthread_exit(NULL);
 
 	return NULL;
 }

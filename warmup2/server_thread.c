@@ -79,9 +79,23 @@ void transmitPacket(ThreadArgument *args) {
 
 void *server(void *obj) {
 
+	int exitThread = FALSE;
 	ThreadArgument *args = (ThreadArgument *) obj;
-	int i = 0;
-	while(i < 10) {
+	
+	while(TRUE) {
+
+		if (packetCount == args->epPtr->numPackets) {
+
+			pthread_mutex_lock(args->token_m);
+
+			if (args->q1->num_members == 0 && args->q2->num_members == 0) {
+
+				exitThread = TRUE;
+			}
+			pthread_mutex_unlock(args->token_m);
+		}
+		// printf("about to set exit to true\n");
+		if (exitThread == TRUE) break;
 
 		pthread_cond_wait(args->Q2NotEmpty, args->token_m);
 		// check again that q2 is not empty
@@ -91,8 +105,7 @@ void *server(void *obj) {
 
 		}
 		else pthread_mutex_unlock(args->token_m);
-		i++;
-
 	}
+	pthread_exit(NULL);
 	return NULL;
 }

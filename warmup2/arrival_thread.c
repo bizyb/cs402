@@ -269,7 +269,7 @@ void processPacket(ThreadArgument * args, PacketParams params) {
 }
 
 void *arrival(void * obj) {
-	// TODO: the while loop should run till numPackets have been processed
+	
 	packetCount = 0;
 	firstPacket = TRUE;
 	droppedPacketCount = 0;
@@ -290,7 +290,8 @@ void *arrival(void * obj) {
 		int enumParams = FALSE;
 		(void) readInput(args->epPtr->fileName, enumParams, args);
 	}
-
+	
+	pthread_exit(NULL);
 	return NULL;
 }
 

@@ -46,9 +46,11 @@ void initThreadArgs(ThreadArgument *arrival_arg, ThreadArgument *deposit_arg,
 	pthread_mutex_t *token_m = (pthread_mutex_t*) calloc(1, sizeof(pthread_mutex_t));
 	pthread_mutex_t *packetList_m = (pthread_mutex_t*) calloc(1, sizeof(pthread_mutex_t));
 	pthread_cond_t *Q2NotEmpty = (pthread_cond_t*) calloc(1, sizeof(pthread_cond_t));
+	pthread_cond_t *NoMorePackets = (pthread_cond_t*) calloc(1, sizeof(pthread_cond_t));
 	*token_m = (pthread_mutex_t) PTHREAD_MUTEX_INITIALIZER;
 	*packetList_m = (pthread_mutex_t) PTHREAD_MUTEX_INITIALIZER;
 	*Q2NotEmpty = (pthread_cond_t) PTHREAD_COND_INITIALIZER;
+	*NoMorePackets = (pthread_cond_t) PTHREAD_COND_INITIALIZER;
 
 
 	arrival_arg->q1 = q1, arrival_arg->q2 = q2, arrival_arg->epPtr = ep; 
@@ -57,14 +59,14 @@ void initThreadArgs(ThreadArgument *arrival_arg, ThreadArgument *deposit_arg,
 	deposit_arg->q1 = q1, deposit_arg->q2 = q2, deposit_arg->epPtr = ep; 
 	deposit_arg->token_m = token_m;
 
-	s1_arg->q2 = q2, s1_arg->epPtr = ep, s1_arg->token_m = token_m; 
+	s1_arg->q1 = q1, s1_arg->q2 = q2, s1_arg->epPtr = ep, s1_arg->token_m = token_m; 
 	s1_arg->packetList = packetList, s1_arg->packetList_m = packetList_m, s1_arg->serverID = 0;
 
-	s2_arg->q2 = q2, s2_arg->epPtr = ep, s2_arg->token_m = token_m; 
+	s2_arg->q1 = q1, s2_arg->q2 = q2, s2_arg->epPtr = ep, s2_arg->token_m = token_m; 
 	s2_arg->packetList = packetList, s2_arg->packetList_m = packetList_m, s2_arg->serverID = 1;
 
-	arrival_arg->Q2NotEmpty = Q2NotEmpty;
-	deposit_arg->Q2NotEmpty = Q2NotEmpty;
+	arrival_arg->Q2NotEmpty = Q2NotEmpty, arrival_arg->NoMorePackets = NoMorePackets;
+	deposit_arg->Q2NotEmpty = Q2NotEmpty, deposit_arg->NoMorePackets = NoMorePackets;
 	s1_arg->Q2NotEmpty = Q2NotEmpty;
 	s2_arg->Q2NotEmpty = Q2NotEmpty;
 }
