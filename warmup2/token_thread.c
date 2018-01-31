@@ -95,12 +95,13 @@ void *deposit(void * obj) {
 	tokenInterArrival = (1/args->epPtr->r) * THOUSAND_FACTOR * THOUSAND_FACTOR;
 
 	while (TRUE) {
-
+		// printf("in token thread\n");
 		if (packetCount == args->epPtr->numPackets) {
 
 			pthread_mutex_lock(args->token_m);
 
 			if (args->q1->num_members == 0) exitThread = TRUE;
+			if (args->q2->num_members > 0) pthread_cond_broadcast(args->Q2NotEmpty);
 
 			pthread_mutex_unlock(args->token_m);
 			if (exitThread == TRUE) break;
@@ -134,7 +135,8 @@ void *deposit(void * obj) {
 		(void)gettimeofday(&prevTokenProcTime, NULL);
 
 	}
-	pthread_cond_broadcast(args->NoMorePackets);
+	// pthread_cond_broadcast(args->NoMorePackets);
+	// printf("exiting token thread\n");
 	pthread_exit(NULL);
 
 	return NULL;

@@ -27,17 +27,18 @@ double getTokenDropProb() {
 double getStdv(My402List *q, double avgSystime) {
 
 	My402ListElem *elem = NULL;
-	double variance = 0, dTime = 0;
+	double variance = 0, dTime = 0, sum = 0;
 	avgSystime = avgSystime*THOUSAND_FACTOR; // seconds to milliseconds
 
 	for (elem = My402ListFirst(q); elem != NULL; elem = My402ListNext(q, elem)) {
 
 		Packet *packet = (Packet *) elem->obj;
 		dTime = deltaTime(&packet->time_arrival, &packet->time_out_server);
-		variance += (dTime - avgSystime) * (dTime - avgSystime);
+		sum += (dTime - avgSystime) * (dTime - avgSystime);
 	}
 	
-	variance = variance / (double) getNumPackets(q);
+	variance = sum / getNumPackets(q);
+
 	return sqrt(variance)/THOUSAND_FACTOR; //milliseconds to seconds
 }
 double getAVgSysTime(My402List *q, TimeType t) {
@@ -75,10 +76,12 @@ double getAvgPacketNum(My402List *q, Facility f, double emulTime) {
  		if (f == Q1) totalTime += deltaTime(&packet->time_in_q1, &packet->time_out_q1);
  		else if (f == Q2) totalTime += deltaTime(&packet->time_in_q2, &packet->time_out_q2);
 
- 		else if (f == S1 && packet->serverID + 1 == SERVER_ONE) {
+ 		else if (f == S1 && packet->serverID == SERVER_ONE) {
+ 			
  			totalTime += deltaTime(&packet->time_in_server, &packet->time_out_server);
  		}
- 		else if (f == S2 && packet->serverID + 1 == SERVER_TWO) {
+ 		else if (f == S2 && packet->serverID == SERVER_TWO) {
+
  			totalTime += deltaTime(&packet->time_in_server, &packet->time_out_server);
  		}
 	}

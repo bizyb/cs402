@@ -46,6 +46,7 @@ void transmitPacket(ThreadArgument *args) {
 	packet->time_in_server = then;
 
 	int serverID = args->serverID+1;
+	packet->serverID = serverID;
 	int serviceTime = packet->serviceTime/THOUSAND_FACTOR;
 
 	pthread_mutex_lock(args->token_m);
@@ -94,17 +95,17 @@ void *server(void *obj) {
 			}
 			pthread_mutex_unlock(args->token_m);
 		}
-		// printf("about to set exit to true\n");
+		
 		if (exitThread == TRUE) break;
 
 		pthread_cond_wait(args->Q2NotEmpty, args->token_m);
 		// check again that q2 is not empty
-		if (args->q2->num_members > 0) {
+		while (args->q2->num_members > 0) {
 
 			transmitPacket(args);
 
 		}
-		else pthread_mutex_unlock(args->token_m);
+		pthread_mutex_unlock(args->token_m);
 	}
 	pthread_exit(NULL);
 	return NULL;
