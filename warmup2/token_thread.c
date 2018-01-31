@@ -54,7 +54,6 @@ void dequeueEnqueue(ThreadArgument *args, My402ListElem *elem) {
 	(void)gettimeofday(&in_q2, NULL);
 
 	packet->time_in_q2 = in_q2;
-	// printf("packet->time_in_q2: %d\n", (int) packet->time_in_q2.tv_sec);
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &packet->time_in_q2);
 	printf("%012.3fms: p%d enters Q2\n", dTotal, packet->packetID);
 
@@ -80,8 +79,7 @@ void transferPacket(ThreadArgument *args) {
 
 
 void *deposit(void * obj) {
-	// TODO: this thread can only die if kill signal is received
-
+	
 	firstToken = TRUE;
 	tokenCount = 0;
 	avlblTokens = 0;
@@ -95,7 +93,7 @@ void *deposit(void * obj) {
 	tokenInterArrival = (1/args->epPtr->r) * THOUSAND_FACTOR * THOUSAND_FACTOR;
 
 	while (TRUE) {
-		// printf("in token thread\n");
+		
 		if (packetCount == args->epPtr->numPackets) {
 
 			pthread_mutex_lock(args->token_m);
@@ -135,8 +133,6 @@ void *deposit(void * obj) {
 		(void)gettimeofday(&prevTokenProcTime, NULL);
 
 	}
-	// pthread_cond_broadcast(args->NoMorePackets);
-	// printf("exiting token thread\n");
 	pthread_exit(NULL);
 
 	return NULL;

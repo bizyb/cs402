@@ -57,7 +57,7 @@ double getAVgSysTime(My402List *q, TimeType t) {
 			dTime = deltaTime(&packet->time_arrival, &packet->time_out_server);
 		}
 		else if (t == MeasuredInterArrivalTime) dTime = packet->iaMeasured;
-		// printf("dTime: %f\n", dTime);
+		
 		totalTime += dTime;
 	}
 	return (totalTime/getNumPackets(q))/THOUSAND_FACTOR;

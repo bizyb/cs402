@@ -103,14 +103,7 @@ double deltaTime(struct timeval *start, struct timeval *end) {
 	int sec = (int) end->tv_sec - (int) start->tv_sec;
 	int microsec = (int) end->tv_usec - (int) start->tv_usec;
 	double dTime = (sec * CONVERSION_FACTOR) + (microsec/CONVERSION_FACTOR);
-
-	// printf("(int) end->tv_sec: %d\n", (int) end->tv_sec);
-	// printf("(int) start->tv_sec: %d\n", (int) start->tv_sec);
-	// printf("sec: %d\n", sec);
-	// printf("microsec: %d\n", microsec);
-	// printf("dTime: %f\n\n", dTime);
-
-
+	
 	return dTime;
 
 }

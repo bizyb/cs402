@@ -22,7 +22,6 @@ void matchPattern(char* line, char* pattern, ErrorType e) {
 
     formatFail  = regcomp(&patternBuffer, pattern, REG_EXTENDED);
     formatFail = regexec(&patternBuffer, line, 0, NULL, 0);
-    // fprintf(stdout, "matching: %d\n", formatFail);
     regfree(&patternBuffer);
 
     if (formatFail) exitOnError(e);
@@ -244,8 +243,6 @@ void processPacket(ThreadArgument * args, PacketParams params) {
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &now);
 	prevArrivalTime = now;
 	packet->iaMeasured = dTime;
-
-	// TODO: need to check if packet needs to be dropped before going further
 
 	pthread_mutex_lock(args->token_m);
 	if (packet->tokens > args->epPtr->B) {
