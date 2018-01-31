@@ -1,3 +1,9 @@
+/*
+*  Author: Bizuwork Melesse
+*  USC Spring 2018 - CS402
+*  Assignment: Warmup 2
+*/
+
 #include <stdio.h>
 #include <math.h>
 
@@ -129,4 +135,5 @@ void printStats(ThreadArgument *args) {
 	printf("\ttoken drop probability = %.6f\n", tDropProb);
 	printf("\tpacket drop probability = %.6f\n\n", pDropProp);
 }
+
 

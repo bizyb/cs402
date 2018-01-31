@@ -1,3 +1,9 @@
+/*
+*  Author: Bizuwork Melesse
+*  USC Spring 2018 - CS402
+*  Assignment: Warmup 2
+*/
+
 #ifndef _PARENT_H
 #define _PARENT_H
 
@@ -46,12 +52,52 @@ typedef struct {
 
 } ThreadArgument;
 
+/*
+	Print initial emulation parameters. 	
+*/
 extern void printEmulParams(EmulationParams *);
+
+
+/*
+	Initialize thread arguments to be passed to each thread. Each thread
+	receives a custom set of data structures that are shared globally among
+	all other threads. 
+*/
 extern void initThreadArgs(ThreadArgument *, ThreadArgument *, ThreadArgument *,
 							ThreadArgument *, EmulationParams *);
+
+
+/*
+	Initialize emulation parameters with default values.
+*/
 extern void initEmulParams(EmulationParams *);
+
+
+/*
+	Update emulation parameters using data read in from a trace file.
+*/
 extern void updateEmulParams(EmulationParams *);
+
+
+/*
+	Compute the time elapsed between two points and return the 
+	difference in milliseconds.	
+*/
 extern double deltaTime(struct timeval *, struct timeval *);
+
+
+/*
+	Initiate emulation by creating one thread for packet arrival, 
+	on thread for token genration, one thread for server 1, and one 
+	thread for server 2. Wait for each thread to finish.
+*/
 extern void runEmulation(EmulationParams *);
+
+
+/*
+	Process command line arguments. Raise the appropriate error for each
+	malformed command and terminate program. 
+*/
 extern void processArgs(int, char *[], EmulationParams *, char**);
+
 #endif /*_PARENT_H*/

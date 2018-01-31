@@ -1,3 +1,9 @@
+/*
+*  Author: Bizuwork Melesse
+*  USC Spring 2018 - CS402
+*  Assignment: Warmup 2
+*/
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -192,22 +198,14 @@ void processArgs(int argc, char *argv[], EmulationParams *ep, char** fileNamePtr
 
 int main(int argc, char* argv[]) {
 
-	// TODO: thread return values
+	// TODO: thread return values // free memory
 	
 	char* fileName = NULL;
     EmulationParams ep;
 
     initEmulParams(&ep);
     processArgs(argc, argv, &ep, &fileName);
-    // validateEmulParams(&ep);
     runEmulation(&ep);
-
-
-	// signal handling
-	// stat computation and printing
-	// free memory
-
-
-
+	
 	 return(0);
 }
