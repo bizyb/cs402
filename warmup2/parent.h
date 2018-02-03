@@ -9,6 +9,7 @@
 
 #include <pthread.h>
 #include <sys/time.h>
+#include <signal.h>
 
 #include "my402list.h"
 
@@ -91,7 +92,7 @@ extern double deltaTime(struct timeval *, struct timeval *);
 	on thread for token genration, one thread for server 1, and one 
 	thread for server 2. Wait for each thread to finish.
 */
-extern void runEmulation(EmulationParams *);
+extern void runEmulation(EmulationParams *, sigset_t *);
 
 
 /*

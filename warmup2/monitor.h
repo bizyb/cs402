@@ -7,4 +7,10 @@
 #ifndef _MONITOR_H
 #define _MONITOR_H
 
+#include "cs402.h"
+
+int endEmulsig;
+
+
+extern void *sigMonitor(void *);
 #endif /*_MONITOR_H*/

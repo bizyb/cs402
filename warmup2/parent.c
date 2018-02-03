@@ -5,6 +5,7 @@
 */
 
 #include <stdio.h>
+#include <signal.h>
 #include <string.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -17,6 +18,7 @@
 #include "arrival_thread.h"
 #include "token_thread.h"
 #include "server_thread.h"
+#include "monitor.h"
 #include "stats.h"
 
 void printEmulParams(EmulationParams *ep) {
@@ -114,10 +116,10 @@ double deltaTime(struct timeval *start, struct timeval *end) {
 
 }
 
-void runEmulation(EmulationParams *ep) {
+void runEmulation(EmulationParams *ep, sigset_t *set) {
 
 	
-	pthread_t arrival_t, token_deposit_t, s1_t, s2_t;
+	pthread_t sig_t, arrival_t, token_deposit_t, s1_t, s2_t;
     ThreadArgument arrival_arg, deposit_arg, s1_arg, s2_arg;
     struct timeval startTime, endTime;
     double dTime;
@@ -126,9 +128,11 @@ void runEmulation(EmulationParams *ep) {
     void *(*arrivalFuncPtr)(void*);
     void *(*depositFuncPtr)(void*);
     void *(*serverFuncPtr)(void*);
+    void *(*monitorFuncPtr)(void*);
     arrivalFuncPtr = &arrival;
     depositFuncPtr = &deposit;
     serverFuncPtr = &server;
+    monitorFuncPtr = &sigMonitor;
 
 
     printEmulParams(ep);
@@ -140,11 +144,14 @@ void runEmulation(EmulationParams *ep) {
  	printf("%012.3fms: emulation begins\n", dTime);
 
 
+	
+	pthread_create(&sig_t, 0, monitorFuncPtr, (void *) set);
 	pthread_create(&arrival_t, 0, arrivalFuncPtr, (void *) &arrival_arg);
 	pthread_create(&token_deposit_t, 0, depositFuncPtr, (void *) &deposit_arg);
 	pthread_create(&s1_t, 0, serverFuncPtr, (void *) &s1_arg);
 	pthread_create(&s2_t, 0, serverFuncPtr, (void *) &s2_arg);
 
+	pthread_join(sig_t, 0);
 	pthread_join(arrival_t, 0);
 	pthread_join(token_deposit_t, 0);
 	pthread_join(s1_t, 0);
@@ -202,10 +209,17 @@ int main(int argc, char* argv[]) {
 	
 	char* fileName = NULL;
     EmulationParams ep;
+    sigset_t set;
 
     initEmulParams(&ep);
     processArgs(argc, argv, &ep, &fileName);
-    runEmulation(&ep);
+
+    // block SIGINT
+    sigemptyset(&set);
+    sigaddset(&set, SIGINT);
+    sigprocmask(SIG_BLOCK, &set, 0);
+
+    runEmulation(&ep, &set);
 	
 	 return(0);
 }
