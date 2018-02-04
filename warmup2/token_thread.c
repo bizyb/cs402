@@ -64,7 +64,7 @@ void dequeueEnqueue(ThreadArgument *args, My402ListElem *elem) {
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &packet->time_in_q2);
 	printf("%012.3fms: p%d enters Q2\n", dTotal, packet->packetID);
 	pthread_cond_broadcast(args->Q2NotEmpty);
-	printf("\n\nSignal about to be sent for q2 not empty\n\n");
+	// printf("\n\nSignal about to be sent for q2 not empty\n\n");
 
 }
 
@@ -86,6 +86,56 @@ void transferPacket(ThreadArgument *args) {
 	}
 }
 
+void processToken(ThreadArgument *args, int tokenInterArrival) {
+
+	struct timeval then, now;
+	double dTime, dTotal;
+
+	(void)gettimeofday(&then, NULL);
+
+	if (firstToken == TRUE) {
+		// account for the time elapsed since the start of the emulation and 
+		// the first invocation of deposit()
+		dTime = deltaTime(&args->epPtr->time_emul_start, &then) * THOUSAND_FACTOR;
+		firstToken = FALSE;	
+	}
+	else {
+		
+		dTime = deltaTime(&prevTokenArrivaltime, &prevTokenProcTime) * THOUSAND_FACTOR;
+		
+	}
+	if (dTime > 0) usleep(tokenInterArrival - (int) dTime);
+
+	(void)gettimeofday(&now, NULL);
+	dTotal = deltaTime(&args->epPtr->time_emul_start, &now);
+	prevTokenArrivaltime = now;
+
+	pthread_mutex_lock(args->token_m);
+	generateToken(args, dTotal);
+	transferPacket(args);
+	pthread_mutex_unlock(args->token_m);
+
+	(void)gettimeofday(&prevTokenProcTime, NULL);
+}
+
+int maxPacketsReached(ThreadArgument *args) {
+
+	int exitThread = FALSE;
+
+	if (packetCount == args->epPtr->numPackets) {
+
+			pthread_mutex_lock(args->token_m);
+
+			if (args->q1->num_members == 0) exitThread = TRUE;
+			if (args->q2->num_members > 0) pthread_cond_broadcast(args->Q2NotEmpty);
+
+			pthread_mutex_unlock(args->token_m);
+
+		}
+
+	return exitThread;
+
+}
 
 void *deposit(void * obj) {
 	
@@ -94,53 +144,21 @@ void *deposit(void * obj) {
 	avlblTokens = 0;
 	droppedTokenCount = 0;
 	int tokenInterArrival;
-	int exitThread = FALSE;
-	struct timeval then, now;
-	double dTime, dTotal;
+	int maxRate = MAX_TOKEN_RATE * THOUSAND_FACTOR * THOUSAND_FACTOR;
+	
 	
 	ThreadArgument *args = (ThreadArgument *) obj;
 	tokenInterArrival = (1/args->epPtr->r) * THOUSAND_FACTOR * THOUSAND_FACTOR;
 
+	if (tokenInterArrival > maxRate) tokenInterArrival = maxRate;
+
+
 	while (endSimulation == FALSE) {
-		
-		if (packetCount == args->epPtr->numPackets) {
 
-			pthread_mutex_lock(args->token_m);
-
-			if (args->q1->num_members == 0) exitThread = TRUE;
-			if (args->q2->num_members > 0) pthread_cond_broadcast(args->Q2NotEmpty);
-
-			pthread_mutex_unlock(args->token_m);
-			if (exitThread == TRUE) break;
-
-		}
-		(void)gettimeofday(&then, NULL);
-		if (firstToken == TRUE) {
-			// account for the time elapsed since the start of the emulation and 
-			// the first invocation of deposit()
-			dTime = deltaTime(&args->epPtr->time_emul_start, &then) * THOUSAND_FACTOR;
-			firstToken = FALSE;	
-		}
-		else {
-			dTime = deltaTime(&prevTokenArrivaltime, &prevTokenProcTime) * THOUSAND_FACTOR;
-			
-		}
-		if (dTime > 0) usleep(tokenInterArrival - (int) dTime);
-
-		(void)gettimeofday(&now, NULL);
-		dTotal = deltaTime(&args->epPtr->time_emul_start, &now);
-		prevTokenArrivaltime = now;
-
-		pthread_mutex_lock(args->token_m);
-		generateToken(args, dTotal);
-		transferPacket(args);
-		pthread_mutex_unlock(args->token_m);
-
-		(void)gettimeofday(&prevTokenProcTime, NULL);
+		if (maxPacketsReached(args) == TRUE) break;
+		processToken(args, tokenInterArrival);
 
 	}
-	pthread_exit(NULL);
-
 	return NULL;
 }
 

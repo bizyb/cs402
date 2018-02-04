@@ -302,7 +302,7 @@ void *arrival(void * obj) {
 		(void) readInput(args->epPtr->fileName, enumParams, args);
 	}
 	
-	if (endSimulation == TRUE) printf("kill signal received; exiting thread\n");
+	// if (endSimulation == TRUE) printf("kill signal received; exiting thread\n");
 
 	pthread_exit(NULL);
 	return NULL;

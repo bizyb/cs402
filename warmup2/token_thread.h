@@ -47,6 +47,19 @@ extern void transferPacket(ThreadArgument *);
 
 
 /*
+	Initiate timestamping of token generation and sleep for a specified amount of 
+	time.
+*/
+extern void processToken(ThreadArgument *, int);
+
+
+/*
+	Return true if the maximum number of packets to be sered has been served.
+*/
+extern int maxPacketsReached(ThreadArgument *);
+
+
+/*
 	Monitor packet availability to generate tokens and initiate packet transfer. Broadcast
 	the servers whenever Q2 becomes non-empty. If No more packets can enter the system and 
 	Q1 is empty, immediately stop token generation and exit. 

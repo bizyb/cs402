@@ -75,7 +75,7 @@ void transmitPacket(ThreadArgument *args) {
 
 
 	pthread_mutex_lock(args->packetList_m);
-	printf("\n\nserver thread packet archived\n\n");
+	// printf("\n\nserver thread packet archived\n\n");
 	My402ListAppend(args->packetList, (void *)packet);
 	pthread_mutex_unlock(args->packetList_m);
 }
@@ -100,9 +100,9 @@ void *server(void *obj) {
 		
 		if (exitThread == TRUE) break;
 
-		printf("\n\nserver thread waiting for signal\n\n");
+		// printf("\n\nserver thread waiting for signal\n\n");
 		pthread_cond_wait(args->Q2NotEmpty, args->token_m);
-		printf("\n\nserver thread signal received\n\n");
+		// printf("\n\nserver thread signal received\n\n");
 		// check again that q2 is not empty
 		while (args->q2->num_members > 0) {
 

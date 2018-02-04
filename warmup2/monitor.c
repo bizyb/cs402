@@ -1,3 +1,9 @@
+/*
+*  Author: Bizuwork Melesse
+*  USC Spring 2018 - CS402
+*  Assignment: Warmup 2
+*/
+
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>

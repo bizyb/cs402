@@ -31,7 +31,7 @@ void printEmulParams(EmulationParams *ep) {
 		printf("\tmu = %.2f\n", ep->mu);
 	}
 
-	printf("\tr = %.2f\n", ep->r);
+	printf("\tr = %f\n", ep->r);
 	printf("\tB = %d\n", ep->B);
 	printf("\tP = %d\n", ep->P);
 

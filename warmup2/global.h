@@ -11,6 +11,7 @@ static const int BUFFERSIZE = 1028;
 static const int MAX_LINE = 1024;
 static const int MAX_INT = 2147483647;
 static const int THOUSAND_FACTOR = 1000;
+static const int MAX_TOKEN_RATE = 10;
 
 
 #endif
