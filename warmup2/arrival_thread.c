@@ -18,6 +18,7 @@
 #include "global.h"
 #include "arrival_thread.h"
 #include "token_thread.h"
+#include "monitor.h"
 
 int lineNum = 1;
 
@@ -136,15 +137,18 @@ PacketParams readInput(char* fileName, int enumParams, ThreadArgument *args) {
 
     while (fgets(buffer, BUFFERSIZE,  file) != NULL) {
 
-        if (buffer[0] != '\n') {
+    	// printf("not breaking\n");
+    	if (endSimulation == FALSE) {
+	        if (buffer[0] != '\n') {
 
-            params = parseLine((char* ) &buffer, enumParams);
-            if (enumParams == TRUE) break;
-            if (lineNum > 1) processPacket(args, params);
-            lineNum++;
-
-        }
-        else exitOnError(EmptyLine);
+	            params = parseLine((char* ) &buffer, enumParams);
+	            if (enumParams == TRUE) break;
+	            if (lineNum > 1 ) processPacket(args, params);
+	            lineNum++;
+	        }
+	        else exitOnError(EmptyLine);
+	    }
+	    else break;
         
     }
     if (file != NULL) fclose(file);
@@ -278,6 +282,7 @@ void *arrival(void * obj) {
 	droppedPacketCount = 0;
 	PacketParams detParams;
 	ThreadArgument *args = (ThreadArgument *) obj;
+
 	int numPackets = args->epPtr-> numPackets;
 
 	if (args->epPtr->deterministic == TRUE) {
@@ -285,8 +290,11 @@ void *arrival(void * obj) {
 		detParams = getDetParams(args);
 		int i = 0;
 		while (i < numPackets) {
-			processPacket(args, detParams);
-			i++;
+			if (endSimulation == FALSE) {
+				processPacket(args, detParams);
+				i++;
+			}
+			else break;	
 		}
 	}
 	else {
@@ -294,6 +302,8 @@ void *arrival(void * obj) {
 		(void) readInput(args->epPtr->fileName, enumParams, args);
 	}
 	
+	if (endSimulation == TRUE) printf("kill signal received; exiting thread\n");
+
 	pthread_exit(NULL);
 	return NULL;
 }

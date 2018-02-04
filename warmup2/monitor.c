@@ -1,19 +1,22 @@
 #include <signal.h>
 #include <stdio.h>
+#include <stdlib.h>
 
+#include "parent.h"
 #include "monitor.h"
 #include "cs402.h"
 
 void *sigMonitor(void * obj) {
 
-	int endEmulsig = FALSE;
 	int sig;
-	sigset_t *set = (sigset_t *) obj;
+	ThreadArgument *args = (ThreadArgument *) obj;
+	sigset_t *set = args->set;
 
 	while (TRUE) {
 
 		sigwait(set, &sig);
-		endEmulsig = TRUE;
+		endSimulation = TRUE;
+		// exit(1); 
 		break;
 	}
 

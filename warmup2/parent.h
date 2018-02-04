@@ -14,6 +14,7 @@
 #include "my402list.h"
 
 extern int lineNum;
+extern int endEmulsig;
 
 typedef struct {
 
@@ -42,6 +43,7 @@ typedef enum {
 typedef struct {
 
 	int serverID;
+	sigset_t *set;
 	My402List *q1;
 	My402List *q2;
 	My402List *packetList;
@@ -65,7 +67,8 @@ extern void printEmulParams(EmulationParams *);
 	all other threads. 
 */
 extern void initThreadArgs(ThreadArgument *, ThreadArgument *, ThreadArgument *,
-							ThreadArgument *, EmulationParams *);
+							ThreadArgument *, ThreadArgument *, sigset_t *,
+							EmulationParams *);
 
 
 /*

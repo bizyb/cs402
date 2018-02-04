@@ -9,8 +9,12 @@
 
 #include "cs402.h"
 
-int endEmulsig;
+int endSimulation;
 
 
+/*
+	Monitor for Ctrl-C (SIGINT) signal and update the global variable 
+	when the signal is received.
+*/
 extern void *sigMonitor(void *);
 #endif /*_MONITOR_H*/

@@ -13,6 +13,7 @@
 #include "cs402.h"
 #include "parent.h"
 #include "global.h"
+#include "monitor.h"
 
 void generateToken(ThreadArgument *args, double dTotal) {
 
@@ -62,6 +63,8 @@ void dequeueEnqueue(ThreadArgument *args, My402ListElem *elem) {
 	packet->time_in_q2 = in_q2;
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &packet->time_in_q2);
 	printf("%012.3fms: p%d enters Q2\n", dTotal, packet->packetID);
+	pthread_cond_broadcast(args->Q2NotEmpty);
+	printf("\n\nSignal about to be sent for q2 not empty\n\n");
 
 }
 
@@ -98,7 +101,7 @@ void *deposit(void * obj) {
 	ThreadArgument *args = (ThreadArgument *) obj;
 	tokenInterArrival = (1/args->epPtr->r) * THOUSAND_FACTOR * THOUSAND_FACTOR;
 
-	while (TRUE) {
+	while (endSimulation == FALSE) {
 		
 		if (packetCount == args->epPtr->numPackets) {
 
@@ -131,9 +134,6 @@ void *deposit(void * obj) {
 		pthread_mutex_lock(args->token_m);
 		generateToken(args, dTotal);
 		transferPacket(args);
-
-		pthread_cond_broadcast(args->Q2NotEmpty);
-
 		pthread_mutex_unlock(args->token_m);
 
 		(void)gettimeofday(&prevTokenProcTime, NULL);

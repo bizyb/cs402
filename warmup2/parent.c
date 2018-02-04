@@ -42,7 +42,8 @@ void printEmulParams(EmulationParams *ep) {
 
 }
 void initThreadArgs(ThreadArgument *arrival_arg, ThreadArgument *deposit_arg,
-				ThreadArgument *s1_arg, ThreadArgument *s2_arg, EmulationParams *ep) {
+				ThreadArgument *s1_arg, ThreadArgument *s2_arg, ThreadArgument *mon_arg,
+				sigset_t *set, EmulationParams *ep) {
 
 	My402List *q1 = (My402List *) calloc(1, sizeof(My402List));
 	My402List *q2 = (My402List *) calloc(1, sizeof(My402List));
@@ -77,6 +78,7 @@ void initThreadArgs(ThreadArgument *arrival_arg, ThreadArgument *deposit_arg,
 	deposit_arg->Q2NotEmpty = Q2NotEmpty, deposit_arg->NoMorePackets = NoMorePackets;
 	s1_arg->Q2NotEmpty = Q2NotEmpty;
 	s2_arg->Q2NotEmpty = Q2NotEmpty;
+	mon_arg->set = set;
 }
 
 void initEmulParams(EmulationParams *ep) {
@@ -120,11 +122,11 @@ void runEmulation(EmulationParams *ep, sigset_t *set) {
 
 	
 	pthread_t sig_t, arrival_t, token_deposit_t, s1_t, s2_t;
-    ThreadArgument arrival_arg, deposit_arg, s1_arg, s2_arg;
+    ThreadArgument arrival_arg, deposit_arg, s1_arg, s2_arg, mon_arg;
     struct timeval startTime, endTime;
     double dTime;
 
-    initThreadArgs(&arrival_arg, &deposit_arg, &s1_arg, &s2_arg, ep);
+    initThreadArgs(&arrival_arg, &deposit_arg, &s1_arg, &s2_arg, &mon_arg, set, ep);
     void *(*arrivalFuncPtr)(void*);
     void *(*depositFuncPtr)(void*);
     void *(*serverFuncPtr)(void*);
@@ -143,9 +145,7 @@ void runEmulation(EmulationParams *ep, sigset_t *set) {
 
  	printf("%012.3fms: emulation begins\n", dTime);
 
-
-	
-	pthread_create(&sig_t, 0, monitorFuncPtr, (void *) set);
+	pthread_create(&sig_t, 0, monitorFuncPtr, (void *) &mon_arg);
 	pthread_create(&arrival_t, 0, arrivalFuncPtr, (void *) &arrival_arg);
 	pthread_create(&token_deposit_t, 0, depositFuncPtr, (void *) &deposit_arg);
 	pthread_create(&s1_t, 0, serverFuncPtr, (void *) &s1_arg);
@@ -210,6 +210,7 @@ int main(int argc, char* argv[]) {
 	char* fileName = NULL;
     EmulationParams ep;
     sigset_t set;
+    endSimulation = FALSE;
 
     initEmulParams(&ep);
     processArgs(argc, argv, &ep, &fileName);
