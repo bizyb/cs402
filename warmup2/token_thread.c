@@ -129,15 +129,18 @@ int maxPacketsReached(ThreadArgument *args) {
 
 			pthread_mutex_lock(args->token_m);
 			pthread_cleanup_push(pthread_mutex_unlock, args->token_m);
+			// printf("\n\nargs->q1->num_members %d\n", args->q1->num_members);
+			// printf("args->q2->num_members %d\n\n", args->q2->num_members);
 
-			if (args->q1->num_members == 0) exitThread = TRUE;
+
+			if (args->q1->num_members == 0 && endTokenDeposit == TRUE) exitThread = TRUE;
 			if (args->q2->num_members > 0) pthread_cond_broadcast(args->Q2NotEmpty);
 
 			// pthread_mutex_unlock(args->token_m);
 			pthread_cleanup_pop(1);
 
 		}
-
+	// printf("\npacket count in deposit: %d exit status: %d\n", packetCount, exitThread);
 	return exitThread;
 
 }
@@ -147,6 +150,7 @@ void *deposit(void * obj) {
 	// printf("\n\nin deposit thread\n\n");
 
 	firstToken = TRUE;
+	endTokenDeposit = FALSE;
 	tokenCount = 0;
 	avlblTokens = 0;
 	droppedTokenCount = 0;
@@ -164,10 +168,11 @@ void *deposit(void * obj) {
 
 		if (maxPacketsReached(args) == TRUE) break;
 		processToken(args, tokenInterArrival);
+		// printf("in deposit loop...\n");
 
 	}
 	// pthread_cleanup_pop(1);
-	// printf("\n\ndeposit exiting...\n\n");
+	// printf("\n\nexiting deposit thread...\n\n");
 	return NULL;
 }
 

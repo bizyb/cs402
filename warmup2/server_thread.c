@@ -74,9 +74,10 @@ void transmitPacket(ThreadArgument *args) {
 	Packet *packet = dequeuePacketQ2(args);
 	dTime = deltaTime(&packet->time_in_q2, &packet->time_out_q2);
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &packet->time_out_q2);
+	// printf("logging q2 exit in server....\n");
 	logActivity(args, packet, Q2Exit, dTime, dTotal);
 
-
+	// printf("starting the service at the server....\n");
 	// service the packet at the current server
 	(void)gettimeofday(&then, NULL);
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &then);
@@ -84,6 +85,7 @@ void transmitPacket(ThreadArgument *args) {
 	packet->serverID = args->serverID+1;
 	logActivity(args, packet, ServerStart, dTime, dTotal);
 	usleep(packet->serviceTime);
+	// printf("ending service the server....\n");
 
 	// Finish serving the packet and archive it
 	(void)gettimeofday(&now, NULL);
@@ -99,15 +101,17 @@ void transmitPacket(ThreadArgument *args) {
 int allPacketsServed(ThreadArgument *args) {
 
 	int exitThread = FALSE;
+	// printf("\n\npacketCount: %d\n\n", packetCount);
 	if (packetCount == args->epPtr->numPackets) {
 
 			pthread_mutex_lock(args->token_m);
-			if (args->q1->num_members == 0 && args->q2->num_members == 0) {
-
+			if (args->q1->num_members == 0 && args->q2->num_members == 0 && allPacketsArrived == TRUE) {
+				endTokenDeposit = TRUE;
 				exitThread = TRUE;
 			}
 			pthread_mutex_unlock(args->token_m);
 	}
+	// printf("args->q2->num_members: %d\n", args->q2->num_members);
 	return exitThread;
 }
 
@@ -125,5 +129,6 @@ void *server(void *obj) {
 		// check again that q2 is not empty
 		while (args->q2->num_members > 0) transmitPacket(args);
 	}
+	// printf("\n\nexiting server thread...\n\n");
 	return NULL;
 }

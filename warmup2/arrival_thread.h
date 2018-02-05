@@ -15,6 +15,7 @@
 int packetCount;
 int firstPacket;
 int droppedPacketCount;
+int allPacketsArrived;
 struct timeval prevProcessingTime;
 struct timeval prevArrivalTime;
 

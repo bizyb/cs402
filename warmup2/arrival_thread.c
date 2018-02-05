@@ -305,6 +305,7 @@ void *arrival(void * obj) {
 	packetCount = 0;
 	firstPacket = TRUE;
 	droppedPacketCount = 0;
+	allPacketsArrived = FALSE;
 
 	ThreadArgument *args = (ThreadArgument *) obj;
 
@@ -315,6 +316,8 @@ void *arrival(void * obj) {
 	
 	// if (endSimulation == TRUE) printf("kill signal received; exiting thread\n");
 
+	// printf("\n\nexiting arrival thread...\n\n");
+	allPacketsArrived = TRUE;
 	return NULL;
 }
 

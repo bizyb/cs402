@@ -14,6 +14,7 @@ int firstToken;
 int tokenCount;
 int avlblTokens;
 int droppedTokenCount;
+int endTokenDeposit;
 struct timeval prevTokenProcTime;
 struct timeval prevTokenArrivaltime;
 

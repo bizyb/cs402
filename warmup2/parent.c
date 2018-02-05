@@ -155,11 +155,12 @@ void runEmulation(EmulationParams *ep, sigset_t *set) {
 	pthread_create(&s1_t, 0, serverFuncPtr, (void *) &s1_arg);
 	pthread_create(&s2_t, 0, serverFuncPtr, (void *) &s2_arg);
 
-	pthread_join(sig_t, 0);
+	// pthread_join(sig_t, 0);
 	pthread_join(arrival_t, 0);
 	pthread_join(token_deposit_t, 0);
 	// pthread_join(s1_t, 0);
 	// pthread_join(s2_t, 0);
+	pthread_cancel(sig_t);
 
 	(void)gettimeofday(&endTime, NULL);
 	dTime = deltaTime(&startTime, &endTime);

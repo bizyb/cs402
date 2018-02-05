@@ -18,17 +18,17 @@ void *sigMonitor(void * obj) {
 	ThreadArgument *args = (ThreadArgument *) obj;
 	sigset_t *set = args->set;
 
-	while (TRUE) {
+	// while (endSimulation == FALSE) {
 
 		sigwait(set, &sig);
 		endSimulation = TRUE;
 
 		pthread_cancel(*args->arrival_t);
 		pthread_cancel(*args->deposit_t);
-		 
-		break;
-	}
 
+		// break;
+	// }
+	// printf("\n\nexiting signal thread...\n\n");
 	return NULL;
 
 }
