@@ -113,19 +113,17 @@ int allPacketsServed(ThreadArgument *args) {
 
 void *server(void *obj) {
 
-	
+	// printf("\n\nin server thread\n\n");
 	ThreadArgument *args = (ThreadArgument *) obj;
 	
 	while(endSimulation == FALSE) {
 		
 		if (allPacketsServed(args) == TRUE) break;
-
+		// printf("\n\nin server thread waiting\n\n");
 		pthread_cond_wait(args->Q2NotEmpty, args->token_m);
 
 		// check again that q2 is not empty
 		while (args->q2->num_members > 0) transmitPacket(args);
-		
-		pthread_mutex_unlock(args->token_m);
 	}
 	return NULL;
 }

@@ -36,6 +36,8 @@ extern void archivePacket(ThreadArgument *, Packet *);
 */
 extern void logActivity(ThreadArgument *, Packet *, Activity, double, double);
 
+
+
 /*
 	Perform packet transmission by dequeuing a target packet from Q2 and serving
 	it by going to sleep. Then timestamp the packet's departure from the server 

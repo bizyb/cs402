@@ -111,9 +111,12 @@ void processToken(ThreadArgument *args, int tokenInterArrival) {
 	prevTokenArrivaltime = now;
 
 	pthread_mutex_lock(args->token_m);
+	pthread_cleanup_push(pthread_mutex_unlock, args->token_m);
+
 	generateToken(args, dTotal);
 	transferPacket(args);
-	pthread_mutex_unlock(args->token_m);
+	// pthread_mutex_unlock(args->token_m);
+	pthread_cleanup_pop(1);
 
 	(void)gettimeofday(&prevTokenProcTime, NULL);
 }
@@ -125,11 +128,13 @@ int maxPacketsReached(ThreadArgument *args) {
 	if (packetCount == args->epPtr->numPackets) {
 
 			pthread_mutex_lock(args->token_m);
+			pthread_cleanup_push(pthread_mutex_unlock, args->token_m);
 
 			if (args->q1->num_members == 0) exitThread = TRUE;
 			if (args->q2->num_members > 0) pthread_cond_broadcast(args->Q2NotEmpty);
 
-			pthread_mutex_unlock(args->token_m);
+			// pthread_mutex_unlock(args->token_m);
+			pthread_cleanup_pop(1);
 
 		}
 
@@ -139,6 +144,8 @@ int maxPacketsReached(ThreadArgument *args) {
 
 void *deposit(void * obj) {
 	
+	// printf("\n\nin deposit thread\n\n");
+
 	firstToken = TRUE;
 	tokenCount = 0;
 	avlblTokens = 0;
@@ -152,13 +159,15 @@ void *deposit(void * obj) {
 
 	if (tokenInterArrival > maxRate) tokenInterArrival = maxRate;
 
-
+	// pthread_cleanup_push(pthread_mutex_unlock, args->token_m);
 	while (endSimulation == FALSE) {
 
 		if (maxPacketsReached(args) == TRUE) break;
 		processToken(args, tokenInterArrival);
 
 	}
+	// pthread_cleanup_pop(1);
+	// printf("\n\ndeposit exiting...\n\n");
 	return NULL;
 }
 

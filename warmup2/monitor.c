@@ -13,7 +13,7 @@
 #include "cs402.h"
 
 void *sigMonitor(void * obj) {
-
+	// printf("\n\nin signal thread\n\n");
 	int sig;
 	ThreadArgument *args = (ThreadArgument *) obj;
 	sigset_t *set = args->set;
@@ -22,7 +22,10 @@ void *sigMonitor(void * obj) {
 
 		sigwait(set, &sig);
 		endSimulation = TRUE;
-		// exit(1); 
+
+		pthread_cancel(*args->arrival_t);
+		pthread_cancel(*args->deposit_t);
+		 
 		break;
 	}
 

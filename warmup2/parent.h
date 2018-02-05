@@ -52,6 +52,8 @@ typedef struct {
 	pthread_mutex_t *packetList_m;
 	pthread_cond_t *Q2NotEmpty;
 	pthread_cond_t *NoMorePackets;
+	pthread_t *arrival_t;
+	pthread_t *deposit_t;
 
 } ThreadArgument;
 

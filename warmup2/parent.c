@@ -136,6 +136,10 @@ void runEmulation(EmulationParams *ep, sigset_t *set) {
     serverFuncPtr = &server;
     monitorFuncPtr = &sigMonitor;
 
+    // set thread IDs for cancellation
+    mon_arg.arrival_t = &arrival_t;
+    mon_arg.deposit_t = &token_deposit_t;
+
 
     printEmulParams(ep);
 
@@ -154,8 +158,8 @@ void runEmulation(EmulationParams *ep, sigset_t *set) {
 	pthread_join(sig_t, 0);
 	pthread_join(arrival_t, 0);
 	pthread_join(token_deposit_t, 0);
-	pthread_join(s1_t, 0);
-	pthread_join(s2_t, 0);
+	// pthread_join(s1_t, 0);
+	// pthread_join(s2_t, 0);
 
 	(void)gettimeofday(&endTime, NULL);
 	dTime = deltaTime(&startTime, &endTime);

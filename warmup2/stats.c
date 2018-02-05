@@ -98,7 +98,7 @@ double getAvgPacketNum(My402List *q, Facility f, double emulTime) {
 
 void printStats(ThreadArgument *args) {
 
-	double avgInterArrival, avgServTime, avgNumQ1, avgNumQ2, avgNumS1, avgNumS2;
+	double avgInterArrival = 0, avgServTime = 0, avgNumQ1 = 0, avgNumQ2 = 0, avgNumS1, avgNumS2;
 	double avgSysTime, stdvSystime, tDropProb, pDropProp;
 	
 
