@@ -90,7 +90,7 @@ void initEmulParams(EmulationParams *ep) {
 	// numPackets is read from the trace file and over-written later
 	ep->lambda = LAMBDA;
 	ep->mu = MU;
-	ep->r = R; // 1/r = token inter-arrival-time; permanent
+	ep->r = R; // 1/r = token inter-arrival-time; defaults to 10 seconds if 1/r greater than 10 seconds
 	ep->B = B; // B = bucket size; permanent
 	ep->P = P; 
 	ep->numPackets = NUM_PACKETS;

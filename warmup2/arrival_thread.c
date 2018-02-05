@@ -66,7 +66,7 @@ void validateLine(char* line) {
 
 PacketParams getPacketParams(char *interArrival, char *tokens, char* serviceTime) {
 
-	// TODO: multiplying by THOUSAND_FACTOR may cause overflow; this would be incorrect since the 
+	// TODO: multiplying by THOUSAND_FACTOR may cause an overflow; this would be incorrect since the 
 	// original input could have been valid;
 
 	int iArrival, iTokens, iSrvTime;
@@ -135,20 +135,16 @@ PacketParams readInput(char* fileName, int enumParams, ThreadArgument *args) {
 
     }
 
-    while (fgets(buffer, BUFFERSIZE,  file) != NULL) {
+    while (fgets(buffer, BUFFERSIZE,  file) != NULL && endSimulation == FALSE) {
 
-    	// printf("not breaking\n");
-    	if (endSimulation == FALSE) {
-	        if (buffer[0] != '\n') {
+        if (buffer[0] != '\n') {
 
-	            params = parseLine((char* ) &buffer, enumParams);
-	            if (enumParams == TRUE) break;
-	            if (lineNum > 1 ) processPacket(args, params);
-	            lineNum++;
-	        }
-	        else exitOnError(EmptyLine);
-	    }
-	    else break;
+            params = parseLine((char* ) &buffer, enumParams);
+            if (enumParams == TRUE) break;
+            if (lineNum > 1 ) processPacket(args, params);
+            lineNum++;
+        }
+        else exitOnError(EmptyLine);
         
     }
     if (file != NULL) fclose(file);
@@ -212,47 +208,55 @@ void enqueuePacketQ1(ThreadArgument * args, Packet *packet) {
 
 }
 
-void processPacket(ThreadArgument * args, PacketParams params) {
+int getSleepTime(ThreadArgument * args, PacketParams params) {
 
-	// TODO: negative sleep time skipping is not yet tested
-			// 	5. go back to sleep for the interArrival time of the next packet 
-			// 		the sleep time is the next packets interArrival time minus 
-			// 		the time it took to create the current packet and queue it; 
-			// 		queueing could take a while since the mutex could be locked by 
-			// 		some other thread; 
-			// 		If the time difference is negative, sleep time should be zero,
-
-	struct timeval then, now;
-	double dTime, dTotal;
+	int sleepTime;
+	double dTime;
+	struct timeval then;
 
 	(void)gettimeofday(&then, NULL);
+
 	if (firstPacket == TRUE) {
 		// account for the time elapsed since the start of the emulation and 
 		// the first invocation of processPacket()
 		dTime = deltaTime(&args->epPtr->time_emul_start, &then) * THOUSAND_FACTOR;
-		usleep(params.interArrival - (int) dTime);
-		
 	}
-	else {
-		dTime = deltaTime(&prevArrivalTime, &prevProcessingTime) * THOUSAND_FACTOR;
-		if (dTime > 0) usleep(params.interArrival - (int) dTime);
-	}
-	
-	(void)gettimeofday(&now, NULL);
-	
 
-	Packet *packet = getPacket(params);
+	else dTime = deltaTime(&prevArrivalTime, &prevProcessingTime) * THOUSAND_FACTOR;
+
+	sleepTime = params.interArrival - (int) dTime;
+
+	if (sleepTime < 0) sleepTime = 0;
+
+	return sleepTime;
+}
+
+void setInterArrivalTime(ThreadArgument * args, Packet *packet, double *dTime, double *dTotal) {
+
+	struct timeval now;
+
+	(void)gettimeofday(&now, NULL);
 	packet->time_arrival = now;
 
 	if (firstPacket == TRUE) {
-		dTime = deltaTime(&args->epPtr->time_emul_start, &now);
+		*dTime = deltaTime(&args->epPtr->time_emul_start, &now);
 		firstPacket = FALSE;
 	}
-	else dTime = deltaTime(&prevArrivalTime, &packet->time_arrival);
+	else *dTime = deltaTime(&prevArrivalTime, &packet->time_arrival);
 
-	dTotal = deltaTime(&args->epPtr->time_emul_start, &now);
+	*dTotal = deltaTime(&args->epPtr->time_emul_start, &now);
 	prevArrivalTime = now;
-	packet->iaMeasured = dTime;
+	packet->iaMeasured = *dTime;
+
+}
+
+void processPacket(ThreadArgument * args, PacketParams params) {
+
+	double dTime, dTotal;
+	Packet *packet = getPacket(params);
+
+	usleep(getSleepTime(args, params));
+	setInterArrivalTime(args, packet, &dTime, &dTotal);
 
 	pthread_mutex_lock(args->token_m);
 	if (packet->tokens > args->epPtr->B) {
@@ -275,36 +279,33 @@ void processPacket(ThreadArgument * args, PacketParams params) {
 
 }
 
+void processDeterministic(ThreadArgument *args) {
+
+	int numPackets = args->epPtr-> numPackets;
+	PacketParams detParams;
+
+	detParams = getDetParams(args);
+	int i = 0;
+	while (i < numPackets && endSimulation == FALSE) {
+
+		processPacket(args, detParams);
+		i++;	
+	}
+
+}
 void *arrival(void * obj) {
 	
 	packetCount = 0;
 	firstPacket = TRUE;
 	droppedPacketCount = 0;
-	PacketParams detParams;
+
 	ThreadArgument *args = (ThreadArgument *) obj;
 
-	int numPackets = args->epPtr-> numPackets;
-
-	if (args->epPtr->deterministic == TRUE) {
-
-		detParams = getDetParams(args);
-		int i = 0;
-		while (i < numPackets) {
-			if (endSimulation == FALSE) {
-				processPacket(args, detParams);
-				i++;
-			}
-			else break;	
-		}
-	}
-	else {
-		int enumParams = FALSE;
-		(void) readInput(args->epPtr->fileName, enumParams, args);
-	}
+	if (args->epPtr->deterministic == TRUE) processDeterministic(args);
+	else (void) readInput(args->epPtr->fileName, FALSE, args);
 	
 	// if (endSimulation == TRUE) printf("kill signal received; exiting thread\n");
 
-	pthread_exit(NULL);
 	return NULL;
 }
 

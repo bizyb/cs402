@@ -111,6 +111,26 @@ extern PacketParams getDetParams(ThreadArgument *);
 extern void enqueuePacketQ1(ThreadArgument *, Packet *);
 
 
+
+/*
+	Return the amount of time to sleep the thread in microseconds.
+*/
+extern int getSleepTime(ThreadArgument *, PacketParams);
+
+
+/*
+	Computer and update packet inter-arrival time.
+*/
+extern void setInterArrivalTime(ThreadArgument *, Packet *, double *, double *);
+
+
+
+/*
+	Process packets using deterministic parameters. 
+*/
+extern void processDeterministic(ThreadArgument *);
+
+
 /*
 	Perform the appropriate timestamping and logging for each packet. Enqueue the 
 	packet as appropriate.
