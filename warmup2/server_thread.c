@@ -17,100 +17,115 @@
 #include "server_thread.h"
 #include "monitor.h"
 
-void transmitPacket(ThreadArgument *args) {
 
-	struct timeval then, now, out_q2;
-	double dTime, dTotal, sysTime;
+Packet *dequeuePacketQ2(ThreadArgument *args) {
 
-	//dequeue packet
+	struct timeval out_q2;
+
 	My402ListElem *elem = My402ListFirst(args->q2);
 	Packet *packet = (Packet *) elem->obj;
 
 	My402ListUnlink(args->q2, elem);
 	(void)gettimeofday(&out_q2, NULL);
-	
-
-	pthread_mutex_unlock(args->token_m);
-
 	packet->time_out_q2 = out_q2;
 
-	dTime = deltaTime(&packet->time_in_q2, &packet->time_out_q2);
-	dTotal = deltaTime(&args->epPtr->time_emul_start, &packet->time_out_q2);
-
-
-	pthread_mutex_lock(args->token_m);
-	printf("%012.3fms: p%d leaves Q2, time in Q2 = %.3fms\n", 
-			dTotal, packet->packetID, dTime);
 	pthread_mutex_unlock(args->token_m);
 
-	(void)gettimeofday(&then, NULL);
-	dTotal = deltaTime(&args->epPtr->time_emul_start, &then);
-	packet->time_in_server = then;
+	return packet;
+}
 
-	int serverID = args->serverID+1;
-	packet->serverID = serverID;
-	int serviceTime = packet->serviceTime/THOUSAND_FACTOR;
-
-	pthread_mutex_lock(args->token_m);
-	printf("%012.3fms: p%d begins service at S%d, requesting %dms of service\n", 
-			dTotal, packet->packetID, serverID, serviceTime);
-	pthread_mutex_unlock(args->token_m);
-
-	// service the packet
-	usleep(packet->serviceTime);
-	(void)gettimeofday(&now, NULL);
-	packet->time_out_server = now;
-
-	dTotal = deltaTime(&args->epPtr->time_emul_start, &now);
-	dTime = deltaTime(&packet->time_in_server, &packet->time_out_server);
-	sysTime = deltaTime(&packet->time_arrival, &packet->time_out_server);
-	packet->dSysTime = sysTime;
-	
-
-	pthread_mutex_lock(args->token_m);
-	printf("%012.3fms: p%d departs from S%d, service time = %.3fms, time in system =  %.3fms\n",
-	 dTotal, packet->packetID, serverID, dTime, packet->dSysTime);
-	pthread_mutex_unlock(args->token_m);
-
-
+void archivePacket(ThreadArgument *args, Packet *packet) {
 
 	pthread_mutex_lock(args->packetList_m);
-	// printf("\n\nserver thread packet archived\n\n");
 	My402ListAppend(args->packetList, (void *)packet);
 	pthread_mutex_unlock(args->packetList_m);
 }
 
-void *server(void *obj) {
+void logActivity(ThreadArgument *args, Packet *packet, Activity a, double dTime, double dTotal) {
+
+	pthread_mutex_lock(args->token_m);
+
+	if (a == Q2Exit) {
+
+		printf("%012.3fms: p%d leaves Q2, time in Q2 = %.3fms\n", 
+				dTotal, packet->packetID, dTime);
+	}
+	else if (a == ServerStart) {
+		int serviceTime = packet->serviceTime/THOUSAND_FACTOR;
+		printf("%012.3fms: p%d begins service at S%d, requesting %dms of service\n", 
+			dTotal, packet->packetID, packet->serverID, serviceTime);
+
+	}
+	else if (a == ServerExit) {
+
+		printf("%012.3fms: p%d departs from S%d, service time = %.3fms, time in system =  %.3fms\n",
+	 		dTotal, packet->packetID, packet->serverID, dTime, packet->dSysTime);
+	}
+
+	pthread_mutex_unlock(args->token_m);
+
+}
+void transmitPacket(ThreadArgument *args) {
+
+	struct timeval then, now;
+	double dTime, dTotal, sysTime;
+
+	// dequeue the packet from Q2
+	Packet *packet = dequeuePacketQ2(args);
+	dTime = deltaTime(&packet->time_in_q2, &packet->time_out_q2);
+	dTotal = deltaTime(&args->epPtr->time_emul_start, &packet->time_out_q2);
+	logActivity(args, packet, Q2Exit, dTime, dTotal);
+
+
+	// service the packet at the current server
+	(void)gettimeofday(&then, NULL);
+	dTotal = deltaTime(&args->epPtr->time_emul_start, &then);
+	packet->time_in_server = then;
+	packet->serverID = args->serverID+1;
+	logActivity(args, packet, ServerStart, dTime, dTotal);
+	usleep(packet->serviceTime);
+
+	// Finish serving the packet and archive it
+	(void)gettimeofday(&now, NULL);
+	packet->time_out_server = now;
+	dTotal = deltaTime(&args->epPtr->time_emul_start, &now);
+	dTime = deltaTime(&packet->time_in_server, &packet->time_out_server);
+	sysTime = deltaTime(&packet->time_arrival, &packet->time_out_server);
+	packet->dSysTime = sysTime;
+	logActivity(args, packet, ServerExit, dTime, dTotal);
+	archivePacket(args, packet);
+}
+
+int allPacketsServed(ThreadArgument *args) {
 
 	int exitThread = FALSE;
-	ThreadArgument *args = (ThreadArgument *) obj;
-	
-	while(endSimulation == FALSE) {
-
-		if (packetCount == args->epPtr->numPackets) {
+	if (packetCount == args->epPtr->numPackets) {
 
 			pthread_mutex_lock(args->token_m);
-
 			if (args->q1->num_members == 0 && args->q2->num_members == 0) {
 
 				exitThread = TRUE;
 			}
 			pthread_mutex_unlock(args->token_m);
-		}
+	}
+	return exitThread;
+}
+
+void *server(void *obj) {
+
+	
+	ThreadArgument *args = (ThreadArgument *) obj;
+	
+	while(endSimulation == FALSE) {
 		
-		if (exitThread == TRUE) break;
+		if (allPacketsServed(args) == TRUE) break;
 
-		// printf("\n\nserver thread waiting for signal\n\n");
 		pthread_cond_wait(args->Q2NotEmpty, args->token_m);
-		// printf("\n\nserver thread signal received\n\n");
+
 		// check again that q2 is not empty
-		while (args->q2->num_members > 0) {
-
-			transmitPacket(args);
-
-		}
+		while (args->q2->num_members > 0) transmitPacket(args);
+		
 		pthread_mutex_unlock(args->token_m);
 	}
-	pthread_exit(NULL);
 	return NULL;
 }

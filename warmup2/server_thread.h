@@ -8,6 +8,33 @@
 #define _WARMUP2_SERVER_THREAD
 
 #include "parent.h"
+#include "arrival_thread.h"
+
+typedef enum {
+
+	Q2Exit,
+	ServerStart,
+	ServerExit,
+
+} Activity;
+
+/*
+	Dequeue a packet from Q2 and move it into the server for servicing.
+*/
+extern Packet *dequeuePacketQ2(ThreadArgument *);
+
+
+/*
+	Add a serviced packet to an archive for future stat computation.
+*/
+extern void archivePacket(ThreadArgument *, Packet *);
+
+
+
+/*
+	Log server activity on a given packet to stdout. 
+*/
+extern void logActivity(ThreadArgument *, Packet *, Activity, double, double);
 
 /*
 	Perform packet transmission by dequeuing a target packet from Q2 and serving

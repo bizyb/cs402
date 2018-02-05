@@ -22,8 +22,8 @@ void *sigMonitor(void * obj) {
 
 		sigwait(set, &sig);
 		endSimulation = TRUE;
-		exit(1); 
-		// break;
+		// exit(1); 
+		break;
 	}
 
 	return NULL;
