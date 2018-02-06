@@ -77,17 +77,19 @@ void transmitPacket(ThreadArgument *args) {
 	// printf("logging q2 exit in server....\n");
 	logActivity(args, packet, Q2Exit, dTime, dTotal);
 
-	// printf("starting the service at the server....\n");
+	// printf("starting service at the server....\n");
 	// service the packet at the current server
 	(void)gettimeofday(&then, NULL);
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &then);
 	packet->time_in_server = then;
 	packet->serverID = args->serverID+1;
 	logActivity(args, packet, ServerStart, dTime, dTotal);
+	// printf("going to sleep at the server....\n");
 	usleep(packet->serviceTime);
 	// printf("ending service the server....\n");
 
 	// Finish serving the packet and archive it
+	// printf("exiting service at the server....\n");
 	(void)gettimeofday(&now, NULL);
 	packet->time_out_server = now;
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &now);
@@ -96,6 +98,7 @@ void transmitPacket(ThreadArgument *args) {
 	packet->dSysTime = sysTime;
 	logActivity(args, packet, ServerExit, dTime, dTotal);
 	archivePacket(args, packet);
+	// printf("exiting service at the server and archived....\n");
 }
 
 int allPacketsServed(ThreadArgument *args) {
@@ -106,7 +109,7 @@ int allPacketsServed(ThreadArgument *args) {
 
 			pthread_mutex_lock(args->token_m);
 			if (args->q1->num_members == 0 && args->q2->num_members == 0 && allPacketsArrived == TRUE) {
-				endTokenDeposit = TRUE;
+				// endTokenDeposit = TRUE;
 				exitThread = TRUE;
 			}
 			pthread_mutex_unlock(args->token_m);
@@ -118,6 +121,7 @@ int allPacketsServed(ThreadArgument *args) {
 void *server(void *obj) {
 
 	// printf("\n\nin server thread\n\n");
+	serverExitCount = 0;
 	ThreadArgument *args = (ThreadArgument *) obj;
 	
 	while(endSimulation == FALSE) {
@@ -129,6 +133,7 @@ void *server(void *obj) {
 		// check again that q2 is not empty
 		while (args->q2->num_members > 0) transmitPacket(args);
 	}
+	serverExitCount++;
 	// printf("\n\nexiting server thread...\n\n");
 	return NULL;
 }

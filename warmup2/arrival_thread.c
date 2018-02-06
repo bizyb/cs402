@@ -316,8 +316,10 @@ void *arrival(void * obj) {
 	
 	// if (endSimulation == TRUE) printf("kill signal received; exiting thread\n");
 
-	// printf("\n\nexiting arrival thread...\n\n");
+	
 	allPacketsArrived = TRUE;
+	maxPacketsReached(args);
+	// printf("\n\nexiting arrival thread...\n\n");
 	return NULL;
 }
 

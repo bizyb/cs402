@@ -10,6 +10,7 @@
 
 #include "token_thread.h"
 #include "arrival_thread.h"
+#include "server_thread.h"
 #include "cs402.h"
 #include "parent.h"
 #include "global.h"
@@ -30,7 +31,7 @@ void generateToken(ThreadArgument *args, double dTotal) {
 
 		}
 	}
-	else if (avlblTokens == args->epPtr->B) {
+	else if (avlblTokens == args->epPtr->B ) {
 
 		printf("%012.3fms: token t%d arrives, dropped\n", dTotal, ++tokenCount);
 		droppedTokenCount++;
@@ -57,13 +58,17 @@ void dequeueEnqueue(ThreadArgument *args, My402ListElem *elem) {
 	printf("%012.3fms: p%d leaves Q1, time in Q1 = %.3fms, token bucket now has %d tokens \n",
 		 dTotal, packet->packetID, dTime, avlblTokens);
 
+	// update token deposit state
+	// maxPacketsReached(args);
 	My402ListAppend(args->q2, (void *) packet);
 	(void)gettimeofday(&in_q2, NULL);
 
 	packet->time_in_q2 = in_q2;
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &packet->time_in_q2);
 	printf("%012.3fms: p%d enters Q2\n", dTotal, packet->packetID);
+
 	pthread_cond_broadcast(args->Q2NotEmpty);
+	// if (endTokenDeposit == TRUE) {printf("\n\nexiting deposit thread...\n\n"); pthread_exit(NULL);}
 	// printf("\n\nSignal about to be sent for q2 not empty\n\n");
 
 }
@@ -113,8 +118,9 @@ void processToken(ThreadArgument *args, int tokenInterArrival) {
 	pthread_mutex_lock(args->token_m);
 	pthread_cleanup_push(pthread_mutex_unlock, args->token_m);
 
-	generateToken(args, dTotal);
+	if (endTokenDeposit == FALSE) generateToken(args, dTotal);
 	transferPacket(args);
+	// if (args->q2->num_members > 0) pthread_cond_broadcast(args->Q2NotEmpty);
 	// pthread_mutex_unlock(args->token_m);
 	pthread_cleanup_pop(1);
 
@@ -123,7 +129,7 @@ void processToken(ThreadArgument *args, int tokenInterArrival) {
 
 int maxPacketsReached(ThreadArgument *args) {
 
-	int exitThread = FALSE;
+	// int exitThread = FALSE;
 
 	if (packetCount == args->epPtr->numPackets) {
 
@@ -133,15 +139,15 @@ int maxPacketsReached(ThreadArgument *args) {
 			// printf("args->q2->num_members %d\n\n", args->q2->num_members);
 
 
-			if (args->q1->num_members == 0 && endTokenDeposit == TRUE) exitThread = TRUE;
+			if (args->q1->num_members == 0 && allPacketsArrived == TRUE) {endTokenDeposit = TRUE;}
 			if (args->q2->num_members > 0) pthread_cond_broadcast(args->Q2NotEmpty);
 
 			// pthread_mutex_unlock(args->token_m);
 			pthread_cleanup_pop(1);
 
 		}
-	// printf("\npacket count in deposit: %d exit status: %d\n", packetCount, exitThread);
-	return exitThread;
+	// printf("\nallPacketsArrived: %d args->q1->num_members: %d\n", allPacketsArrived, args->q1->num_members);
+	return endTokenDeposit;
 
 }
 
@@ -172,7 +178,9 @@ void *deposit(void * obj) {
 
 	}
 	// pthread_cleanup_pop(1);
-	// printf("\n\nexiting deposit thread...\n\n");
+	while (!(serverExitCount > 1)) {};
+	// printf("\n\nexiting deposit thread\n\n");
+
 	return NULL;
 }
 
