@@ -28,7 +28,6 @@ void generateToken(ThreadArgument *args, double dTotal) {
 
 			printf("%012.3fms: token t%d arrives, token bucket now has %d tokens\n", 
 				dTotal, ++tokenCount, ++avlblTokens);
-
 		}
 	}
 	else if (avlblTokens == args->epPtr->B ) {
@@ -59,7 +58,6 @@ void dequeueEnqueue(ThreadArgument *args, My402ListElem *elem) {
 		 dTotal, packet->packetID, dTime, avlblTokens);
 
 	// update token deposit state
-	// maxPacketsReached(args);
 	My402ListAppend(args->q2, (void *) packet);
 	(void)gettimeofday(&in_q2, NULL);
 
@@ -134,11 +132,9 @@ int maxPacketsReached(ThreadArgument *args) {
 			if (args->q2->num_members > 0) pthread_cond_broadcast(args->Q2NotEmpty);
 
 			pthread_cleanup_pop(1);
-
 		}
 
 	return endTokenDeposit;
-
 }
 
 void *deposit(void * obj) {
@@ -163,13 +159,6 @@ void *deposit(void * obj) {
 		processToken(args, tokenInterArrival);
 
 	}
-	// a temporary fix for a bug; if the depositing thread exits before the server
-	// threads, the last packet does not get served
-	// while (!(serverExitCount > 1)) {};
-	// pthread_mutex_lock(args->token_m);
-	// printf("\n\n deposit thread exiting\n\n");
-	// pthread_mutex_unlock(args->token_m);
-
 	return NULL;
 }
 

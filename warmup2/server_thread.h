@@ -11,7 +11,6 @@
 #include "arrival_thread.h"
 #include "token_thread.h"
 
-int serverExitCount;
 
 typedef enum {
 

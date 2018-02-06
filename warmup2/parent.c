@@ -235,8 +235,6 @@ void processArgs(int argc, char *argv[], EmulationParams *ep, char** fileNamePtr
 
 int main(int argc, char* argv[]) {
 
-	// TODO: thread return values // free memory
-	
 	char* fileName = NULL;
     EmulationParams ep;
     sigset_t set;

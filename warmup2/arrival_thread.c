@@ -310,9 +310,6 @@ void *arrival(void * obj) {
 	allPacketsArrived = TRUE;
 	maxPacketsReached(args);
 
-	// pthread_mutex_lock(args->token_m);
-	// printf("\n\n arrival thread exiting\n\n");
-	// pthread_mutex_unlock(args->token_m);
 	return NULL;
 }
 
