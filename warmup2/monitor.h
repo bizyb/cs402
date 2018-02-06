@@ -10,6 +10,7 @@
 #include "cs402.h"
 
 int endSimulation;
+int signalReceived;
 
 
 /*

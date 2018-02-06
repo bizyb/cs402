@@ -68,8 +68,6 @@ void dequeueEnqueue(ThreadArgument *args, My402ListElem *elem) {
 	printf("%012.3fms: p%d enters Q2\n", dTotal, packet->packetID);
 
 	pthread_cond_broadcast(args->Q2NotEmpty);
-	// if (endTokenDeposit == TRUE) {printf("\n\nexiting deposit thread...\n\n"); pthread_exit(NULL);}
-	// printf("\n\nSignal about to be sent for q2 not empty\n\n");
 
 }
 
@@ -120,8 +118,6 @@ void processToken(ThreadArgument *args, int tokenInterArrival) {
 
 	if (endTokenDeposit == FALSE) generateToken(args, dTotal);
 	transferPacket(args);
-	// if (args->q2->num_members > 0) pthread_cond_broadcast(args->Q2NotEmpty);
-	// pthread_mutex_unlock(args->token_m);
 	pthread_cleanup_pop(1);
 
 	(void)gettimeofday(&prevTokenProcTime, NULL);
@@ -129,31 +125,23 @@ void processToken(ThreadArgument *args, int tokenInterArrival) {
 
 int maxPacketsReached(ThreadArgument *args) {
 
-	// int exitThread = FALSE;
-
 	if (packetCount == args->epPtr->numPackets) {
 
 			pthread_mutex_lock(args->token_m);
 			pthread_cleanup_push(pthread_mutex_unlock, args->token_m);
-			// printf("\n\nargs->q1->num_members %d\n", args->q1->num_members);
-			// printf("args->q2->num_members %d\n\n", args->q2->num_members);
-
 
 			if (args->q1->num_members == 0 && allPacketsArrived == TRUE) {endTokenDeposit = TRUE;}
 			if (args->q2->num_members > 0) pthread_cond_broadcast(args->Q2NotEmpty);
 
-			// pthread_mutex_unlock(args->token_m);
 			pthread_cleanup_pop(1);
 
 		}
-	// printf("\nallPacketsArrived: %d args->q1->num_members: %d\n", allPacketsArrived, args->q1->num_members);
+
 	return endTokenDeposit;
 
 }
 
 void *deposit(void * obj) {
-	
-	// printf("\n\nin deposit thread\n\n");
 
 	firstToken = TRUE;
 	endTokenDeposit = FALSE;
@@ -169,17 +157,18 @@ void *deposit(void * obj) {
 
 	if (tokenInterArrival > maxRate) tokenInterArrival = maxRate;
 
-	// pthread_cleanup_push(pthread_mutex_unlock, args->token_m);
 	while (endSimulation == FALSE) {
 
 		if (maxPacketsReached(args) == TRUE) break;
 		processToken(args, tokenInterArrival);
-		// printf("in deposit loop...\n");
 
 	}
-	// pthread_cleanup_pop(1);
-	while (!(serverExitCount > 1)) {};
-	// printf("\n\nexiting deposit thread\n\n");
+	// a temporary fix for a bug; if the depositing thread exits before the server
+	// threads, the last packet does not get served
+	// while (!(serverExitCount > 1)) {};
+	// pthread_mutex_lock(args->token_m);
+	// printf("\n\n deposit thread exiting\n\n");
+	// pthread_mutex_unlock(args->token_m);
 
 	return NULL;
 }

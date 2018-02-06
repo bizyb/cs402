@@ -7,28 +7,30 @@
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
 
 #include "parent.h"
 #include "monitor.h"
 #include "cs402.h"
 
 void *sigMonitor(void * obj) {
-	// printf("\n\nin signal thread\n\n");
+	
 	int sig;
+	signalReceived = FALSE;
 	ThreadArgument *args = (ThreadArgument *) obj;
 	sigset_t *set = args->set;
 
-	// while (endSimulation == FALSE) {
+	sigwait(set, &sig);
+	endSimulation = TRUE;
+	signalReceived = TRUE;
 
-		sigwait(set, &sig);
-		endSimulation = TRUE;
+	pthread_cancel(*args->arrival_t);
+	pthread_cancel(*args->deposit_t);
 
-		pthread_cancel(*args->arrival_t);
-		pthread_cancel(*args->deposit_t);
-
-		// break;
-	// }
-	// printf("\n\nexiting signal thread...\n\n");
+	//signal the server threads in case they're currently 
+	//waiting for a signal	
+	pthread_cond_broadcast(args->Q2NotEmpty);
+			
 	return NULL;
 
 }

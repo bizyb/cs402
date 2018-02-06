@@ -137,7 +137,7 @@ PacketParams readInput(char* fileName, int enumParams, ThreadArgument *args) {
 
     pthread_cleanup_push(fclose, file);
     while (fgets(buffer, BUFFERSIZE,  file) != NULL && endSimulation == FALSE) {
-    	// printf("\n\nin arrival thread...\n\n");
+ 
         if (buffer[0] != '\n') {
 
             params = parseLine((char* ) &buffer, enumParams);
@@ -148,10 +148,6 @@ PacketParams readInput(char* fileName, int enumParams, ThreadArgument *args) {
         else exitOnError(EmptyLine);
         
     }
-    // printf("\n\narrival cancellation received...\n\n");
-    // pthread_cleanup_pop(0);
-
-    // if (file != NULL) fclose(file);
     pthread_cleanup_pop(1);
 
     return params;
@@ -279,7 +275,6 @@ void processPacket(ThreadArgument * args, PacketParams params) {
 		enqueuePacketQ1(args, packet);
 		
 	}
-	// pthread_mutex_unlock(args->token_m);
 	pthread_cleanup_pop(1);
 
 	(void)gettimeofday(&prevProcessingTime, NULL);
@@ -301,7 +296,7 @@ void processDeterministic(ThreadArgument *args) {
 
 }
 void *arrival(void * obj) {
-	// printf("\n\nin arrival thread\n\n");
+
 	packetCount = 0;
 	firstPacket = TRUE;
 	droppedPacketCount = 0;
@@ -309,17 +304,15 @@ void *arrival(void * obj) {
 
 	ThreadArgument *args = (ThreadArgument *) obj;
 
-	// pthread_cleanup_push(pthread_mutex_unlock, args->token_m);
 	if (args->epPtr->deterministic == TRUE) processDeterministic(args);
 	else (void) readInput(args->epPtr->fileName, FALSE, args);
-	// pthread_cleanup_pop(1);
-	
-	// if (endSimulation == TRUE) printf("kill signal received; exiting thread\n");
-
 	
 	allPacketsArrived = TRUE;
 	maxPacketsReached(args);
-	// printf("\n\nexiting arrival thread...\n\n");
+
+	// pthread_mutex_lock(args->token_m);
+	// printf("\n\n arrival thread exiting\n\n");
+	// pthread_mutex_unlock(args->token_m);
 	return NULL;
 }
 

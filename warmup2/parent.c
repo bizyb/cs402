@@ -21,6 +21,28 @@
 #include "monitor.h"
 #include "stats.h"
 
+void cleanup(ThreadArgument *arrival_arg, ThreadArgument *s1_arg) {
+
+	My402ListElem *elem = NULL;
+	My402ListUnlinkAll(s1_arg->q1);
+	My402ListUnlinkAll(s1_arg->q2);
+
+	for (elem = My402ListFirst(s1_arg->packetList); elem != NULL; 
+			elem = My402ListNext(s1_arg->packetList, elem)) {
+		free(elem->obj);
+	}
+	My402ListUnlinkAll(s1_arg->packetList);
+
+	free(s1_arg->q1);
+	free(s1_arg->q2);
+	free(s1_arg->packetList);
+	free(s1_arg->token_m);
+	free(s1_arg->packetList_m);
+	free(arrival_arg->Q2NotEmpty);
+	free(arrival_arg->NoMorePackets);
+
+}
+
 void printEmulParams(EmulationParams *ep) {
 
 	printf("Emulation Parameters:\n");
@@ -78,7 +100,7 @@ void initThreadArgs(ThreadArgument *arrival_arg, ThreadArgument *deposit_arg,
 	deposit_arg->Q2NotEmpty = Q2NotEmpty, deposit_arg->NoMorePackets = NoMorePackets;
 	s1_arg->Q2NotEmpty = Q2NotEmpty;
 	s2_arg->Q2NotEmpty = Q2NotEmpty;
-	mon_arg->set = set;
+	mon_arg->set = set, mon_arg->Q2NotEmpty = Q2NotEmpty, mon_arg->q1 = q1, mon_arg->q2 = q2, mon_arg->token_m = token_m; 
 }
 
 void initEmulParams(EmulationParams *ep) {
@@ -155,12 +177,14 @@ void runEmulation(EmulationParams *ep, sigset_t *set) {
 	pthread_create(&s1_t, 0, serverFuncPtr, (void *) &s1_arg);
 	pthread_create(&s2_t, 0, serverFuncPtr, (void *) &s2_arg);
 
-	// pthread_join(sig_t, 0);
+	
 	pthread_join(arrival_t, 0);
 	pthread_join(token_deposit_t, 0);
-	// pthread_join(s1_t, 0);
-	// pthread_join(s2_t, 0);
-	pthread_cancel(sig_t);
+	pthread_join(s1_t, 0);
+	pthread_join(s2_t, 0);
+
+	if (signalReceived == FALSE) pthread_cancel(sig_t);
+	else pthread_join(sig_t, 0);
 
 	(void)gettimeofday(&endTime, NULL);
 	dTime = deltaTime(&startTime, &endTime);
@@ -169,6 +193,7 @@ void runEmulation(EmulationParams *ep, sigset_t *set) {
 	printf("%012.3fms: emulation ends\n\n", dTime);
 
 	printStats(&s1_arg);
+	cleanup(&arrival_arg, &s1_arg);
 
 }
 void processArgs(int argc, char *argv[], EmulationParams *ep, char** fileNamePtr) {
