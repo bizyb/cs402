@@ -259,12 +259,9 @@ void processPacket(ThreadArgument * args, PacketParams params) {
 
 	double dTime, dTotal;
 	Packet *packet = getPacket(params);
-	// printf("\n\nDEBUG 1: arrival in processPacket\n\n");
 	usleep(getSleepTime(args, params));
 	setInterArrivalTime(args, packet, &dTime, &dTotal);
-	// printf("\n\nDEBUG 2: arrival in processPacket\n\n");
 	pthread_mutex_lock(args->token_m);
-	// printf("\n\nDEBUG 3: arrival in processPacket\n\n");
 	pthread_cleanup_push(pthread_mutex_unlock, args->token_m);
 	if (packet->tokens > args->epPtr->B) {
 
@@ -316,8 +313,6 @@ void *arrival(void * obj) {
 	
 	allPacketsArrived = TRUE;
 	maxPacketsReached(args);
-
-	// printf("\n\nDEBUG point: arrival thread exiting\n\n");
 
 	return NULL;
 }
