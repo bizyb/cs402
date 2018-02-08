@@ -18,6 +18,7 @@
 #include "global.h"
 #include "arrival_thread.h"
 #include "token_thread.h"
+#include "server_thread.h"
 #include "monitor.h"
 
 int lineNum = 1;
@@ -42,9 +43,9 @@ void validateLine(char* line) {
     // one never gets executed since the program exits. 
 
     char* numPacketsPattern = "^([0-9]{1,10}\n)";
-    char* interArrivalPattern =  "^([0-9]{1,10})\\s+";
-    char* tokensPattern = "^([0-9]{1,10})\\s+([0-9]{1,10})\\s+";
-    char* sTimePattern = "^([0-9]{1,10})\\s+([0-9]{1,10})\\s+([0-9]{1,10})\n";
+    char* interArrivalPattern =  "^([0-9]{1,10})( |\t)+";
+    char* tokensPattern = "^([0-9]{1,10})( |\t)+([0-9]{1,10})( |\t)+";
+    char* sTimePattern = "^([0-9]{1,10})( |\t)+([0-9]{1,10})( |\t)+([0-9]{1,10})\n";
 
     if (lineNum > 1) {
 	    matchPattern(line, interArrivalPattern, InterArrival);
@@ -137,7 +138,6 @@ PacketParams readInput(char* fileName, int enumParams, ThreadArgument *args) {
 
     pthread_cleanup_push(fclose, file);
     while (fgets(buffer, BUFFERSIZE,  file) != NULL && endSimulation == FALSE) {
- 
         if (buffer[0] != '\n') {
 
             params = parseLine((char* ) &buffer, enumParams);
@@ -162,6 +162,9 @@ Packet *getPacket(PacketParams params) {
 	packet->interArrival = params.interArrival;
 	packet->serviceTime = params.serviceTime;
 	packet->packetID = ++packetCount;
+	packet->iaMeasured = 0;
+	packet->packetDropped = FALSE;
+	packet->serveSuccess = FALSE;
 
 	return packet;
 
@@ -186,6 +189,7 @@ PacketParams getDetParams(ThreadArgument *args) {
 
 
 }
+
 void enqueuePacketQ1(ThreadArgument * args, Packet *packet) {
 
 	struct timeval in_q1;
@@ -255,17 +259,20 @@ void processPacket(ThreadArgument * args, PacketParams params) {
 
 	double dTime, dTotal;
 	Packet *packet = getPacket(params);
-
+	// printf("\n\nDEBUG 1: arrival in processPacket\n\n");
 	usleep(getSleepTime(args, params));
 	setInterArrivalTime(args, packet, &dTime, &dTotal);
-
+	// printf("\n\nDEBUG 2: arrival in processPacket\n\n");
 	pthread_mutex_lock(args->token_m);
+	// printf("\n\nDEBUG 3: arrival in processPacket\n\n");
 	pthread_cleanup_push(pthread_mutex_unlock, args->token_m);
 	if (packet->tokens > args->epPtr->B) {
 
 		printf("%012.3fms: p%d arrives, needs %d tokens, inter-arrival time = %.3fms, dropped\n", 
 			dTotal, packet->packetID, packet->tokens, dTime);
 		droppedPacketCount++;
+		packet->packetDropped = TRUE;
+		archivePacket(args, packet, FALSE);
 
 	}
 	else {
@@ -309,6 +316,8 @@ void *arrival(void * obj) {
 	
 	allPacketsArrived = TRUE;
 	maxPacketsReached(args);
+
+	// printf("\n\nDEBUG point: arrival thread exiting\n\n");
 
 	return NULL;
 }

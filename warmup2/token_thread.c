@@ -18,6 +18,9 @@
 
 void generateToken(ThreadArgument *args, double dTotal) {
 
+	// pthread_mutex_lock(args->token_m);
+	// pthread_cleanup_push(pthread_mutex_unlock, args->token_m);
+
 	if (avlblTokens < args->epPtr->B) {
 		if (avlblTokens == 0) {
 
@@ -35,7 +38,8 @@ void generateToken(ThreadArgument *args, double dTotal) {
 		printf("%012.3fms: token t%d arrives, dropped\n", dTotal, ++tokenCount);
 		droppedTokenCount++;
 
-	}	
+	}
+	// pthread_cleanup_pop(1);	
 
 }
 
@@ -72,6 +76,9 @@ void dequeueEnqueue(ThreadArgument *args, My402ListElem *elem) {
 void transferPacket(ThreadArgument *args) {
 
 	int done = FALSE;
+	// pthread_mutex_lock(args->token_m);
+	// pthread_cleanup_push(pthread_mutex_unlock, args->token_m);
+
 	while (!done) {
 
 		My402ListElem *elem = My402ListFirst(args->q1);
@@ -85,6 +92,7 @@ void transferPacket(ThreadArgument *args) {
 		}
 		
 	}
+	// pthread_cleanup_pop(1);
 }
 
 void processToken(ThreadArgument *args, int tokenInterArrival) {
@@ -111,12 +119,18 @@ void processToken(ThreadArgument *args, int tokenInterArrival) {
 	dTotal = deltaTime(&args->epPtr->time_emul_start, &now);
 	prevTokenArrivaltime = now;
 
+	// printf("\n\nDEBUG point: mutex owner: %d\n\n", args->token_m->__data.__owner);
+	// pthread_mutex_unlock(args->token_m);
+	// printf("\n\nDEBUG point 2\n\n");
 	pthread_mutex_lock(args->token_m);
+	
 	pthread_cleanup_push(pthread_mutex_unlock, args->token_m);
-
+	
 	if (endTokenDeposit == FALSE) generateToken(args, dTotal);
 	transferPacket(args);
+	// printf("\n\nDEBUG point 3\n\n");
 	pthread_cleanup_pop(1);
+	
 
 	(void)gettimeofday(&prevTokenProcTime, NULL);
 }
@@ -139,6 +153,8 @@ int maxPacketsReached(ThreadArgument *args) {
 
 void *deposit(void * obj) {
 
+	// printf("\n\nDEBUG: in depositing thread\n\n");
+
 	firstToken = TRUE;
 	endTokenDeposit = FALSE;
 	tokenCount = 0;
@@ -154,11 +170,15 @@ void *deposit(void * obj) {
 	if (tokenInterArrival > maxRate) tokenInterArrival = maxRate;
 
 	while (endSimulation == FALSE) {
-
+		// printf("\n\nDEBUG point 1\n\n");
 		if (maxPacketsReached(args) == TRUE) break;
 		processToken(args, tokenInterArrival);
 
 	}
+	// printf("\n\nDEBUG: exiting depositing thread\n\n");
+	endSimulation = TRUE;
+	// wake up the server threads
+	pthread_cond_broadcast(args->Q2NotEmpty);
 	return NULL;
 }
 

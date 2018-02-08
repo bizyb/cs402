@@ -29,21 +29,26 @@ Packet *dequeuePacketQ2(ThreadArgument *args) {
 	(void)gettimeofday(&out_q2, NULL);
 	packet->time_out_q2 = out_q2;
 
-	pthread_mutex_unlock(args->token_m);
+	// pthread_mutex_unlock(args->token_m);
 
 	return packet;
 }
 
-void archivePacket(ThreadArgument *args, Packet *packet) {
+void archivePacket(ThreadArgument *args, Packet *packet, int served) {
 
 	pthread_mutex_lock(args->packetList_m);
+
+	if (served == TRUE) packet->serveSuccess = TRUE;
 	My402ListAppend(args->packetList, (void *)packet);
+	
 	pthread_mutex_unlock(args->packetList_m);
 }
 
 void logActivity(ThreadArgument *args, Packet *packet, Activity a, double dTime, double dTotal) {
 
-	pthread_mutex_lock(args->token_m);
+	// printf("\n\nDEBUG point: about to lock mutex in logActivity in server thread\n\n");
+	// pthread_mutex_unlock(args->token_m);
+	// pthread_mutex_lock(args->token_m);
 	if (a == Q2Exit) {
 
 		printf("%012.3fms: p%d leaves Q2, time in Q2 = %.3fms\n", 
@@ -61,11 +66,12 @@ void logActivity(ThreadArgument *args, Packet *packet, Activity a, double dTime,
 	 		dTotal, packet->packetID, packet->serverID, dTime, packet->dSysTime);
 	}
 
-	pthread_mutex_unlock(args->token_m);
+	// pthread_mutex_unlock(args->token_m);
+	// printf("\n\nDEBUG point: mutex unlocked in server thread\n\n");
 
 }
 void transmitPacket(ThreadArgument *args) {
-
+	// printf("\n\nDEBUG: in server in transmitPacket\n\n");
 	struct timeval then, now;
 	double dTime, dTotal, sysTime;
 
@@ -81,7 +87,11 @@ void transmitPacket(ThreadArgument *args) {
 	packet->time_in_server = then;
 	packet->serverID = args->serverID+1;
 	logActivity(args, packet, ServerStart, dTime, dTotal);
+	// printf("\n\nDEBUG point: end atomic\n\n");
+	pthread_mutex_unlock(args->token_m);
+	// printf("\n\nDEBUG point: mutex unlocked in server. going to sleep\n\n");
 	usleep(packet->serviceTime);
+	// printf("\n\nDEBUG point: mutex unlocked in server. just woke up\n\n");
 
 	// Finish serving the packet and archive it
 	(void)gettimeofday(&now, NULL);
@@ -90,8 +100,12 @@ void transmitPacket(ThreadArgument *args) {
 	dTime = deltaTime(&packet->time_in_server, &packet->time_out_server);
 	sysTime = deltaTime(&packet->time_arrival, &packet->time_out_server);
 	packet->dSysTime = sysTime;
+
+	pthread_mutex_lock(args->token_m);
 	logActivity(args, packet, ServerExit, dTime, dTotal);
-	archivePacket(args, packet);
+	pthread_mutex_unlock(args->token_m);
+
+	archivePacket(args, packet, TRUE);
 	
 }
 
@@ -100,31 +114,60 @@ int allPacketsServed(ThreadArgument *args) {
 	int exitThread = FALSE;
 	if (packetCount == args->epPtr->numPackets) {
 
-			pthread_mutex_lock(args->token_m);
+			// pthread_mutex_lock(args->token_m);
 			if (args->q1->num_members == 0 && args->q2->num_members == 0 && allPacketsArrived == TRUE) {
 				exitThread = TRUE;
 			}
-			pthread_mutex_unlock(args->token_m);
+			// pthread_mutex_unlock(args->token_m);
 	}
 	return exitThread;
 }
 
 void *server(void *obj) {
 
+	int mutexLocked = FALSE;
 	ThreadArgument *args = (ThreadArgument *) obj;
 	
 	while(endSimulation == FALSE) {
-		
-		if (allPacketsServed(args) == TRUE || signalReceived == TRUE) break;
-
-		pthread_cond_wait(args->Q2NotEmpty, args->token_m);
-
-		// check again that q2 is not empty
-		while (args->q2->num_members > 0) {
-
-			if (signalReceived == FALSE) transmitPacket(args);
+		// printf("\n\nDEBUG A \n\n");
+		if (allPacketsServed(args) == TRUE || signalReceived == TRUE) {
+			// printf("\n\nDEBUG B \n\n");
+			if (mutexLocked == TRUE) {
+				pthread_mutex_unlock(args->token_m);
+				// printf("\n\nDEBUG 1: in server thread mutex unLOCKED\n\n");
+				mutexLocked = FALSE;
+			}
+			break;
 		}
+		// printf("\n\nDEBUG C \n\n");
+		if (mutexLocked == FALSE) {
+			pthread_mutex_lock(args->token_m);
+			// printf("\n\nDEBUG 2: in server thread mutex LOCKED\n\n");
+			mutexLocked = TRUE;
+		}
+		// printf("\n\nDEBUG D \n\n");
+		while (args->q2->num_members > 0) {
+			// the mutex is unlocked after transmitPacket returns
+			// printf("\n\nDEBUG E \n\n"); 
+			if (signalReceived == FALSE) {
+				// printf("\n\nDEBUG F \n\n");
+				// printf("\n\nDEBUG point: start atomic\n\n");
+				transmitPacket(args);
+				mutexLocked = FALSE;
+			}
+			else mutexLocked = TRUE;
+		}
+		// printf("\n\nDEBUG G \n\n");
+		if (mutexLocked == FALSE) pthread_mutex_lock(args->token_m);
+		// printf("\n\nDEBUG: in server thread waiting\n\n");
+		if (endSimulation == FALSE)
+		pthread_cond_wait(args->Q2NotEmpty, args->token_m);
+		// printf("\n\nDEBUG 3: in server thread mutex LOCKED\n\n");
+		mutexLocked = TRUE;
+
 	}
-	pthread_mutex_unlock(args->token_m);
+	if (mutexLocked == TRUE) pthread_mutex_unlock(args->token_m);
 	return NULL;
 }
+
+

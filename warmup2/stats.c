@@ -15,19 +15,33 @@
 #include "token_thread.h"
 #include "global.h"
 
+ 
 
-int getNumPackets(My402List *q) {
+int getNumPackets(My402List *list, int servedOnly) {
 
-	return q->num_members;
+	int count = 0;
+	My402ListElem *elem = NULL;
+
+	if (servedOnly == FALSE) count = list->num_members;
+	else {
+
+		for (elem = My402ListFirst(list); elem != NULL; elem = My402ListNext(list, elem)) {
+
+				Packet *packet = (Packet *) elem->obj;
+				if (packet->serveSuccess == servedOnly) count++;
+			}
+	}
+	return count;
 }
 
 double getPacketDropProb() {
 
-	return droppedPacketCount/(double) packetCount;
+	return packetCount > 0 ? droppedPacketCount/(double) packetCount : 0;
 }
+
 double getTokenDropProb() {
 
-	return droppedTokenCount/(double)tokenCount;
+	return tokenCount > 0 ? droppedTokenCount/(double)tokenCount : 0;
 }
 
 double getStdv(My402List *q, double avgSystime) {
@@ -39,36 +53,48 @@ double getStdv(My402List *q, double avgSystime) {
 	for (elem = My402ListFirst(q); elem != NULL; elem = My402ListNext(q, elem)) {
 
 		Packet *packet = (Packet *) elem->obj;
-		dTime = deltaTime(&packet->time_arrival, &packet->time_out_server);
-		sum += (dTime - avgSystime) * (dTime - avgSystime);
+		if (packet->serveSuccess == TRUE) {
+			dTime = deltaTime(&packet->time_arrival, &packet->time_out_server);
+			sum += (dTime - avgSystime) * (dTime - avgSystime);
+		}
 	}
 	
-	variance = sum / getNumPackets(q);
+	variance = sum / completedPacketCount;
 
-	return sqrt(variance)/THOUSAND_FACTOR; //milliseconds to seconds
+	// avoid divide-by-zero error
+	return variance > 0 ? sqrt(variance)/THOUSAND_FACTOR : 0; //milliseconds to seconds
 }
+
 double getAVgSysTime(My402List *q, TimeType t) {
 
 	double totalTime = 0;
-	double dTime;
+	double dTime = 0;
 	My402ListElem *elem = NULL;
 
 	for (elem = My402ListFirst(q); elem != NULL; elem = My402ListNext(q, elem)) {
 
 		Packet *packet = (Packet *) elem->obj;
-		if (t == MeasuredServiceTime) {
+		if (t == MeasuredServiceTime && packet->serveSuccess == TRUE) {
 			dTime = deltaTime(&packet->time_in_server, &packet->time_out_server);
 		}
-		else if (t == MeasuredSystemTime) {
+		else if (t == MeasuredSystemTime && packet->serveSuccess == TRUE) {
 			dTime = deltaTime(&packet->time_arrival, &packet->time_out_server);
 		}
 		else if (t == MeasuredInterArrivalTime) dTime = packet->iaMeasured;
 		
 		totalTime += dTime;
-		// printf("\n\ndTime: %f\n\n", dTime);
+		
 	}
-	return (totalTime/getNumPackets(q))/THOUSAND_FACTOR;
-
+	// avoid divide-by-zero error
+	double result;
+	if (t == MeasuredInterArrivalTime) {
+		result = allPacketCount > 0 ? (totalTime/allPacketCount)/THOUSAND_FACTOR : 0;
+	}
+	else {
+		result = completedPacketCount > 0 ? (totalTime/completedPacketCount)/THOUSAND_FACTOR : 0; 
+	}
+	return  result;
+	
 }
 
 double getAvgPacketNum(My402List *q, Facility f, double emulTime) {
@@ -80,32 +106,37 @@ double getAvgPacketNum(My402List *q, Facility f, double emulTime) {
  	for (elem = My402ListFirst(q); elem != NULL; elem = My402ListNext(q, elem)) {
 
  		Packet *packet = (Packet *) elem->obj;
- 		if (f == Q1) totalTime += deltaTime(&packet->time_in_q1, &packet->time_out_q1);
- 		else if (f == Q2) totalTime += deltaTime(&packet->time_in_q2, &packet->time_out_q2);
+ 		if (packet->serveSuccess == TRUE) {
+	 		if (f == Q1) totalTime += deltaTime(&packet->time_in_q1, &packet->time_out_q1);
 
- 		else if (f == S1 && packet->serverID == SERVER_ONE) {
- 			
- 			totalTime += deltaTime(&packet->time_in_server, &packet->time_out_server);
- 		}
- 		else if (f == S2 && packet->serverID == SERVER_TWO) {
+	 		else if (f == Q2) totalTime += deltaTime(&packet->time_in_q2, &packet->time_out_q2);
 
- 			totalTime += deltaTime(&packet->time_in_server, &packet->time_out_server);
+	 		else if (f == S1 && packet->serverID == SERVER_ONE) {
+	 			
+	 			totalTime += deltaTime(&packet->time_in_server, &packet->time_out_server);
+	 		}
+	 		else if (f == S2 && packet->serverID == SERVER_TWO) {
+
+	 			totalTime += deltaTime(&packet->time_in_server, &packet->time_out_server);
+	 		}
  		}
 	}
 
-	return (totalTime/emulTime);
+	return emulTime > 0 ? (totalTime/emulTime) : 0;
 }
 
 void printStats(ThreadArgument *args) {
 
+	
 	double avgInterArrival = 0, avgServTime = 0, avgNumQ1 = 0, avgNumQ2 = 0, avgNumS1, avgNumS2;
 	double avgSysTime, stdvSystime, tDropProb, pDropProp;
 	
 
 	double emulTime = deltaTime(&args->epPtr->time_emul_start, &args->epPtr->time_emul_end);
 	My402List *packetList = args->packetList;
+	completedPacketCount = getNumPackets(packetList, TRUE);
+	allPacketCount = getNumPackets(packetList, FALSE);
 
-	
 	avgInterArrival = getAVgSysTime(packetList, MeasuredInterArrivalTime);
 
 	avgNumQ1 = getAvgPacketNum(packetList, Q1, emulTime);
@@ -135,6 +166,9 @@ void printStats(ThreadArgument *args) {
 
 	printf("\ttoken drop probability = %.6f\n", tDropProb);
 	printf("\tpacket drop probability = %.6f\n\n", pDropProp);
+
+	printf("\n\nDEBUG MODE - Packets generated: %d\n",allPacketCount);
+	printf("DEBUG MODE - Packets served: %d\n\n",completedPacketCount);
 }
 
 

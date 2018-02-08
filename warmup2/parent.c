@@ -49,11 +49,11 @@ void printEmulParams(EmulationParams *ep) {
 	printf("\tnumber to arrive = %d\n", ep->numPackets);
 
 	if (ep->fileName == NULL) {
-		printf("\tlambda = %f\n", ep->lambda);
-		printf("\tmu = %.2f\n", ep->mu);
+		printf("\tlambda = %.6g\n", ep->lambda);
+		printf("\tmu = %.6g\n", ep->mu);
 	}
 
-	printf("\tr = %f\n", ep->r);
+	printf("\tr = %.6g\n", ep->r);
 	printf("\tB = %d\n", ep->B);
 	printf("\tP = %d\n", ep->P);
 
@@ -85,7 +85,8 @@ void initThreadArgs(ThreadArgument *arrival_arg, ThreadArgument *deposit_arg,
 
 
 	arrival_arg->q1 = q1, arrival_arg->q2 = q2, arrival_arg->epPtr = ep; 
-	arrival_arg->token_m = token_m;
+	arrival_arg->token_m = token_m, arrival_arg->packetList = packetList;
+	arrival_arg->packetList_m = packetList_m;
 
 	deposit_arg->q1 = q1, deposit_arg->q2 = q2, deposit_arg->epPtr = ep; 
 	deposit_arg->token_m = token_m;
@@ -140,6 +141,20 @@ double deltaTime(struct timeval *start, struct timeval *end) {
 
 }
 
+void removePackets(ThreadArgument *args, My402List *q) {
+
+	My402ListElem *elem = NULL;
+
+	if (q->num_members > 0) {
+		for (elem = My402ListFirst(q); elem != NULL; elem = My402ListNext(q, elem)) {
+			Packet *packet = (Packet *) elem->obj;
+			archivePacket(args, packet, FALSE);
+		}
+		My402ListUnlinkAll(q);
+	}
+	
+}
+
 void runEmulation(EmulationParams *ep, sigset_t *set) {
 
 	
@@ -191,6 +206,9 @@ void runEmulation(EmulationParams *ep, sigset_t *set) {
 	ep->time_emul_end = endTime;
 
 	printf("%012.3fms: emulation ends\n\n", dTime);
+
+	removePackets(&s1_arg, s1_arg.q1);
+	removePackets(&s1_arg, s1_arg.q2);
 
 	printStats(&s1_arg);
 	cleanup(&arrival_arg, &s1_arg);

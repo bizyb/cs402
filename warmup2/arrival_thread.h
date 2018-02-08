@@ -38,6 +38,7 @@ typedef struct {
 	struct timeval time_in_server;
 	struct timeval time_out_server;
 	int packetDropped;
+	int serveSuccess;
 
 
 } Packet;

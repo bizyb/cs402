@@ -7,7 +7,6 @@
 #ifndef _WARMUP2_SERVER_THREAD
 #define _WARMUP2_SERVER_THREAD
 
-#include "parent.h"
 #include "arrival_thread.h"
 #include "token_thread.h"
 
@@ -29,7 +28,7 @@ extern Packet *dequeuePacketQ2(ThreadArgument *);
 /*
 	Add a serviced packet to an archive for future stat computation.
 */
-extern void archivePacket(ThreadArgument *, Packet *);
+extern void archivePacket(ThreadArgument *, Packet *, int);
 
 
 

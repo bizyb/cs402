@@ -93,6 +93,13 @@ extern double deltaTime(struct timeval *, struct timeval *);
 
 
 /*
+	Remove packets left behind in the queue upon signal receipt
+	and place them in the packet archive.
+*/
+extern void removePackets(ThreadArgument *, My402List *);
+
+
+/*
 	Initiate emulation by creating one thread for packet arrival, 
 	on thread for token genration, one thread for server 1, and one 
 	thread for server 2. Wait for each thread to finish.

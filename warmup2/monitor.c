@@ -13,19 +13,23 @@
 #include "monitor.h"
 #include "cs402.h"
 
+
 void *sigMonitor(void * obj) {
 	
-	int sig;
+	// int sig;
 	signalReceived = FALSE;
 	ThreadArgument *args = (ThreadArgument *) obj;
 	sigset_t *set = args->set;
 
-	sigwait(set, &sig);
+	// sigwait(set, &sig); //POSIX standard-compliant
+
+	sigwait(set); //UNIX 
 	endSimulation = TRUE;
 	signalReceived = TRUE;
 
 	pthread_cancel(*args->arrival_t);
 	pthread_cancel(*args->deposit_t);
+	printf("\n\nDEBUG: cancelled arrival and deposit\n\n");
 
 	//signal the server threads in case they're currently 
 	//waiting for a signal	

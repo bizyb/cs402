@@ -8,6 +8,13 @@
 #define _WARMUP2_STATS_THREAD
 #include "parent.h"
 
+/*
+	Define a global variable to keep track of the total number of packets that
+	have been successfully served. 
+*/
+int completedPacketCount;
+int allPacketCount;
+
 typedef enum {
 
 	Q1,
@@ -28,7 +35,7 @@ typedef enum {
 /*
 	Return number of packets successfuly transmitted.
 */
-extern int getNumPackets(My402List *);
+extern int getNumPackets(My402List *, int);
 
 
 /*
