@@ -29,10 +29,11 @@ void *sigMonitor(void * obj) {
 
 	pthread_cancel(*args->arrival_t);
 	pthread_cancel(*args->deposit_t);
-	printf("\n\nDEBUG: cancelled arrival and deposit\n\n");
+	// printf("\n\nDEBUG: cancelled arrival and deposit\n\n");
 
 	//signal the server threads in case they're currently 
 	//waiting for a signal	
+	
 	pthread_cond_broadcast(args->Q2NotEmpty);
 			
 	return NULL;

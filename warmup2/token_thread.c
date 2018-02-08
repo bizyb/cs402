@@ -176,7 +176,7 @@ void *deposit(void * obj) {
 
 	}
 	// printf("\n\nDEBUG: exiting depositing thread\n\n");
-	endSimulation = TRUE;
+	// endSimulation = TRUE;
 	// wake up the server threads
 	pthread_cond_broadcast(args->Q2NotEmpty);
 	return NULL;
