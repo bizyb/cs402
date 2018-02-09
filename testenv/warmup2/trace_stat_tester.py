@@ -22,3 +22,89 @@
 # 	- let the user decide whether the values are close enough
 # 	- make note that comparing floats with many significant figures for equivalence is not a good idea
 # 5.  
+
+class Packet(object):
+	
+	def __init__(self, *args, **kwargs):
+
+		self.packetID = kwargs.get("packetID")
+		self.serverID = kwargs.get("serverID")
+		self.ia = kwargs.get("ia") #inter-arrival time
+		self.q1_duration = kwargs.get("q1_duration")
+		self.q2_duration = kwargs.get("q2_duration")
+		self.service_time = kwargs.get("service_time")
+		self.service_time_m = kwargs.get("service_time_m") #measured
+
+
+class Stat(object):
+
+	def __init__(self, *args, **kwargs):
+
+		self.packet_ia 	= kwargs.get("packet_ia")
+		self.service_time = kwargs.get("service_time")
+		self.num_p_q1 = kwargs.get("num_p_q1")
+		self.num_p_q2 = kwargs.get("num_p_q2")
+		self.num_p_s1 = kwargs.get("num_p_s1")
+		self.num_p_s2 = kwargs.get("num_p_s2")
+		self.sys_time = kwargs.get("sys_time")
+		self.stdv = kwargs.get("stdv")
+		self.t_drop = kwargs.get("t_drop")
+		self.p_drop = kwargs.get("p_drop")
+
+class Warmup2Tester(object):
+
+	def __init__(self, *args, **kwargs):
+
+		self.emul_file = kwargs.get("file")
+		self.parse_file()
+		# print "\n\nEmulation file: {}\n\n".format(self.emul_file)
+
+	def parse_file(self):
+
+		with open(self.emul_file, "r") as f:
+			print f.readlines()
+
+	def run_test(self):
+		pass
+
+
+def add_arguments(parser):
+	"""
+	Parse command-line arguments. Output usage info as appropriate.
+	"""
+
+	help = 'Usage: python trace_stat_tester.py emulation_file'
+	arguments = [
+			{
+				'argument': 'emul_file',
+				'settings': {
+					'nargs': '+',
+					'type': str,
+					'help': help,
+				}
+			}
+	]
+	for arg_dict in arguments:
+		arg = arg_dict.get('argument')
+		settings = arg_dict.get('settings')
+		parser.add_argument(arg, **settings)
+
+	return parser
+
+def parse_arguments(parser):
+
+	args = parser.parse_args()
+	kwargs = {'file': args.emul_file[0]}
+	
+	return kwargs
+
+
+import argparse
+parser = argparse.ArgumentParser(description='CS402 Spring 2018: Warmup2 Emulation Trace Tester')
+parser = add_arguments(parser)
+kwargs = parse_arguments(parser)
+
+w2t = Warmup2Tester(**kwargs)
+w2t.run_test()
+
+

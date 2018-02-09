@@ -1,0 +1,15 @@
+   Statistics:
+
+        average packet inter-arrival time = <real-value>
+        average packet service time = <real-value>
+    
+        average number of packets in Q1 = <real-value>
+        average number of packets in Q2 = <real-value>
+        average number of packets at S1 = <real-value>
+        average number of packets at S2 = <real-value>
+    
+        average time a packet spent in system = <real-value>
+        standard deviation for time spent in system = <real-value>
+
+        token drop probability = <real-value>
+        packet drop probability = <real-value>
