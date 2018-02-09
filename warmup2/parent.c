@@ -103,7 +103,7 @@ void initThreadArgs(ThreadArgument *arrival_arg, ThreadArgument *deposit_arg,
 	s2_arg->Q2NotEmpty = Q2NotEmpty;
 	mon_arg->set = set, mon_arg->Q2NotEmpty = Q2NotEmpty, mon_arg->q1 = q1;
 	mon_arg->q2 = q2, mon_arg->token_m = token_m, mon_arg->packetList_m = packetList_m ;
-	mon_arg->epPtr = ep;
+	mon_arg->epPtr = ep, mon_arg->packetList = packetList;
 }
 
 void initEmulParams(EmulationParams *ep) {
@@ -141,20 +141,6 @@ double deltaTime(struct timeval *start, struct timeval *end) {
 	
 	return dTime;
 
-}
-
-void removePackets(ThreadArgument *args, My402List *q) {
-
-	My402ListElem *elem = NULL;
-
-	if (q->num_members > 0) {
-		for (elem = My402ListFirst(q); elem != NULL; elem = My402ListNext(q, elem)) {
-			Packet *packet = (Packet *) elem->obj;
-			archivePacket(args, packet, FALSE);
-		}
-		My402ListUnlinkAll(q);
-	}
-	
 }
 
 void runEmulation(EmulationParams *ep, sigset_t *set) {
@@ -208,9 +194,6 @@ void runEmulation(EmulationParams *ep, sigset_t *set) {
 	ep->time_emul_end = endTime;
 
 	printf("%012.3fms: emulation ends\n\n", dTime);
-
-	removePackets(&s1_arg, s1_arg.q1);
-	removePackets(&s1_arg, s1_arg.q2);
 
 	printStats(&s1_arg);
 	cleanup(&arrival_arg, &s1_arg);

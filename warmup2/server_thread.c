@@ -34,12 +34,9 @@ Packet *dequeuePacketQ2(ThreadArgument *args) {
 
 void archivePacket(ThreadArgument *args, Packet *packet, int served) {
 
-	pthread_mutex_lock(args->packetList_m);
-
 	if (served == TRUE) packet->serveSuccess = TRUE;
 	My402ListAppend(args->packetList, (void *)packet);
-	
-	pthread_mutex_unlock(args->packetList_m);
+
 }
 
 void logActivity(ThreadArgument *args, Packet *packet, Activity a, double dTime, double dTotal) {
@@ -94,9 +91,9 @@ void transmitPacket(ThreadArgument *args) {
 	logActivity(args, packet, ServerExit, dTime, dTotal);
 	pthread_mutex_unlock(args->token_m);
 
-	// pthread_mutex_lock(args->packetList_m);
+	pthread_mutex_lock(args->packetList_m);
 	archivePacket(args, packet, TRUE);
-	// pthread_mutex_unlock(args->packetList_m);
+	pthread_mutex_unlock(args->packetList_m);
 	
 }
 

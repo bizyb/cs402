@@ -167,8 +167,8 @@ void printStats(ThreadArgument *args) {
 	printf("\ttoken drop probability = %.6f\n", tDropProb);
 	printf("\tpacket drop probability = %.6f\n\n", pDropProp);
 
-	printf("\n\nDEBUG MODE - Packets generated: %d\n",allPacketCount);
-	printf("DEBUG MODE - Packets served: %d\n\n",completedPacketCount);
+	printf("\n\n[DEBUG MODE] Packets generated: %d\n",allPacketCount);
+	printf("[DEBUG MODE] Packets served: %d\n\n",completedPacketCount);
 }
 
 
