@@ -1,0 +1,5 @@
+*.h.gch
+testenv/lib/*
+testenv/bin/*
+*.o
+*.h.gch
