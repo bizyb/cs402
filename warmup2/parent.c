@@ -111,11 +111,11 @@ void initEmulParams(EmulationParams *ep) {
 
 	// Values ignored if trace file provided: lambda, mu, P, numPackets
 	// numPackets is read from the trace file and over-written later
-	ep->lambda = LAMBDA;
-	ep->mu = MU;
+	ep->lambda = LAMBDA; // 1/lambda = inter-arrival time
+	ep->mu = MU; //1/mu = service time
 	ep->r = R; // 1/r = token inter-arrival-time; defaults to 10 seconds if 1/r greater than 10 seconds
 	ep->B = B; // B = bucket size; permanent
-	ep->P = P; 
+	ep->P = P; // num tokens/packet (deterministic)
 	ep->numPackets = NUM_PACKETS;
 	ep->fileName = NULL;
 }

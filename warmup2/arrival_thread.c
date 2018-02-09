@@ -181,8 +181,8 @@ PacketParams getDetParams(ThreadArgument *args) {
 	serviceTime = 1/(args->epPtr->mu) * THOUSAND_FACTOR * THOUSAND_FACTOR;
 	interArrival = 1/(args->epPtr->lambda) * THOUSAND_FACTOR * THOUSAND_FACTOR;
 
-	if (serviceTime > MAX_SECONDS) serviceTime = MAX_SECONDS;
-	if (interArrival > MAX_SECONDS) interArrival = MAX_SECONDS;
+	if (serviceTime > MAX_SECONDS) serviceTime = MAX_SECONDS; // 1/mu
+	if (interArrival > MAX_SECONDS) interArrival = MAX_SECONDS; // 1/lambda
 
 	PacketParams params = {-1, interArrival, tokens, serviceTime};
 	return params;

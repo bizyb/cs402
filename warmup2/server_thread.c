@@ -100,14 +100,20 @@ void transmitPacket(ThreadArgument *args) {
 
 int allPacketsServed(ThreadArgument *args) {
 
-	int exitThread = FALSE;
+	int exitThread = FALSE;\
+	// printf("\n\nDEBUG 1\n\n");
 	if (packetCount == args->epPtr->numPackets) {
-
+		// printf("\n\nDEBUG 2\n\n");
 		if (args->q1->num_members == 0 && args->q2->num_members == 0 
 			&& allPacketsArrived == TRUE) {
 			exitThread = TRUE;
 			endSimulation = TRUE;
+			// printf("\n\nDEBUG 3\n\n");
 		}
+	// printf("\n\nDEBUG: args->q1->num_members: %d\n\n",args->q1->num_members);
+	// printf("\n\nDEBUG: args->q2->num_members: %d\n\n",args->q2->num_members);
+	// printf("\n\nDEBUG: allPacketsArrived: %d\n\n",allPacketsArrived);
+	// printf("\n\nDEBUG 4\n\n");
 	}
 	return exitThread;
 }
@@ -118,32 +124,65 @@ void *server(void *obj) {
 	ThreadArgument *args = (ThreadArgument *) obj;
 	
 	while(endSimulation == FALSE) {
+
+		pthread_mutex_lock(args->token_m);
+		// printf("\n\nDEBUG a: serverID: %d\n\n", args->serverID+1);
+		while (args->q2->num_members == 0 && endSimulation == FALSE && allPacketsServed(args) == FALSE) { 
+			// printf("\n\nDEBUG b: serverID: %d\n\n", args->serverID+1);
+			pthread_cond_wait(args->Q2NotEmpty, args->token_m);
+			// printf("\n\nDEBUG c: serverID: %d\n\n", args->serverID+1);
+		}
+		// transmitPacket returns with the mutex unlocked
+		// do not service any packets from the queue if SIGINT has been issued
+		if (args->q2->num_members > 0 && signalReceived == FALSE) transmitPacket(args);
+		else pthread_mutex_unlock(args->token_m);
+
 		if (allPacketsServed(args) == TRUE || signalReceived == TRUE) {
-			if (mutexLocked == TRUE) {
-				pthread_mutex_unlock(args->token_m);
-				mutexLocked = FALSE;
-			}
+			// it's possible that the other thread is still waiting so signal it
+			pthread_cond_signal(args->Q2NotEmpty);
+			// mutexLocked = TRUE;
 			break;
 		}
-		if (mutexLocked == FALSE) {
-			pthread_mutex_lock(args->token_m);
-			mutexLocked = TRUE;
-		}
 
-		if (args->q2->num_members > 0) { 
-			if (signalReceived == FALSE) {
-				transmitPacket(args);
-				mutexLocked = FALSE;
-			}
-			else mutexLocked = TRUE;
-		}
-		if (mutexLocked == FALSE) pthread_mutex_lock(args->token_m);
-		if (endSimulation == FALSE)
-		pthread_cond_wait(args->Q2NotEmpty, args->token_m);
-		mutexLocked = TRUE;
+				
+
+
+		// if (allPacketsServed(args) == TRUE || signalReceived == TRUE) {
+		// 	if (mutexLocked == TRUE) {
+		// 		pthread_mutex_unlock(args->token_m);
+		// 		mutexLocked = FALSE;
+		// 	}
+		// 	break;
+		// }
+		// if (mutexLocked == FALSE) {
+		// 	pthread_mutex_lock(args->token_m);
+		// 	mutexLocked = TRUE;
+		// }
+
+		// while (args->q2->num_members > 0) { 
+		// 	if (signalReceived == FALSE) {
+		// 		if (mutexLocked == FALSE) {
+		// 			pthread_mutex_lock(args->token_m);
+		// 			mutexLocked = TRUE;
+		// 		}
+		// 		transmitPacket(args);
+		// 		mutexLocked = FALSE;
+		// 	}
+		// 	else mutexLocked = TRUE;
+		// }
+		// if (mutexLocked == FALSE) {
+		// 	pthread_mutex_lock(args->token_m);
+		// 	mutexLocked = TRUE;
+		// }
+		// if (allPacketsServed(args) == FALSE || signalReceived == FALSE) {
+		// 	printf("\n\nDEBUG 5\n\n");
+		// 	pthread_cond_wait(args->Q2NotEmpty, args->token_m);
+		// }
+		// mutexLocked = TRUE;
 
 	}
 	if (mutexLocked == TRUE) pthread_mutex_unlock(args->token_m);
+	// printf("\n\nDEBUG d: exiting serverID: %d\n\n", args->serverID+1);
 	return NULL;
 }
 
