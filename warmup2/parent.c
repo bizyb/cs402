@@ -101,7 +101,9 @@ void initThreadArgs(ThreadArgument *arrival_arg, ThreadArgument *deposit_arg,
 	deposit_arg->Q2NotEmpty = Q2NotEmpty, deposit_arg->NoMorePackets = NoMorePackets;
 	s1_arg->Q2NotEmpty = Q2NotEmpty;
 	s2_arg->Q2NotEmpty = Q2NotEmpty;
-	mon_arg->set = set, mon_arg->Q2NotEmpty = Q2NotEmpty, mon_arg->q1 = q1, mon_arg->q2 = q2, mon_arg->token_m = token_m; 
+	mon_arg->set = set, mon_arg->Q2NotEmpty = Q2NotEmpty, mon_arg->q1 = q1;
+	mon_arg->q2 = q2, mon_arg->token_m = token_m, mon_arg->packetList_m = packetList_m ;
+	mon_arg->epPtr = ep;
 }
 
 void initEmulParams(EmulationParams *ep) {

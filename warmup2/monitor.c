@@ -7,12 +7,28 @@
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <pthread.h>
 
 #include "parent.h"
 #include "monitor.h"
 #include "cs402.h"
 
+
+
+void removePackets(ThreadArgument *args, My402List *q) {
+
+	My402ListElem *elem = NULL;
+
+	if (q->num_members > 0) {
+		for (elem = My402ListFirst(q); elem != NULL; elem = My402ListNext(q, elem)) {
+			Packet *packet = (Packet *) elem->obj;
+			archivePacket(args, packet, FALSE);
+		}
+		My402ListUnlinkAll(q);
+	}
+	
+}
 
 void *sigMonitor(void * obj) {
 	
@@ -23,7 +39,9 @@ void *sigMonitor(void * obj) {
 
 	// sigwait(set, &sig); //POSIX standard-compliant
 
-	sigwait(set); //UNIX 
+	sigwait(set); //UNIX
+
+	 
 	endSimulation = TRUE;
 	signalReceived = TRUE;
 
@@ -35,5 +53,7 @@ void *sigMonitor(void * obj) {
 	pthread_cond_broadcast(args->Q2NotEmpty);
 			
 	return NULL;
+
+	pthread_mutex_unlock(args->packetList_m);
 
 }
