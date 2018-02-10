@@ -1,19 +1,33 @@
 # TODO (pseudocode):
 # 1. Timestamps
+# 	- formatting: has 8 leading digits, a period, and three significant figures
 # 	- (LAST) verify that the timestamps are the result of adding the inter-arrival times, service times, etc.
- 
+# 2. Packet trace output
+# 	- each packet fully served must have 7 lines (temporally contiguous but not necessarily spacially)
+# 	- 
+# 3. Packet values
+# 	- create a Packet object with all the relevant attributes
+# 	-save each packet object in hash table, i.e. a dictionary where key=packetID, value=packet object
+# 	-parse out each attribute and assign it to the appropriate packet 
+# 3. Stats 
+# 	- create a stat object and save the relevant values to its attributes 
+# 4. Recompute the stats
+# 	- use the packet objects to recompute the stats
+# 	- output the recomputed values and the parsed values side by side 
+# 	- let the user decide whether the values are close enough
+# 	- make note that comparing floats with many significant figures for equivalence is not a good idea
+# 5.  
 
 import re
 import copy
 import decimal
-import statistics
 
 class Token(object):
 
 	def __init__(self, *args, **kwargs):
 
-		self.num_tokens = 0
-		self.num_dropped = 0
+		self.tokenID = kwargs.get("tokenID")
+		self.dropped = False
 
 
 class Packet(object):
@@ -21,14 +35,12 @@ class Packet(object):
 	def __init__(self, *args, **kwargs):
 
 		self.packetID = kwargs.get("packetID")
-		self.ia = -1 #inter-arrival time
-		self.tokens = -1
-		self.q1_duration = -1
-		self.q2_duration = -1
-		self.service_time = -1
-		self.service_time_m = -1 #measured
-		self.arrival_t = -1
-		self.departure_t = -1
+		self.ia = kwargs.get("ia") #inter-arrival time
+		self.tokens = kwargs.get("tokens")
+		self.q1_duration = kwargs.get("q1_duration")
+		self.q2_duration = kwargs.get("q2_duration")
+		self.service_time = kwargs.get("service_time")
+		self.service_time_m = kwargs.get("service_time_m") #measured
 		self.serverID = 0
 		self.num_trace_lines = 0
 		self.served = False
@@ -57,10 +69,8 @@ class Warmup2Tester(object):
 		self.emul_file = kwargs.get("file")
 		self.emul_lines = self.parse_file()
 		self.raw_timestamps = self.get_timestamps()
-		self.token_obj = Token()
 		self.packets = {}
 		self.stats = {}
-		self.THOUSAND = 1000
 
 
 	def parse_file(self):
@@ -75,9 +85,8 @@ class Warmup2Tester(object):
 
 	def get_timestamps(self):
 
-		timestamp_p = "[0-9]{8}\.[0-9]{3}"
+		timestamp_p = "[0-9]+\.[0-9]+"
 		timestamps = re.findall(timestamp_p, ' '.join(self.emul_lines))
-		timestamps = [float(t) for t in timestamps]
 		return timestamps
 
 
@@ -85,10 +94,9 @@ class Warmup2Tester(object):
 	def run_test(self):
 
 		msg = "WARNING: No error handling is done. The script assumes the trace\n"
-		msg += "file has no spelling errors. Not all failures are valid due to \n"
-		msg += "precision and rounding errors.\n"
+		msg += "file has no spelling errors.\n"
 		# msg += " "
-		print "\n----------Start of Testing-------------------------------------"
+		print "\n----------Start of Testing------------"
 		print msg
 
 		# test timestamp
@@ -99,117 +107,21 @@ class Warmup2Tester(object):
 		self.parse_packets()
 		self.validate_packets()
 
-		self.parse_tokens()
-
 		# extract the stats
 		self.parse_stats("parsed")
 
-		# recompute the stats and validate them
-		self.recompute_stats()
-		self.validate_stats("packet_ia")
-		self.validate_stats("service_time")
-		self.validate_stats("num_p_q1")
-		self.validate_stats("num_p_q2")
-		self.validate_stats("num_p_s1")
-		self.validate_stats("num_p_s2")
-		self.validate_stats("sys_time")
-		self.validate_stats("stdv")
-		self.validate_stats("t_drop")
-		self.validate_stats("p_drop")
- 
-		print "\n"
-
-	def parse_tokens(self):
-
-		for line in self.emul_lines:
-			token_p = "token\st[0-9]+\sarrives"
-			if re.findall(token_p, line):
-				self.token_obj.num_tokens += 1
-				if "dropped" in line:
-					self.token_obj.num_dropped += 1
-
-	
-	def recompute_stats(self):
-
-		stat_obj = Stat()
-		stat_obj.packet_ia = self.stat_packet_ia()
-		stat_obj.service_time = self.stat_service_time()
-		stat_obj.num_p_q1 = self.stat_avg_num("q1_duration")
-		stat_obj.num_p_q2 = self.stat_avg_num("q2_duration")
-		stat_obj.num_p_s1 = self.stat_avg_num("service_time_m", id=1)
-		stat_obj.num_p_s2 = self.stat_avg_num("service_time_m", id=2)
-		stat_obj.sys_time = self.stat_service_time(sys_time=True)
-		stat_obj.stdv = self.stat_stdv()
-		stat_obj.t_drop = self.stat_drop("token")
-		stat_obj.p_drop = self.stat_drop("packet")
-
-		self.stats["recomputed"] = stat_obj
+		# recompute the stats
 
 
-	def stat_packet_ia(self):
-
-		num_packets = len(self.packets.keys())
-		total_time = 0
-		for packetID, packet_obj in self.packets.items():
-			total_time += packet_obj.ia
-		ia = total_time/num_packets/self.THOUSAND
-		return ia
-
-	def stat_service_time(self, sys_time=False):
-
-		num_packets = 0
-		total_time = 0
-		for packetID, packet_obj in self.packets.items():
-			if packet_obj.served:
-				if sys_time:
-					total_time += packet_obj.departure_t - packet_obj.arrival_t
-				else:
-					total_time += packet_obj.service_time_m
-				num_packets += 1
-		st = total_time/num_packets/self.THOUSAND
-		return st
-
-	def stat_avg_num(self, facility, id=-1):
-
-		total_time = 0
-		for packetID, packet_obj in self.packets.items():
-			if packet_obj.served:
-				if id > 0 and packet_obj.serverID == id or id == -1:
-					total_time += getattr(packet_obj, facility)
-				
-		avg_num = total_time/self.raw_timestamps[-1] # total emulation time == last timestamp
-		return avg_num
-
-	def stat_stdv(self):
-
-		sys_times = []
-		for packetID, packet_obj in self.packets.items():
-			if packet_obj.served:
-				sys_times.append(packet_obj.departure_t - packet_obj.arrival_t)
-		stdv =  statistics.stdev(sys_times)/self.THOUSAND
-		return stdv
-
-	def stat_drop(self, drop_type):
-
-		num_total = 0
-		num_dropped = 0
-		if drop_type == "packet":
-			num_total = len(self.packets.keys())
-			for packetID, packet_obj in self.packets.items():
-				if packet_obj.dropped:
-					num_dropped += 1
-
-		elif drop_type == "token":
-			num_total = self.token_obj.num_tokens
-			num_dropped = self.token_obj.num_dropped
+		# test 
 
 
-		return num_dropped/float(num_total)
+		
 
 	def parse_packets(self):
 
-		TIMESTAMP_OFFSET = 7
-		for index, line in enumerate(self.emul_lines):
+		for line in self.emul_lines:
+
 			packetID = self.get_packetID(line)
 			if packetID != -1: 
 				# if packet already exits, update its fields
@@ -218,9 +130,14 @@ class Warmup2Tester(object):
 				if not packet_obj:
 					packet_obj = Packet(packetID=packetID)
 					self.packets[packetID] = packet_obj
-				self.update_packet(packet_obj, line, index - TIMESTAMP_OFFSET)
+				self.update_packet(packet_obj, line)
 
 	
+
+
+
+
+
 	def parse_stats(self, stat_type):
 
 		stat_obj = Stat()
@@ -247,6 +164,16 @@ class Warmup2Tester(object):
 				stat_obj.p_drop = self.parse_float(line)
 
 		self.stats[stat_type] = stat_obj
+		print "packet_ia: ", stat_obj.packet_ia
+		print "service_time: ", stat_obj.service_time
+		print "num_p_q1: ", stat_obj.num_p_q1
+		print "num_p_q2: ", stat_obj.num_p_q2
+		print "num_p_s1: ", stat_obj.num_p_s1
+		print "num_p_s2: ", stat_obj.num_p_s2
+		print "sys_time: ", stat_obj.sys_time
+		print "stdv: ", stat_obj.stdv
+		print "t_drop: ", stat_obj.t_drop
+		print "p_drop: ", stat_obj.p_drop 
 
 	def get_packetID(self, line):
 
@@ -302,7 +229,7 @@ class Warmup2Tester(object):
 				packet_obj.service_time_m = duration
 
 
-	def update_packet(self, packet_obj, line, line_num=-1):
+	def update_packet(self, packet_obj, line):
 
 		"""
 		Parse packet attributes and update the object. Note that 
@@ -310,18 +237,13 @@ class Warmup2Tester(object):
 		block, not upon any functional call to update_packet to 
 		ensure that each trace line strictly follows the assignment specs.
 		"""
+		can_print = False
 		if "arrives" in line:
 			token_count = self.get_p_tokens(line)
 			packet_obj.tokens =  token_count
-			packet_obj.arrival_t = self.raw_timestamps[line_num]
-
 
 			inter_arrival = self.get_p_inter_arrival(line)
 			packet_obj.ia = inter_arrival
-
-			if "dropped" in line:
-				packet_obj.dropped = True
-
 			packet_obj.num_trace_lines += 1
 
 		elif "enters" in line:
@@ -339,16 +261,25 @@ class Warmup2Tester(object):
 			packet_obj.num_trace_lines += 1
 
 		elif "departs" in line: 
-			
+			can_print = True
 			s1_pattern = "\sS1"
 			self.parse_duration(packet_obj, line, s1_pattern, "server-departs")
 			packet_obj.served = True
-			packet_obj.departure_t = self.raw_timestamps[line_num]
 			packet_obj.num_trace_lines += 1
-			
 
+		elif "dropped" in line:
+			# do not increment num_trace_lines
+			packet_obj.dropped = True
+			 
+	
+		# if can_print:
+		# 	print "packetID: {}\ttoken count: {}\tia: {}\tq1: {}\tq2: {}\tserverID: {}\tst: {}\tst_m: {}\tlines: {}".format(
+		# 		packet_obj.packetID, packet_obj.tokens,packet_obj.ia, packet_obj.q1_duration, 
+		# 		packet_obj.q2_duration, packet_obj.serverID, packet_obj.service_time,
+		# 		packet_obj.service_time_m, packet_obj.num_trace_lines)
+
+	
 	def get_p_tokens(self, line):
-
 		# parse out the token count
 		token_p = "(\s[0-9]+\stoken)"
 		match = re.findall(token_p, line)
@@ -366,16 +297,24 @@ class Warmup2Tester(object):
 
 		return float(match)
 
+
+
+
+
+
 	
 	def valid_start_time(self):
 
-		start_f = float("00000000.000")
-		start_f_sorted = float(sorted(copy.deepcopy(self.raw_timestamps))[0])
+		star_str = "00000000.000"
+		star_str_sorted = sorted(copy.deepcopy(self.raw_timestamps))[0]
 
-		result = start_f == start_f_sorted
+		result = star_str == str(star_str_sorted)
 		msg = "{} \tTimestamp: 00000000.000 start time"
 		msg = msg.format(self.pass_or_fail(result))
 		print msg
+
+
+
 
 	def is_monotonic(self):
 
@@ -399,54 +338,19 @@ class Warmup2Tester(object):
 					fail = True
 					break
 
-		msg = "{}\tPackets: Each served packet has exactly 7 lines"
+		msg = "{}\tPackets: Each served packet as exactly 7 lines"
 		msg = msg.format(self.pass_or_fail( not fail))
 		print msg
-
-	def validate_stats(self, attr):
-
-		msg = "{}\tStats: "
-		if attr == "packet_ia":
-			msg += "average packet inter-arrival time "
-		elif attr == "service_time":
-			msg += "average packet service time "
-		elif attr == "num_p_q1":
-			msg += "average number of packets in Q1 "
-		elif attr == "num_p_q2":
-			msg += "average number of packets in Q2 "
-		elif attr == "num_p_s1":
-			msg += "average number of packets in S1 "
-		elif attr == "num_p_s2":
-			msg += "average number of packets in S2 "
-		elif attr == "sys_time":
-			msg += "average time a packet spent in system "
-		elif attr == "stdv":
-			msg += "standard deviation for time spent in system "
-		elif attr == "t_drop":
-			msg += "token drop probability "
-		elif attr == "p_drop":
-			msg += "packet drop probability "
-
-		msg += "[parsed={} recomputed={}]"
-
-		# parameterize attribute access with getattr
-		parsed = getattr(self.stats.get("parsed"), attr)
-		recomputed = getattr(self.stats.get("recomputed"), attr)
-		recomputed_str = "{:.6f}".format(recomputed)
-
-		# compare the rounded float value to the parsed value to avoid precision 
-		# errors
-		result = parsed == float(recomputed_str)
-		msg = msg.format(self.pass_or_fail(result), parsed, recomputed)
-		print msg
-
-
 
 	def pass_or_fail(self, value):
 
 		return  "PASS" if value == True else "FAIL"
 
-#-------------------------------------------------------------------------------------#
+
+
+		
+
+
 def add_arguments(parser):
 	"""
 	Parse command-line arguments. Output usage info as appropriate.

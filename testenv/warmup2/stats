@@ -13,3 +13,15 @@
 
         token drop probability = <real-value>
         packet drop probability = <real-value>
+
+
+
+       
+        # print "t_drop: ", stat_obj.t_drop
+        # print "p_drop: ", stat_obj.p_drop
+
+
+      
+      
+        self.served = False
+        self.dropped = False
