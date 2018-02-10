@@ -119,6 +119,8 @@ class Warmup2Tester(object):
  
 		print "\n"
 
+		print "----------End of Testing-------------------------------------\n"
+
 	def parse_tokens(self):
 
 		for line in self.emul_lines:
@@ -186,7 +188,7 @@ class Warmup2Tester(object):
 		for packetID, packet_obj in self.packets.items():
 			if packet_obj.served:
 				sys_times.append(packet_obj.departure_t - packet_obj.arrival_t)
-		stdv =  statistics.stdev(sys_times)/self.THOUSAND
+		stdv =  statistics.pstdev(sys_times)/self.THOUSAND # population stddev
 		return stdv
 
 	def stat_drop(self, drop_type):
@@ -339,7 +341,7 @@ class Warmup2Tester(object):
 			packet_obj.num_trace_lines += 1
 
 		elif "departs" in line: 
-			
+
 			s1_pattern = "\sS1"
 			self.parse_duration(packet_obj, line, s1_pattern, "server-departs")
 			packet_obj.served = True
